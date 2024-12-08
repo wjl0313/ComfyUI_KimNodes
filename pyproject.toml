@@ -1,0 +1,14 @@
+[project]
+name = "ComfyUI_KimNodes"
+description = "Image effects, icon layout processing, YOLO cropping — this toolbox is a node library organized according to my own needs."
+version = "0.0.1"
+license = {file = "LICENSE"}
+
+[project.urls]
+Repository = "https://github.com/wjl0313/ComfyUI_KimNodes"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "wjl0313"
+DisplayName = "ComfyUI_KimNodes"
+Icon = "🍊"
