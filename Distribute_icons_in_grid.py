@@ -19,11 +19,7 @@ class IconDistributeByGrid:
             "required": {
                 "scene_image": ("IMAGE",),
                 "mask_image": ("MASK",),
-                "icon_folder": ("STRING", {
-                    "multiline": False,
-                    "default": "F:/龙品/all",
-                    "lazy": True
-                }),
+                "icons": ("IMAGE",),
                 "icon_size": ("INT", {
                     "default": 50,
                     "min": 10,  
@@ -69,18 +65,48 @@ class IconDistributeByGrid:
     FUNCTION = "distribute_icons_in_grid" 
     CATEGORY = "🍊 Kim-Nodes"
 
-    def distribute_icons_in_grid(self, scene_image, mask_image, icon_folder, icon_size,
+    def distribute_icons_in_grid(self, scene_image, mask_image, icons, icon_size,
                     min_distance, num_rows=5, num_cols=10, max_scale=1.0, vertical_offset=0):
 
-        def load_icons(icon_folder):
-            """加载文件夹内所有图标"""
-            icons = []
-            for file in os.listdir(icon_folder):
-                if file.lower().endswith(('.png', '.jpg', '.jpeg')): 
-                    icon_path = os.path.join(icon_folder, file)
-                    icon = Image.open(icon_path).convert("RGBA")
-                    icons.append(icon)
-            return icons
+        def icons_preprocess(icons):
+            """将批次或列表张量类型图片转换为PIL Image 对象列表"""
+
+                        # 如果输入的是四维张量，先将其转为列表
+            if isinstance(icons, torch.Tensor):
+                # 将传入的张量转置为(B, H, W, C)
+                if icons.shape[1] == 3 or icons.shape[1] == 4:
+                    icons = icons.permute(0, 2, 3, 1) # (B, H, W, C)
+
+                icons_tensor = [icons[i:i+1] for i in range(icons.shape[0])]  # 将每个批次作为独立的图片
+                print("传入的是批次图片，图片张量的形状, ", icons_tensor[0].shape)
+                # 图片列表容器
+                icon_list = []
+                # 遍历每张贴纸
+                for icon_tensor in icons_tensor:
+                    # 假设输入张量是 (1, H, W, C) 格式，取第一维的1（即去掉批次维度）
+                    icon_tensor = icon_tensor.squeeze(0)  # 去掉批次维度，得到(C, H, W)格式
+                    # 将张量转换为PIL图像
+                    icon_np = icon_tensor.cpu().numpy()  # 将张量转换为numpy数组
+                    icon_np = (icon_np * 255).astype(np.uint8)
+                    icon = Image.fromarray(icon_np)
+                    # 加入列表容器
+                    icon_list.append(icon)
+            elif isinstance(icons, list):
+                print("传入的是列表图片, 图片的张量形状，", icons[0].shape)
+                icon_list = []
+                for icon_tensor in icons:
+                    # 将图片张量专职为(1, H, W, C)
+                    if icon_tensor.shape[1] == 3 or icon_tensor.shape[1] == 4:
+                        icon_tensor = icon_tensor.permute(0, 2, 3, 1)
+                    icon_np = icon_tensor.cpu().numpy()  # 将张量转换为numpy数组
+                    icon_np = (icon_np * 255).astype(np.uint8)
+                    icon = Image.fromarray(icon_np)
+                    # 加入列表容器
+                    icon_list.append(icon)
+            else:
+                raise ValueError("输入的贴纸必须是四维张量的图片或元素为张量（四维张量且批次维度为1）的列表")    
+
+            return icon_list
 
         def preprocess_mask_image(mask_image):
             """预处理蒙版，确保维度和类型正确"""
@@ -173,9 +199,16 @@ class IconDistributeByGrid:
             return aligned_positions
 
         def place_icons_on_scene(positions, scene_image_pil, icons, icon_size):
+            """
+            在场景上按顺序放置图标，只放置可用的图标数量
+            """
             placed_positions = []
-            for position in positions:
-                icon = random.choice(icons)
+            
+            # 只使用可用的图标数量，不循环使用
+            available_positions = positions[:len(icons)]
+            
+            # 按顺序放置图标
+            for position, icon in zip(available_positions, icons):
                 transformed_icon = transform_icon(icon, icon_size)
                 x, y = position
                 scene_image_pil.paste(transformed_icon, (x, y), transformed_icon)
@@ -212,7 +245,7 @@ class IconDistributeByGrid:
         # 处理蒙版
         mask_np = preprocess_mask_image(mask_image)
         contours, binary_mask = get_white_area(mask_np)
-        icons = load_icons(icon_folder)
+        icons = icons_preprocess(icons)
         positions = get_grid_positions(binary_mask, icon_size, icon_size, num_rows, num_cols)
 
         # 对齐网格到蒙版中心并应用垂直偏移

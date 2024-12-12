@@ -3,8 +3,8 @@ from .Distribute_Icons import Distribute_Icons
 from .Distribute_icons_in_grid import IconDistributeByGrid
 from .YOLO_Crop import YOLO_Crop
 from .Crop_Paste import Crop_Paste
-from .KimFilter import KimFilter 
-
+from .KimFilter import KimFilter
+from .Text_Match import Text_Match
 
 # 插件的节点类映射
 NODE_CLASS_MAPPINGS = {
@@ -12,7 +12,8 @@ NODE_CLASS_MAPPINGS = {
     "IconDistributeByGrid": IconDistributeByGrid,
     "YOLO_Crop": YOLO_Crop,
     "Crop_Paste": Crop_Paste,
-    "KimFilter": KimFilter
+    "KimFilter": KimFilter,
+    "Text_Match": Text_Match
 }
 
 # 节点的显示名称映射
@@ -21,7 +22,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "IconDistributeByGrid": "Kim_🍊IconDistributeByGrid 🛑",
     "YOLO_Crop": "Kim_🍊YOLO_Crop ✂",
     "Crop_Paste": "Kim_🍊Crop_Paste ✂",
-    "KimFilter": "Kim_🍊Filter🎨"
+    "KimFilter": "Kim_🍊Filter🎨",
+    "Text_Match": "Kim_🍊Text_Match🔍"
 }
 
 # 插件初始化

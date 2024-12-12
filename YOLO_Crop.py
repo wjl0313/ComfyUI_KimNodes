@@ -56,10 +56,10 @@ class YOLO_Crop:
                     "default": 500.0, "min": 100.0, "max": 1000.0, "step": 1.0, "display": "slider"
                 }),  # 方块大小（以像素为单位）
                 "vertical_offset": ("FLOAT", {
-                    "default": 0.0, "min": -50.0, "max": 50.0, "step": 1.0, "display": "slider"
+                    "default": 0.0, "min": -512.0, "max": 512.0, "step": 1.0, "display": "slider"
                 }),  # 上下偏移百分比
                 "horizontal_offset": ("FLOAT", {
-                    "default": 0.0, "min": -50.0, "max": 50.0, "step": 1.0, "display": "slider"
+                    "default": 0.0, "min": -512.0, "max": 512.0, "step": 1.0, "display": "slider"
                 })  # 左右偏移百分比
             },
         }
