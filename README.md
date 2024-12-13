@@ -53,6 +53,28 @@ Adjust images with tools like sharpening, defogging, contrast enhancement, natur
 
 ---
 
+### Kim_🍊HDR 🎨
+
+#### Example:
+![image](https://github.com/user-attachments/assets/591afb41-a2f6-4bab-bf8f-3436b0a431f5)
+
+---
+
+### Kim_Metadata
+
+Image metadata compilation
+1.It can be used to write workflow and image generation information into any image.
+2.You can write the personal information or promotional information you need in the image to obtain more dissemination channels.
+3.Edited images in Photoshop can also have metadata written into them to disguise them as original images.
+
+#### Example:
+![FgU1dqDu_kju59EjENx4AEKEmdqP](https://github.com/user-attachments/assets/fb6960d9-d08f-4026-8863-c0cde10abbcd)
+![FvJP3wPm_6CzKkLQ7q8SOx0xMCdc](https://github.com/user-attachments/assets/962fc970-9406-479c-954d-123815b7c473)
+![Fu40LiyJzqlt8YNHltfKL__cTjUn](https://github.com/user-attachments/assets/d1d1865f-069b-4cc8-8cc7-b5a353941e9b)
+
+
+---
+
 ## Installation
 
 1. Clone the repository:
@@ -70,18 +92,8 @@ Usage
 
 Community & Support
 知识星球: https://t.zsxq.com/8fA0M
-Join the Knowledge Planet community to stay updated, share insights, and ask questions.
 
 ---
 
 QQ 群: 852450267
-For real-time discussions, join our QQ group.
-
----
-
-Contributing
-Contributions are welcome! To contribute:
-
-1.Fork the repository.
-2.Create a feature branch.
-3.Submit a pull request with detailed explanations of your changes.   
+For real-time discussions, join our QQ group. 
