@@ -1,10 +1,14 @@
 import logging
-from .Distribute_Icons import Distribute_Icons
-from .Distribute_icons_in_grid import IconDistributeByGrid
-from .YOLO_Crop import YOLO_Crop
-from .Crop_Paste import Crop_Paste
-from .KimFilter import KimFilter
-from .Text_Match import Text_Match
+from .py.Distribute_Icons import Distribute_Icons
+from .py.Distribute_icons_in_grid import IconDistributeByGrid
+from .py.YOLO_Crop import YOLO_Crop
+from .py.Crop_Paste import Crop_Paste
+from .py.KimFilter import KimFilter
+from .py.Text_Match import Text_Match
+from .py.KimHDR import KimHDR
+from .py.Kim_image_metadata import Add_ImageMetadata
+from .py.LoadImageWithMetadata import LoadImage_Metadata
+from .py.manual_metadata_input import Manual_MetadataInput  # 导入新的节点类
 
 # 插件的节点类映射
 NODE_CLASS_MAPPINGS = {
@@ -13,17 +17,25 @@ NODE_CLASS_MAPPINGS = {
     "YOLO_Crop": YOLO_Crop,
     "Crop_Paste": Crop_Paste,
     "KimFilter": KimFilter,
-    "Text_Match": Text_Match
+    "Text_Match": Text_Match,
+    "KimHDR": KimHDR,
+    "Add_ImageMetadata": Add_ImageMetadata,
+    "LoadImage_Metadata": LoadImage_Metadata,
+    "Manual_MetadataInput": Manual_MetadataInput
 }
 
 # 节点的显示名称映射
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "Distribute_Icons": "Kim_🍊istribute_Icons 🛑",
-    "IconDistributeByGrid": "Kim_🍊IconDistributeByGrid 🛑",
-    "YOLO_Crop": "Kim_🍊YOLO_Crop ✂",
-    "Crop_Paste": "Kim_🍊Crop_Paste ✂",
-    "KimFilter": "Kim_🍊Filter🎨",
-    "Text_Match": "Kim_🍊Text_Match🔍"
+    "Distribute_Icons": "Kim_🍊istribute_Icons🛑",
+    "IconDistributeByGrid": "Kim_🍊IconDistributeByGrid🛑",
+    "YOLO_Crop": "Kim_🍊YOLO_Crop✂YOLO裁切",
+    "Crop_Paste": "Kim_🍊Crop_Paste✂裁切粘贴",
+    "KimFilter": "Kim_🍊Filter🎨滤镜",
+    "Text_Match": "Kim_🍊Text_Match🔍文本匹配",
+    "KimHDR": "Kim_🍊KimHDR",
+    "Add_ImageMetadata": "Kim_🍊Add_ImageMetadata📝合并保存图像元数据",
+    "LoadImage_Metadata": "Kim_🍊LoadImage_Metadata📝加载workflow图片",
+    "Manual_MetadataInput": "Kim_🍊Manual_MetadataInput📝填写元数据"
 }
 
 # 插件初始化
