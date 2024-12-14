@@ -1,0 +1,1236 @@
+{
+  "last_node_id": 404,
+  "last_link_id": 910,
+  "nodes": [
+    {
+      "id": 379,
+      "type": "easy forLoopStart",
+      "pos": [
+        -3092.6357421875,
+        -318.13800048828125
+      ],
+      "size": [
+        210,
+        118
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "initial_value1",
+          "type": "*",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "initial_value2",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "flow",
+          "type": "FLOW_CONTROL",
+          "links": [
+            872
+          ],
+          "slot_index": 0,
+          "shape": 5
+        },
+        {
+          "name": "index",
+          "type": "INT",
+          "links": [
+            871
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "value1",
+          "type": "*",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "value2",
+          "type": "*",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy forLoopStart"
+      },
+      "widgets_values": [
+        4
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 381,
+      "type": "easy forLoopEnd",
+      "pos": [
+        -1957.0682373046875,
+        -322.7212219238281
+      ],
+      "size": [
+        178,
+        126
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "flow",
+          "type": "FLOW_CONTROL",
+          "link": 872,
+          "shape": 5
+        },
+        {
+          "name": "initial_value1",
+          "type": "*",
+          "link": 873,
+          "shape": 7
+        },
+        {
+          "name": "initial_value2",
+          "type": "*",
+          "link": 892
+        },
+        {
+          "name": "initial_value3",
+          "type": "*",
+          "link": null
+        },
+        {
+          "name": "initial_value4",
+          "type": "*",
+          "link": 876
+        },
+        {
+          "name": "initial_value5",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value1",
+          "type": "*",
+          "links": [
+            881
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "value2",
+          "type": "*",
+          "links": null
+        },
+        {
+          "name": "value3",
+          "type": "*",
+          "links": null
+        },
+        {
+          "name": "value4",
+          "type": "*",
+          "links": null
+        },
+        {
+          "name": "value5",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy forLoopEnd"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 387,
+      "type": "ShowTextForGPT",
+      "pos": [
+        -1863.525634765625,
+        -134.37831115722656
+      ],
+      "size": [
+        210,
+        96
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 881,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "name": "output_dir",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_dir"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "title": "end",
+      "properties": {
+        "Node name for S&R": "ShowTextForGPT"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "tensor([[[[0.2941, 0.3294, 0.4431],\n          [0.2745, 0.3216, 0.4549],\n          [0.2824, 0.3373, 0.4235],\n          ...,\n          [0.2902, 0.3686, 0.4275],\n          [0.2824, 0.3373, 0.3882],\n          [0.1686, 0.1882, 0.2275]],\n\n         [[0.2784, 0.3255, 0.4588],\n          [0.2824, 0.3333, 0.4549],\n          [0.2824, 0.3373, 0.4235],\n          ...,\n          [0.2980, 0.3647, 0.4275],\n          [0.2980, 0.3412, 0.3961],\n          [0.1569, 0.1843, 0.2118]],\n\n         [[0.2784, 0.3294, 0.4510],\n          [0.2824, 0.3333, 0.4510],\n          [0.2784, 0.3373, 0.4118],\n          ...,\n          [0.2980, 0.3608, 0.4157],\n          [0.2980, 0.3373, 0.3882],\n          [0.1569, 0.1843, 0.2078]],\n\n         ...,\n\n         [[0.1686, 0.2196, 0.3059],\n          [0.1647, 0.2196, 0.3098],\n          [0.1686, 0.2196, 0.2980],\n          ...,\n          [0.2353, 0.2745, 0.3176],\n          [0.2588, 0.2627, 0.2980],\n          [0.1176, 0.1216, 0.1569]],\n\n         [[0.1647, 0.2235, 0.2980],\n          [0.1608, 0.2235, 0.3098],\n          [0.1647, 0.2235, 0.2980],\n          ...,\n          [0.2353, 0.2824, 0.3216],\n          [0.2549, 0.2667, 0.2941],\n          [0.1137, 0.1216, 0.1569]],\n\n         [[0.1804, 0.2314, 0.3176],\n          [0.1608, 0.2235, 0.3176],\n          [0.1569, 0.2196, 0.3059],\n          ...,\n          [0.2235, 0.2824, 0.3176],\n          [0.2392, 0.2824, 0.3020],\n          [0.1020, 0.1333, 0.1608]]]])",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 382,
+      "type": "PreviewImage",
+      "pos": [
+        -3094.7373046875,
+        66.76860046386719
+      ],
+      "size": [
+        237.268798828125,
+        246
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 877
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 384,
+      "type": "Prompt_Text",
+      "pos": [
+        -2755.333740234375,
+        84.71318817138672
+      ],
+      "size": [
+        210,
+        76
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            883
+          ],
+          "slot_index": 0,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "G:\\1",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 385,
+      "type": "Prompt_Text",
+      "pos": [
+        -2756.840087890625,
+        213.678955078125
+      ],
+      "size": [
+        210,
+        81
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            884
+          ],
+          "slot_index": 0,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "G:\\2",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 388,
+      "type": "Image_Classification",
+      "pos": [
+        -2487.19677734375,
+        -73.17167663574219
+      ],
+      "size": [
+        305.75177001953125,
+        74
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_tag",
+          "type": "STRING",
+          "link": 890,
+          "widget": {
+            "name": "text_tag"
+          }
+        },
+        {
+          "name": "true_path",
+          "type": "STRING",
+          "link": 883,
+          "widget": {
+            "name": "true_path"
+          }
+        },
+        {
+          "name": "false_path",
+          "type": "STRING",
+          "link": 884,
+          "widget": {
+            "name": "false_path"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output_path",
+          "type": "STRING",
+          "links": [
+            868,
+            876,
+            880
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image_Classification"
+      },
+      "widgets_values": [
+        "",
+        "/path/to/true_output",
+        "/path/to/false_output"
+      ]
+    },
+    {
+      "id": 390,
+      "type": "ShowTextForGPT",
+      "pos": [
+        -2489.137451171875,
+        -237.2370147705078
+      ],
+      "size": [
+        210,
+        101
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 885,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "name": "output_dir",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_dir"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "title": "Save path",
+      "properties": {
+        "Node name for S&R": "ShowTextForGPT"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "true",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 386,
+      "type": "Save_Image",
+      "pos": [
+        -2143.37109375,
+        96.04827880859375
+      ],
+      "size": [
+        274.7075500488281,
+        54
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 879
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 880,
+          "widget": {
+            "name": "file_path"
+          }
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Save_Image"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 376,
+      "type": "ShowTextForGPT",
+      "pos": [
+        -2141.058349609375,
+        212.34283447265625
+      ],
+      "size": [
+        210,
+        101
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 868,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "name": "output_dir",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_dir"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "title": "Save path",
+      "properties": {
+        "Node name for S&R": "ShowTextForGPT"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "G:\\1",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 380,
+      "type": "LoadImagesFromFolderKJ",
+      "pos": [
+        -3099.75390625,
+        -152.52076721191406
+      ],
+      "size": [
+        244.73361206054688,
+        166
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "start_index",
+          "type": "INT",
+          "link": 871,
+          "widget": {
+            "name": "start_index"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            873,
+            877,
+            879,
+            894
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "image_path",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImagesFromFolderKJ"
+      },
+      "widgets_values": [
+        "F:\\test",
+        1,
+        1
+      ]
+    },
+    {
+      "id": 389,
+      "type": "YOLOWorld_Match",
+      "pos": [
+        -2835.2099609375,
+        -71.88481140136719
+      ],
+      "size": [
+        292.44976806640625,
+        107.463134765625
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 894
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "STRING",
+          "links": [
+            885,
+            890,
+            892
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YOLOWorld_Match"
+      },
+      "widgets_values": [
+        "yolov8x-worldv2.pt",
+        0.5,
+        "person"
+      ]
+    },
+    {
+      "id": 375,
+      "type": "Note",
+      "pos": [
+        -3497.431884765625,
+        -961.9107055664062
+      ],
+      "size": [
+        321.8633728027344,
+        1011.4934692382812
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "### Kim_🍊YOLOWorld_Match🔍特征匹配\nyolo_world_model——模型选择\nconfidence_threshold——置信度\ncategory——类\n*以下是yolo_world的80个类，选择需要的类替换到category中\n=======================================================\n人: person\n自行车: bicycle\n汽车: car\n摩托车: motorcycle\n飞机: airplane\n公共汽车: bus\n火车: train\n卡车: truck\n船: boat\n红绿灯: traffic light\n消防栓: fire hydrant\n停车标志: stop sign\n停车计时器: parking meter\n长椅: bench\n鸟: bird\n猫: cat\n狗: dog\n马: horse\n羊: sheep\n牛: cow\n大象: elephant\n熊: bear\n斑马: zebra\n长颈鹿: giraffe\n背包: backpack\n雨伞: umbrella\n手提包: handbag\n领带: tie\n手提箱: suitcase\n飞盘: frisbee\n滑雪板: skis\n单板滑雪: snowboard\n运动球: sports ball\n风筝: kite\n棒球棒: baseball bat\n棒球手套: baseball glove\n滑板: skateboard\n冲浪板: surfboard\n网球拍: tennis racket\n瓶子: bottle\n酒杯: wine glass\n杯子: cup\n叉子: fork\n刀: knife\n勺子: spoon\n碗: bowl\n香蕉: banana\n苹果: apple\n三明治: sandwich\n橙子: orange\n西兰花: broccoli\n胡萝卜: carrot\n热狗: hot dog\n披萨: pizza\n甜甜圈: donut\n蛋糕: cake\n椅子: chair\n沙发: couch\n盆栽: potted plant\n床: bed\n餐桌: dining table\n厕所: toilet\n电视: tv\n笔记本电脑: laptop\n鼠标: mouse\n遥控器: remote\n键盘: keyboard\n手机: cell phone\n微波炉: microwave\n烤箱: oven\n烤面包机: toaster\n水槽: sink\n冰箱: refrigerator\n书: book\n时钟: clock\n花瓶: vase\n剪刀: scissors\n泰迪熊: teddy bear\n吹风机: hair drier\n牙刷: toothbrush\n======================================================="
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 397,
+      "type": "Prompt_Text",
+      "pos": [
+        -2544.44384765625,
+        -736.4578857421875
+      ],
+      "size": [
+        210,
+        76
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            898
+          ],
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "G:\\1",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 398,
+      "type": "Prompt_Text",
+      "pos": [
+        -2542.9384765625,
+        -609.373046875
+      ],
+      "size": [
+        210,
+        76
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            899
+          ],
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "G:\\2",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 399,
+      "type": "Image_Classification",
+      "pos": [
+        -2323.04736328125,
+        -755.6964721679688
+      ],
+      "size": [
+        305.75177001953125,
+        82
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_tag",
+          "type": "STRING",
+          "link": 908,
+          "widget": {
+            "name": "text_tag"
+          }
+        },
+        {
+          "name": "true_path",
+          "type": "STRING",
+          "link": 898,
+          "widget": {
+            "name": "true_path"
+          }
+        },
+        {
+          "name": "false_path",
+          "type": "STRING",
+          "link": 899,
+          "widget": {
+            "name": "false_path"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output_path",
+          "type": "STRING",
+          "links": [
+            903,
+            910
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image_Classification"
+      },
+      "widgets_values": [
+        "",
+        "/path/to/true_output",
+        "/path/to/false_output"
+      ]
+    },
+    {
+      "id": 400,
+      "type": "Save_Image",
+      "pos": [
+        -2296.46484375,
+        -880.864990234375
+      ],
+      "size": [
+        274.7075500488281,
+        54
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 905
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 903,
+          "widget": {
+            "name": "file_path"
+          }
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Save_Image"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 402,
+      "type": "YOLOWorld_Match",
+      "pos": [
+        -2865.11962890625,
+        -811.7468872070312
+      ],
+      "size": [
+        292.44976806640625,
+        107.463134765625
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 906
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "type": "STRING",
+          "links": [
+            908,
+            909
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YOLOWorld_Match"
+      },
+      "widgets_values": [
+        "yolov8x-worldv2.pt",
+        0.5,
+        "person"
+      ]
+    },
+    {
+      "id": 403,
+      "type": "ShowTextForGPT",
+      "pos": [
+        -2553.333740234375,
+        -900.1630859375
+      ],
+      "size": [
+        210,
+        101
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 909,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "name": "output_dir",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_dir"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "title": "Save path",
+      "properties": {
+        "Node name for S&R": "ShowTextForGPT"
+      },
+      "widgets_values": [
+        "",
+        "true",
+        "true",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 404,
+      "type": "ShowTextForGPT",
+      "pos": [
+        -2231.432373046875,
+        -601.845458984375
+      ],
+      "size": [
+        210,
+        101
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 910,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "name": "output_dir",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_dir"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "title": "Save path",
+      "properties": {
+        "Node name for S&R": "ShowTextForGPT"
+      },
+      "widgets_values": [
+        "",
+        "G:\\1",
+        "G:\\1",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 401,
+      "type": "LoadImage",
+      "pos": [
+        -3097.15869140625,
+        -885.7515258789062
+      ],
+      "size": [
+        210,
+        431.0431213378906
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            905,
+            906
+          ],
+          "label": "图像"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "label": "遮罩"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "._2024-10-09_00-10-34.png",
+        "image"
+      ]
+    }
+  ],
+  "links": [
+    [
+      868,
+      388,
+      0,
+      376,
+      0,
+      "STRING"
+    ],
+    [
+      871,
+      379,
+      1,
+      380,
+      0,
+      "INT"
+    ],
+    [
+      872,
+      379,
+      0,
+      381,
+      0,
+      "FLOW_CONTROL"
+    ],
+    [
+      873,
+      380,
+      0,
+      381,
+      1,
+      "*"
+    ],
+    [
+      876,
+      388,
+      0,
+      381,
+      4,
+      "*"
+    ],
+    [
+      877,
+      380,
+      0,
+      382,
+      0,
+      "IMAGE"
+    ],
+    [
+      879,
+      380,
+      0,
+      386,
+      0,
+      "IMAGE"
+    ],
+    [
+      880,
+      388,
+      0,
+      386,
+      1,
+      "STRING"
+    ],
+    [
+      881,
+      381,
+      0,
+      387,
+      0,
+      "STRING"
+    ],
+    [
+      883,
+      384,
+      0,
+      388,
+      1,
+      "STRING"
+    ],
+    [
+      884,
+      385,
+      0,
+      388,
+      2,
+      "STRING"
+    ],
+    [
+      885,
+      389,
+      0,
+      390,
+      0,
+      "STRING"
+    ],
+    [
+      890,
+      389,
+      0,
+      388,
+      0,
+      "STRING"
+    ],
+    [
+      892,
+      389,
+      0,
+      381,
+      2,
+      "*"
+    ],
+    [
+      894,
+      380,
+      0,
+      389,
+      0,
+      "IMAGE"
+    ],
+    [
+      898,
+      397,
+      0,
+      399,
+      1,
+      "STRING"
+    ],
+    [
+      899,
+      398,
+      0,
+      399,
+      2,
+      "STRING"
+    ],
+    [
+      903,
+      399,
+      0,
+      400,
+      1,
+      "STRING"
+    ],
+    [
+      905,
+      401,
+      0,
+      400,
+      0,
+      "IMAGE"
+    ],
+    [
+      906,
+      401,
+      0,
+      402,
+      0,
+      "IMAGE"
+    ],
+    [
+      908,
+      402,
+      0,
+      399,
+      0,
+      "STRING"
+    ],
+    [
+      909,
+      402,
+      0,
+      403,
+      0,
+      "STRING"
+    ],
+    [
+      910,
+      399,
+      0,
+      404,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "批量图片分类保存",
+      "bounding": [
+        -3141.890380859375,
+        -406.16070556640625,
+        1403.3712158203125,
+        741.40380859375
+      ],
+      "color": "#8A8",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "分类保存",
+      "bounding": [
+        -3143.37109375,
+        -990.7056274414062,
+        1148.5267333984375,
+        557.5031127929688
+      ],
+      "color": "#3f789e",
+      "font_size": 22,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7972024500000005,
+      "offset": [
+        3587.316684534329,
+        1057.8287447798225
+      ]
+    }
+  },
+  "version": 0.4
+}

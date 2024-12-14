@@ -9,9 +9,8 @@ import os
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# 定义模型目录为相对路径：根目录下的 /models/yolo
-base_dir = os.getcwd()  # 获取当前工作目录
-model_path = os.path.join(base_dir, "models", "yolo")  # 定义模型路径
+# 设置模型目录为当前路径下的 /models/yolo
+model_path = os.path.abspath(os.path.join(os.getcwd(), "models", "yolo"))
 
 
 # 定义 get_files 函数
