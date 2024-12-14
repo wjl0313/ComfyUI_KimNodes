@@ -75,10 +75,8 @@ Image metadata compilation
 3.Edited images in Photoshop can also have metadata written into them to disguise them as original images.
 
 #### Example:
-![FgU1dqDu_kju59EjENx4AEKEmdqP](https://github.com/user-attachments/assets/fb6960d9-d08f-4026-8863-c0cde10abbcd)
-![FvJP3wPm_6CzKkLQ7q8SOx0xMCdc](https://github.com/user-attachments/assets/962fc970-9406-479c-954d-123815b7c473)
-![Fu40LiyJzqlt8YNHltfKL__cTjUn](https://github.com/user-attachments/assets/d1d1865f-069b-4cc8-8cc7-b5a353941e9b)
-
+![QQ20241020-145830](https://github.com/user-attachments/assets/fd448c3c-d078-4a93-87c5-41c90d93ca57)
+![QQ20241020-145818](https://github.com/user-attachments/assets/2a28b95b-2361-4ca8-a323-42814bfe539f)
 
 ---
 
