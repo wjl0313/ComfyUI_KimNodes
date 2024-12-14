@@ -1,0 +1,1260 @@
+{
+  "last_node_id": 348,
+  "last_link_id": 700,
+  "nodes": [
+    {
+      "id": 264,
+      "type": "Prompt_Text",
+      "pos": [
+        -1411.5654296875,
+        -1102.6473388671875
+      ],
+      "size": [
+        210,
+        76
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            496
+          ],
+          "slot_index": 0,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "realistic",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 229,
+      "type": "WD14Tagger|pysssss",
+      "pos": [
+        -1412.8453369140625,
+        -986.4932861328125
+      ],
+      "size": [
+        210.95164489746094,
+        261.34893798828125
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 453,
+          "label": "图像"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            455
+          ],
+          "slot_index": 0,
+          "shape": 6,
+          "label": "字符串"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WD14Tagger|pysssss"
+      },
+      "widgets_values": [
+        "wd-swinv2-tagger-v3",
+        0.35,
+        0.85,
+        false,
+        false,
+        ""
+      ]
+    },
+    {
+      "id": 226,
+      "type": "Text_Match",
+      "pos": [
+        -1176.2435302734375,
+        -1033.507080078125
+      ],
+      "size": [
+        240.99119567871094,
+        54
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "text_match",
+          "type": "STRING",
+          "link": 496,
+          "widget": {
+            "name": "text_match"
+          }
+        },
+        {
+          "name": "text_tag",
+          "type": "STRING",
+          "link": 455,
+          "widget": {
+            "name": "text_tag"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            504
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Text_Match"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 269,
+      "type": "Prompt_Text",
+      "pos": [
+        -1172.8201904296875,
+        -930.4691162109375
+      ],
+      "size": [
+        210,
+        76
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            505
+          ],
+          "slot_index": 0,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "G:\\1",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 270,
+      "type": "Prompt_Text",
+      "pos": [
+        -1170.6783447265625,
+        -801.5054321289062
+      ],
+      "size": [
+        210,
+        76
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            506
+          ],
+          "slot_index": 0,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "G:\\2",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 271,
+      "type": "Image_Classification",
+      "pos": [
+        -912.28955078125,
+        -1033.7674560546875
+      ],
+      "size": [
+        305.75177001953125,
+        74
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "text_tag",
+          "type": "STRING",
+          "link": 504,
+          "widget": {
+            "name": "text_tag"
+          }
+        },
+        {
+          "name": "true_path",
+          "type": "STRING",
+          "link": 505,
+          "widget": {
+            "name": "true_path"
+          }
+        },
+        {
+          "name": "false_path",
+          "type": "STRING",
+          "link": 506,
+          "widget": {
+            "name": "false_path"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output_path",
+          "type": "STRING",
+          "links": [
+            509
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image_Classification"
+      },
+      "widgets_values": [
+        "",
+        "/path/to/true_output",
+        "/path/to/false_output"
+      ]
+    },
+    {
+      "id": 272,
+      "type": "Save_Image",
+      "pos": [
+        -587.9370727539062,
+        -1097.3121337890625
+      ],
+      "size": [
+        274.7075500488281,
+        54
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 508
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 509,
+          "widget": {
+            "name": "file_path"
+          }
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Save_Image"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 231,
+      "type": "LoadImage",
+      "pos": [
+        -1642.845458984375,
+        -1096.494140625
+      ],
+      "size": [
+        210,
+        317.7682189941406
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            453,
+            508
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "label": "遮罩"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "ComfyUI_03222_.png",
+        "image"
+      ]
+    },
+    {
+      "id": 273,
+      "type": "Prompt_Text",
+      "pos": [
+        -1103.6441650390625,
+        -320.97479248046875
+      ],
+      "size": [
+        210,
+        76
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            511
+          ],
+          "slot_index": 0,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "realistic",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 275,
+      "type": "Text_Match",
+      "pos": [
+        -872.0099487304688,
+        -321.1070556640625
+      ],
+      "size": [
+        240.99119567871094,
+        54
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_match",
+          "type": "STRING",
+          "link": 511,
+          "widget": {
+            "name": "text_match"
+          }
+        },
+        {
+          "name": "text_tag",
+          "type": "STRING",
+          "link": 683,
+          "widget": {
+            "name": "text_tag"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            513,
+            687
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Text_Match"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 289,
+      "type": "easy forLoopStart",
+      "pos": [
+        -1620.0103759765625,
+        -572.0413208007812
+      ],
+      "size": [
+        210,
+        118
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "initial_value1",
+          "type": "*",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "initial_value2",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "flow",
+          "type": "FLOW_CONTROL",
+          "links": [
+            537
+          ],
+          "slot_index": 0,
+          "shape": 5
+        },
+        {
+          "name": "index",
+          "type": "INT",
+          "links": [
+            529
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "value1",
+          "type": "*",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "value2",
+          "type": "*",
+          "links": [],
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy forLoopStart"
+      },
+      "widgets_values": [
+        4
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 287,
+      "type": "LoadImagesFromFolderKJ",
+      "pos": [
+        -1627.12841796875,
+        -406.42401123046875
+      ],
+      "size": [
+        244.73361206054688,
+        166
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "start_index",
+          "type": "INT",
+          "link": 529,
+          "widget": {
+            "name": "start_index"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            611,
+            685,
+            686,
+            699
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "image_path",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImagesFromFolderKJ"
+      },
+      "widgets_values": [
+        "F:\\test",
+        1,
+        1
+      ]
+    },
+    {
+      "id": 291,
+      "type": "easy forLoopEnd",
+      "pos": [
+        -484.4437561035156,
+        -576.62451171875
+      ],
+      "size": [
+        178,
+        126
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "flow",
+          "type": "FLOW_CONTROL",
+          "link": 537,
+          "shape": 5
+        },
+        {
+          "name": "initial_value1",
+          "type": "*",
+          "link": 699,
+          "shape": 7
+        },
+        {
+          "name": "initial_value2",
+          "type": "*",
+          "link": 700
+        },
+        {
+          "name": "initial_value3",
+          "type": "*",
+          "link": 687
+        },
+        {
+          "name": "initial_value4",
+          "type": "*",
+          "link": 688
+        },
+        {
+          "name": "initial_value5",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value1",
+          "type": "*",
+          "links": [
+            663
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "value2",
+          "type": "*",
+          "links": null
+        },
+        {
+          "name": "value3",
+          "type": "*",
+          "links": null
+        },
+        {
+          "name": "value4",
+          "type": "*",
+          "links": null
+        },
+        {
+          "name": "value5",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy forLoopEnd"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 292,
+      "type": "PreviewImage",
+      "pos": [
+        -1622.1119384765625,
+        -187.13462829589844
+      ],
+      "size": [
+        237.268798828125,
+        246
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 686
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 274,
+      "type": "WD14Tagger|pysssss",
+      "pos": [
+        -1349.4752197265625,
+        -309.8072509765625
+      ],
+      "size": [
+        210,
+        370
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 611,
+          "label": "图像"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            683,
+            700
+          ],
+          "slot_index": 0,
+          "shape": 6,
+          "label": "字符串"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WD14Tagger|pysssss"
+      },
+      "widgets_values": [
+        "wd-swinv2-tagger-v3",
+        0.35,
+        0.85,
+        false,
+        false,
+        "",
+        "1girl, solo, long_hair, looking_at_viewer, brown_hair, hair_ornament, dress, jewelry, bare_shoulders, sitting, brown_eyes, ponytail, flower, earrings, indoors, window, chinese_clothes, red_dress, realistic"
+      ]
+    },
+    {
+      "id": 276,
+      "type": "Prompt_Text",
+      "pos": [
+        -1102.0767822265625,
+        -147.4473419189453
+      ],
+      "size": [
+        210,
+        76
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            514
+          ],
+          "slot_index": 0,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "G:\\1",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 277,
+      "type": "Prompt_Text",
+      "pos": [
+        -1102.7467041015625,
+        -20.990222930908203
+      ],
+      "size": [
+        210,
+        81
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": [
+            515
+          ],
+          "slot_index": 0,
+          "shape": 6
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "G:\\2",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 278,
+      "type": "Image_Classification",
+      "pos": [
+        -867.3906860351562,
+        -168.18597412109375
+      ],
+      "size": [
+        305.75177001953125,
+        74
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_tag",
+          "type": "STRING",
+          "link": 513,
+          "widget": {
+            "name": "text_tag"
+          }
+        },
+        {
+          "name": "true_path",
+          "type": "STRING",
+          "link": 514,
+          "widget": {
+            "name": "true_path"
+          }
+        },
+        {
+          "name": "false_path",
+          "type": "STRING",
+          "link": 515,
+          "widget": {
+            "name": "false_path"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output_path",
+          "type": "STRING",
+          "links": [
+            517,
+            650,
+            688
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image_Classification"
+      },
+      "widgets_values": [
+        "",
+        "/path/to/true_output",
+        "/path/to/false_output"
+      ]
+    },
+    {
+      "id": 279,
+      "type": "Save_Image",
+      "pos": [
+        -837.9979248046875,
+        -6.492443561553955
+      ],
+      "size": [
+        274.7075500488281,
+        54
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 685
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "link": 517,
+          "widget": {
+            "name": "file_path"
+          }
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Save_Image"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 320,
+      "type": "ShowTextForGPT",
+      "pos": [
+        -517.0713500976562,
+        -48.250553131103516
+      ],
+      "size": [
+        210,
+        96
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 650,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "name": "output_dir",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_dir"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "title": "Save path",
+      "properties": {
+        "Node name for S&R": "ShowTextForGPT"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "G:\\1"
+      ]
+    },
+    {
+      "id": 331,
+      "type": "ShowTextForGPT",
+      "pos": [
+        -390.9012145996094,
+        -388.2815856933594
+      ],
+      "size": [
+        210,
+        96
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 663,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "name": "output_dir",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_dir"
+          },
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 6
+        }
+      ],
+      "title": "end",
+      "properties": {
+        "Node name for S&R": "ShowTextForGPT"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "1girl, solo, long_hair, looking_at_viewer, brown_hair, hair_ornament, dress, jewelry, bare_shoulders, sitting, brown_eyes, ponytail, flower, earrings, indoors, window, chinese_clothes, red_dress, realistic"
+      ]
+    }
+  ],
+  "links": [
+    [
+      453,
+      231,
+      0,
+      229,
+      0,
+      "IMAGE"
+    ],
+    [
+      455,
+      229,
+      0,
+      226,
+      1,
+      "STRING"
+    ],
+    [
+      496,
+      264,
+      0,
+      226,
+      0,
+      "STRING"
+    ],
+    [
+      504,
+      226,
+      0,
+      271,
+      0,
+      "STRING"
+    ],
+    [
+      505,
+      269,
+      0,
+      271,
+      1,
+      "STRING"
+    ],
+    [
+      506,
+      270,
+      0,
+      271,
+      2,
+      "STRING"
+    ],
+    [
+      508,
+      231,
+      0,
+      272,
+      0,
+      "IMAGE"
+    ],
+    [
+      509,
+      271,
+      0,
+      272,
+      1,
+      "STRING"
+    ],
+    [
+      511,
+      273,
+      0,
+      275,
+      0,
+      "STRING"
+    ],
+    [
+      513,
+      275,
+      0,
+      278,
+      0,
+      "STRING"
+    ],
+    [
+      514,
+      276,
+      0,
+      278,
+      1,
+      "STRING"
+    ],
+    [
+      515,
+      277,
+      0,
+      278,
+      2,
+      "STRING"
+    ],
+    [
+      517,
+      278,
+      0,
+      279,
+      1,
+      "STRING"
+    ],
+    [
+      529,
+      289,
+      1,
+      287,
+      0,
+      "INT"
+    ],
+    [
+      537,
+      289,
+      0,
+      291,
+      0,
+      "FLOW_CONTROL"
+    ],
+    [
+      611,
+      287,
+      0,
+      274,
+      0,
+      "IMAGE"
+    ],
+    [
+      628,
+      291,
+      2,
+      292,
+      0,
+      "IMAGE"
+    ],
+    [
+      629,
+      291,
+      2,
+      279,
+      0,
+      "IMAGE"
+    ],
+    [
+      650,
+      278,
+      0,
+      320,
+      0,
+      "STRING"
+    ],
+    [
+      663,
+      291,
+      0,
+      331,
+      0,
+      "STRING"
+    ],
+    [
+      683,
+      274,
+      0,
+      275,
+      1,
+      "STRING"
+    ],
+    [
+      685,
+      287,
+      0,
+      279,
+      0,
+      "IMAGE"
+    ],
+    [
+      686,
+      287,
+      0,
+      292,
+      0,
+      "IMAGE"
+    ],
+    [
+      687,
+      275,
+      0,
+      291,
+      3,
+      "*"
+    ],
+    [
+      688,
+      278,
+      0,
+      291,
+      4,
+      "*"
+    ],
+    [
+      699,
+      287,
+      0,
+      291,
+      1,
+      "*"
+    ],
+    [
+      700,
+      274,
+      0,
+      291,
+      2,
+      "*"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "图片分类保存",
+      "bounding": [
+        -1671.79248046875,
+        -1189.22412109375,
+        1393.00439453125,
+        497.4377136230469
+      ],
+      "color": "#a1309b",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "批量图片分类保存",
+      "bounding": [
+        -1669.2650146484375,
+        -660.0640869140625,
+        1403.3712158203125,
+        741.40380859375
+      ],
+      "color": "#8A8",
+      "font_size": 22,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7972024500000029,
+      "offset": [
+        2282.341457493861,
+        1169.1415173760665
+      ]
+    }
+  },
+  "version": 0.4
+}

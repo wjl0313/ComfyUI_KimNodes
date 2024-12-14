@@ -1,0 +1,464 @@
+{
+  "last_node_id": 310,
+  "last_link_id": 656,
+  "nodes": [
+    {
+      "id": 297,
+      "type": "LayerMask: LoadFlorence2Model",
+      "pos": [
+        -3138.028564453125,
+        -816.4501342773438
+      ],
+      "size": [
+        260.3999938964844,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "florence2_model",
+          "type": "FLORENCE2",
+          "links": [
+            637
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerMask: LoadFlorence2Model"
+      },
+      "widgets_values": [
+        "base"
+      ],
+      "color": "rgba(27, 80, 119, 0.7)"
+    },
+    {
+      "id": 296,
+      "type": "LoadImage",
+      "pos": [
+        -3145.425537109375,
+        -1150.4676513671875
+      ],
+      "size": [
+        261.6959228515625,
+        270.66668701171875
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            634,
+            636,
+            648
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "摄图网_601515090_海滩上的白色行李箱(非企业商用).jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 300,
+      "type": "LayerMask: ObjectDetectorFL2",
+      "pos": [
+        -2816.192626953125,
+        -1147.8663330078125
+      ],
+      "size": [
+        302.3999938964844,
+        150
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 636
+        },
+        {
+          "name": "florence2_model",
+          "type": "FLORENCE2",
+          "link": 637
+        }
+      ],
+      "outputs": [
+        {
+          "name": "bboxes",
+          "type": "BBOXES",
+          "links": [
+            635
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "preview",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerMask: ObjectDetectorFL2"
+      },
+      "widgets_values": [
+        "schoolbag",
+        "left_to_right",
+        "all",
+        "0,"
+      ],
+      "color": "rgba(27, 80, 119, 0.7)"
+    },
+    {
+      "id": 299,
+      "type": "LayerMask: SAM2Ultra",
+      "pos": [
+        -2817.414794921875,
+        -928.3501586914062
+      ],
+      "size": [
+        315,
+        366
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 634
+        },
+        {
+          "name": "bboxes",
+          "type": "BBOXES",
+          "link": 635
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            633
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            644,
+            649
+          ],
+          "slot_index": 1,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerMask: SAM2Ultra"
+      },
+      "widgets_values": [
+        "sam2_hiera_base_plus.safetensors",
+        "fp16",
+        "all",
+        "0,",
+        false,
+        "VITMatte",
+        6,
+        4,
+        0.15,
+        0.99,
+        true,
+        "cuda",
+        2
+      ],
+      "color": "rgba(27, 80, 119, 0.7)"
+    },
+    {
+      "id": 301,
+      "type": "MaskToImage",
+      "pos": [
+        -2436.042236328125,
+        -926.2222290039062
+      ],
+      "size": [
+        220.1425323486328,
+        26
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 644
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            641
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 302,
+      "type": "PreviewImage",
+      "pos": [
+        -2468.1123046875,
+        -852.4147338867188
+      ],
+      "size": [
+        271.5854797363281,
+        246
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 641
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 298,
+      "type": "PreviewImage",
+      "pos": [
+        -2465.198974609375,
+        -600.2981567382812
+      ],
+      "size": [
+        265.5505065917969,
+        246
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 633
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 310,
+      "type": "SaveImage",
+      "pos": [
+        -2161.888671875,
+        -1142.8125
+      ],
+      "size": [
+        969.1708374023438,
+        698.873046875
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 656
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 304,
+      "type": "Distribute_Icons",
+      "pos": [
+        -2444.767578125,
+        -1148.8131103515625
+      ],
+      "size": [
+        255.83859252929688,
+        179.09939575195312
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "scene_image",
+          "type": "IMAGE",
+          "link": 648
+        },
+        {
+          "name": "mask_image",
+          "type": "MASK",
+          "link": 649
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            656
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Distribute_Icons"
+      },
+      "widgets_values": [
+        "E:/icons",
+        120,
+        0,
+        0.5,
+        45
+      ]
+    }
+  ],
+  "links": [
+    [
+      633,
+      299,
+      0,
+      298,
+      0,
+      "IMAGE"
+    ],
+    [
+      634,
+      296,
+      0,
+      299,
+      0,
+      "IMAGE"
+    ],
+    [
+      635,
+      300,
+      0,
+      299,
+      1,
+      "BBOXES"
+    ],
+    [
+      636,
+      296,
+      0,
+      300,
+      0,
+      "IMAGE"
+    ],
+    [
+      637,
+      297,
+      0,
+      300,
+      1,
+      "FLORENCE2"
+    ],
+    [
+      641,
+      301,
+      0,
+      302,
+      0,
+      "IMAGE"
+    ],
+    [
+      644,
+      299,
+      1,
+      301,
+      0,
+      "MASK"
+    ],
+    [
+      648,
+      296,
+      0,
+      304,
+      0,
+      "IMAGE"
+    ],
+    [
+      649,
+      299,
+      1,
+      304,
+      1,
+      "MASK"
+    ],
+    [
+      656,
+      304,
+      0,
+      310,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8769226950000005,
+      "offset": [
+        3230.983386015114,
+        1279.9373483256782
+      ]
+    },
+    "ue_links": []
+  },
+  "version": 0.4
+}

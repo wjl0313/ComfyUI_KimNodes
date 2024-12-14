@@ -1,0 +1,268 @@
+{
+  "last_node_id": 90,
+  "last_link_id": 110,
+  "nodes": [
+    {
+      "id": 88,
+      "type": "YOLO_Crop",
+      "pos": [
+        3072,
+        -1153
+      ],
+      "size": [
+        248.582763671875,
+        174
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 104,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            107,
+            109
+          ],
+          "label": "IMAGE",
+          "slot_index": 0
+        },
+        {
+          "name": "DATA",
+          "type": "DATA",
+          "links": [
+            102
+          ],
+          "label": "DATA",
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YOLO_Crop"
+      },
+      "widgets_values": [
+        "face_yolov8m.pt",
+        0.5,
+        500,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 89,
+      "type": "Crop_Paste",
+      "pos": [
+        3356,
+        -1220
+      ],
+      "size": [
+        187.3759307861328,
+        66
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 110,
+          "label": "image"
+        },
+        {
+          "name": "crop_image",
+          "type": "IMAGE",
+          "link": 109,
+          "label": "crop_image"
+        },
+        {
+          "name": "data",
+          "type": "DATA",
+          "link": 102,
+          "label": "data"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            106
+          ],
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Crop_Paste"
+      }
+    },
+    {
+      "id": 87,
+      "type": "PreviewImage",
+      "pos": [
+        3353,
+        -1099
+      ],
+      "size": [
+        210,
+        246
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 107,
+          "label": "图像"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 85,
+      "type": "PreviewImage",
+      "pos": [
+        3585,
+        -1219
+      ],
+      "size": [
+        296.8326721191406,
+        363.5440979003906
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 106,
+          "label": "图像"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 79,
+      "type": "LoadImage",
+      "pos": [
+        2840,
+        -1219
+      ],
+      "size": [
+        210,
+        432.22674560546875
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            104,
+            110
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "label": "遮罩"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "pasted/image (10).png",
+        "image"
+      ]
+    }
+  ],
+  "links": [
+    [
+      102,
+      88,
+      1,
+      89,
+      2,
+      "DATA"
+    ],
+    [
+      104,
+      79,
+      0,
+      88,
+      0,
+      "IMAGE"
+    ],
+    [
+      106,
+      89,
+      0,
+      85,
+      0,
+      "IMAGE"
+    ],
+    [
+      107,
+      88,
+      0,
+      87,
+      0,
+      "IMAGE"
+    ],
+    [
+      109,
+      88,
+      0,
+      89,
+      1,
+      "IMAGE"
+    ],
+    [
+      110,
+      79,
+      0,
+      89,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.4122927695244514,
+      "offset": [
+        -2370.1064501684314,
+        1576.6236622638444
+      ]
+    }
+  },
+  "version": 0.4
+}
