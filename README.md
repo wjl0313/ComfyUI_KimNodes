@@ -38,8 +38,16 @@ Randomly distribute icons within a specified area.
 Evaluate whether the content of an image matches a given set of keywords and return a Boolean result.
 
 #### Examples:
-![QQ20241214-003531](https://github.com/user-attachments/assets/c1fbd71c-b81d-428c-bb72-ba951f7754ec)
-![QQ20241214-125228](https://github.com/user-attachments/assets/53300abb-6abb-46a6-82ed-c437bfbd80bb)
+![QQ20241214-003531](https://github.com/user-attachments/assets/bb5e5dd0-18c7-48b0-a482-658f6bfa9ac7)
+
+---
+
+### Kim_🍊YOLOWorld_Match🔍
+
+yolo-world calculates whether the contents of the image match the specified type and returns a Boolean result. And move to the specified folder by image classification.
+
+#### Examples:
+![YOLOWorld_Match🔍特征匹配](https://github.com/user-attachments/assets/f1966c74-6a93-499f-9ed7-224630632f42)
 
 ---
 
