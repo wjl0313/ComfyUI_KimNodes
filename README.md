@@ -80,6 +80,19 @@ Image metadata compilation
 
 ---
 
+### Kim_Whitening
+
+Beauty Function - Milk skin
+Get rid of the oily AI texture and make your skin crystal clear and radiant.
+
+#### Example:
+![Milk skin](https://github.com/user-attachments/assets/e4bbc544-36a6-4d86-a709-c3880c4a0037)
+
+---
+
+
+
+
 ## Installation
 
 1. Clone the repository:
