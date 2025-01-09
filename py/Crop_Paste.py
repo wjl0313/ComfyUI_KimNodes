@@ -26,6 +26,12 @@ class Crop_Paste:
                 "image": ("IMAGE",),  # 输入的原始图片
                 "crop_image": ("IMAGE",),    # 置信度最高的裁剪图像
                 "data": ("DATA",),              # 包含边界框信息的字典
+                "feather_amount": ("FLOAT", {
+                    "default": 0.2,
+                    "min": 0.0,
+                    "max": 0.5,
+                    "step": 0.01
+                }),  # 边缘渐变程度控制
             },
         }
 
@@ -36,9 +42,9 @@ class Crop_Paste:
     def __init__(self):
         pass
 
-    def crop_paste(self, data, image, crop_image):
+    def crop_paste(self, data, image, crop_image, feather_amount):
         """
-        Merge the single cropped image back into the original image.
+        Merge the single cropped image back into the original image with feathered edges.
         """
         # 打印输入图像的类型和维度信息
         logger.info(f"Original input type: {type(image)}")
@@ -99,14 +105,29 @@ class Crop_Paste:
         logger.info(f"BBox width: {bbox_width}, BBox height: {bbox_height}")
         crop_image_resized = crop_image.resize((bbox_width, bbox_height))
 
-        # 确保裁剪的图像与原始图像模式一致
-        if crop_image_resized.mode != image.mode:
-            logger.info(f"Converting resized cropped image from {crop_image_resized.mode} to {image.mode}")
-            crop_image_resized = crop_image_resized.convert(image.mode)
+        # 创建透明度遮罩
+        mask = Image.new('L', (bbox_width, bbox_height), 255)
+        feather_pixels = int(min(bbox_width, bbox_height) * feather_amount)
+        
+        if feather_pixels > 0:
+            # 创建渐变效果
+            for i in range(feather_pixels):
+                # 计算当前像素的透明度
+                alpha = int(255 * (i / feather_pixels))
+                
+                # 绘制四条边的渐变
+                # 上边
+                mask.paste(alpha, (0, i, bbox_width, i+1))
+                # 下边
+                mask.paste(alpha, (0, bbox_height-i-1, bbox_width, bbox_height-i))
+                # 左边
+                mask.paste(alpha, (i, 0, i+1, bbox_height))
+                # 右边
+                mask.paste(alpha, (bbox_width-i-1, 0, bbox_width-i, bbox_height))
 
-        # 将裁剪图像粘贴回原始图像
+        # 将裁剪图像粘贴回原始图像，使用透明度遮罩
         image_paste = image.copy()
-        image_paste.paste(crop_image_resized, (left, top))
+        image_paste.paste(crop_image_resized, (left, top), mask)
 
         logger.info(f"Result image size: {image_paste.size}")
         return self.process_output(image_paste)
