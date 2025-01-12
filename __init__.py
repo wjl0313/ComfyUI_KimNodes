@@ -14,6 +14,7 @@ from .py.LoadImageWithMetadata import LoadImage_Metadata
 from .py.manual_metadata_input import Manual_MetadataInput
 from .py.YOLOWorld_Match import YOLOWorld_Match
 from .py.Whitening import Whitening_Node
+from .py.Image_Resize import ImageResize
 
 # 插件的节点类映射
 NODE_CLASS_MAPPINGS = {
@@ -31,7 +32,8 @@ NODE_CLASS_MAPPINGS = {
     "LoadImage_Metadata": LoadImage_Metadata,
     "Manual_MetadataInput": Manual_MetadataInput,
     "YOLOWorld_Match": YOLOWorld_Match,
-    "Whitening_Node": Whitening_Node
+    "Whitening_Node": Whitening_Node,
+    "ImageResize": ImageResize
 }
 
 
@@ -51,7 +53,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Add_ImageMetadata": "Kim_🍊Add_ImageMetadata📝合并保存图像元数据",
     "LoadImage_Metadata": "Kim_🍊LoadImage_Metadata📝加载workflow图片",
     "YOLOWorld_Match": "Kim_🍊YOLOWorld_Match🔍特征匹配",
-    "Whitening_Node": "Kim_🍊Whitening_👧🏻牛奶肌"
+    "Whitening_Node": "Kim_🍊Whitening_👧🏻牛奶肌",
+    "ImageResize": "Kim_🍊ImageResize"
 }
 
 # 插件初始化
