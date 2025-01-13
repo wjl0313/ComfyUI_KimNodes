@@ -105,25 +105,29 @@ class Crop_Paste:
         logger.info(f"BBox width: {bbox_width}, BBox height: {bbox_height}")
         crop_image_resized = crop_image.resize((bbox_width, bbox_height))
 
-        # 创建透明度遮罩
+        # 修改遮罩创建部分
         mask = Image.new('L', (bbox_width, bbox_height), 255)
         feather_pixels = int(min(bbox_width, bbox_height) * feather_amount)
         
         if feather_pixels > 0:
-            # 创建渐变效果
+            # 创建渐变遮罩
+            gradient = np.ones((bbox_height, bbox_width), dtype=np.float32)
+            
+            # 创建四边的渐变
             for i in range(feather_pixels):
-                # 计算当前像素的透明度
-                alpha = int(255 * (i / feather_pixels))
-                
-                # 绘制四条边的渐变
-                # 上边
-                mask.paste(alpha, (0, i, bbox_width, i+1))
-                # 下边
-                mask.paste(alpha, (0, bbox_height-i-1, bbox_width, bbox_height-i))
+                weight = (i / feather_pixels) ** 2
                 # 左边
-                mask.paste(alpha, (i, 0, i+1, bbox_height))
+                gradient[:, i] *= weight
                 # 右边
-                mask.paste(alpha, (bbox_width-i-1, 0, bbox_width-i, bbox_height))
+                gradient[:, -(i+1)] *= weight
+                # 上边
+                gradient[i, :] *= weight
+                # 下边
+                gradient[-(i+1), :] *= weight
+            
+            # 转换为 uint8 类型并创建遮罩
+            gradient = (gradient * 255).astype(np.uint8)
+            mask = Image.fromarray(gradient)
 
         # 将裁剪图像粘贴回原始图像，使用透明度遮罩
         image_paste = image.copy()

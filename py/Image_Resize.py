@@ -26,7 +26,7 @@ class ImageResize:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "image_resize"
-    CATEGORY = "🍊 Kim-Nodes/图像处理"
+    CATEGORY = "🍊 Kim-Nodes/🏖️图像处理"
 
     def image_resize(self, image, supersample, resampling, target_size):
         # 直接处理单张图片，避免循环

@@ -15,6 +15,7 @@ from .py.manual_metadata_input import Manual_MetadataInput
 from .py.YOLOWorld_Match import YOLOWorld_Match
 from .py.Whitening import Whitening_Node
 from .py.Image_Resize import ImageResize
+# from .py.Lora_Difference_extraction import ExtractDifferenceLora
 
 # 插件的节点类映射
 NODE_CLASS_MAPPINGS = {
@@ -33,9 +34,9 @@ NODE_CLASS_MAPPINGS = {
     "Manual_MetadataInput": Manual_MetadataInput,
     "YOLOWorld_Match": YOLOWorld_Match,
     "Whitening_Node": Whitening_Node,
-    "ImageResize": ImageResize
+    "ImageResize": ImageResize,
+    # "ExtractDifferenceLora": ExtractDifferenceLora
 }
-
 
 # 节点的显示名称映射
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -54,7 +55,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadImage_Metadata": "Kim_🍊LoadImage_Metadata📝加载workflow图片",
     "YOLOWorld_Match": "Kim_🍊YOLOWorld_Match🔍特征匹配",
     "Whitening_Node": "Kim_🍊Whitening_👧🏻牛奶肌",
-    "ImageResize": "Kim_🍊ImageResize"
+    "ImageResize": "Kim_🍊ImageResize",
+    # "ExtractDifferenceLora": "Kim_🍊ExtractDifference_Lora"
 }
 
 # 插件初始化
