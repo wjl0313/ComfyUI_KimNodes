@@ -10,7 +10,7 @@ class Whitening_Node:
             "required": {
                 "image": ("IMAGE",),
                 "auto_whitening": ("BOOLEAN", {
-                    "default": False,
+                    "default": True,
                     "label": "Auto Whitening"
                 }),
                 "whitening_strength": ("INT", {
@@ -62,7 +62,7 @@ class Whitening_Node:
 
     def analyze_skin_tone(self, img_np):
         """
-        智能分析皮肤状况，动态返回建议的美白强度
+        智能分析皮肤状况，动态返回建议的美白强度，加强对高光的保护
         """
         skin_mask = self.detect_skin(img_np)
         skin_area = cv2.bitwise_and(img_np, img_np, mask=skin_mask)
@@ -89,65 +89,74 @@ class Whitening_Node:
         mean_a = np.mean(a_values)
         mean_b = np.mean(b_values)
         
-        # 重新调整亮度区间的基础强度（降低亮图片的处理强度）
-        if mean_l > 200:      # 过度明亮
-            base_strength = 5
-        elif mean_l > 180:    # 非常亮
-            base_strength = 10
-        elif mean_l > 160:    # 较亮
-            base_strength = 20
-        elif mean_l > 140:    # 稍亮
-            base_strength = 35
-        elif mean_l > 120:    # 中等
-            base_strength = 50
-        elif mean_l > 100:    # 稍暗
-            base_strength = 65
-        elif mean_l > 80:     # 较暗
-            base_strength = 75
-        else:                # 非常暗
-            base_strength = 85
+        # 高光分析（更严格的高光检测）
+        bright_pixels = l_values > 180
+        very_bright_pixels = l_values > 200
+        bright_ratio = np.mean(bright_pixels)
+        very_bright_ratio = np.mean(very_bright_pixels)
         
-        # 计算暗区比例（更精确的暗区分析）
+        # 重新调整亮度区间的基础强度（显著降低亮图片的处理强度）
+        if mean_l > 200:      # 过度明亮
+            base_strength = 0
+        elif mean_l > 180:    # 非常亮
+            base_strength = 5
+        elif mean_l > 160:    # 较亮
+            base_strength = 10
+        elif mean_l > 140:    # 稍亮
+            base_strength = 20
+        elif mean_l > 120:    # 中等
+            base_strength = 35
+        elif mean_l > 100:    # 稍暗
+            base_strength = 50
+        elif mean_l > 80:     # 较暗
+            base_strength = 65
+        else:                # 非常暗
+            base_strength = 80
+        
+        # 高光保护（更激进的高光保护）
+        if very_bright_ratio > 0.05:  # 降低高光阈值，只要5%的高光就开始保护
+            reduction = int(very_bright_ratio * 50)  # 增加高光的影响力
+            base_strength = max(0, base_strength - reduction)
+        elif bright_ratio > 0.1:      # 对于普通亮度区域也进行保护
+            reduction = int(bright_ratio * 30)
+            base_strength = max(0, base_strength - reduction)
+        
+        # 计算暗区比例
         dark_pixels = l_values < 100
         dark_ratio = np.mean(dark_pixels)
         very_dark_pixels = l_values < 80
         very_dark_ratio = np.mean(very_dark_pixels)
         
-        # 根据暗区比例调整强度
-        if very_dark_ratio > 0.3:  # 大面积深暗区
-            base_strength += int(very_dark_ratio * 30)
-        elif dark_ratio > 0.4:     # 大面积暗区
-            base_strength += int(dark_ratio * 20)
+        # 根据暗区比例调整强度（保持暗部提升）
+        if very_dark_ratio > 0.3 and mean_l < 140:  # 只在整体不太亮时提升暗部
+            base_strength += int(very_dark_ratio * 25)
+        elif dark_ratio > 0.4 and mean_l < 140:
+            base_strength += int(dark_ratio * 15)
         
         # 光照均匀性分析（更温和的调整）
-        if std_l > 45:  # 严重不均匀
-            base_strength += int(min(std_l - 45, 15))
-        elif std_l > 35:  # 中度不均匀
-            base_strength += int(min(std_l - 35, 8))
-        elif std_l > 25:  # 轻度不均匀
-            base_strength += int(min(std_l - 25, 5))
+        if std_l > 45 and mean_l < 160:  # 只在不太亮时处理不均匀
+            base_strength += int(min(std_l - 45, 10))
+        elif std_l > 35 and mean_l < 160:
+            base_strength += int(min(std_l - 35, 5))
         
-        # 肤色调整（更温和）
-        if mean_a > 135:  # 明显偏红
-            base_strength += 2
-        if mean_b > 135:  # 明显偏黄
-            base_strength += 2
+        # 肤色调整（更温和，且只在不太亮时调整）
+        if mean_l < 160:  # 只在不太亮时调整肤色
+            if mean_a > 135:  # 明显偏红
+                base_strength += 2
+            if mean_b > 135:  # 明显偏黄
+                base_strength += 2
         
-        # 高光保护：如果高光区域（L>200）占比较大，降低美白强度
-        highlight_ratio = np.mean(l_values > 200)
-        if highlight_ratio > 0.1:  # 如果高光区域超过10%
-            base_strength = max(5, base_strength - int(highlight_ratio * 30))
-        
-        # 确保最终强度在合理范围内（降低上限）
-        final_strength = np.clip(base_strength, 5, 85)
+        # 确保最终强度在合理范围内（降低上限，提高下限的精度）
+        final_strength = np.clip(base_strength, 0, 80)
         
         # 打印详细分析结果
         print(f"\nSkin Analysis Results:")
         print(f"Average Brightness: {mean_l:.1f} (L channel)")
         print(f"Brightness Variation: {std_l:.1f}")
+        print(f"Bright Area Ratio: {bright_ratio:.2f}")
+        print(f"Very Bright Area Ratio: {very_bright_ratio:.2f}")
         print(f"Dark Area Ratio: {dark_ratio:.2f}")
         print(f"Very Dark Area Ratio: {very_dark_ratio:.2f}")
-        print(f"Highlight Area Ratio: {highlight_ratio:.2f}")
         print(f"Red Level: {mean_a:.1f} (a channel)")
         print(f"Yellow Level: {mean_b:.1f} (b channel)")
         print(f"Base Strength: {base_strength}")
