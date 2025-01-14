@@ -6,21 +6,18 @@ import torch
 class Whitening_Node:
     @classmethod
     def INPUT_TYPES(cls):
-        """
-        定义美白节点的输入参数。
-
-        返回:
-            dict: 所有输入字段的配置。
-        """
         return {
             "required": {
                 "image": ("IMAGE",),
+                "auto_whitening": ("BOOLEAN", {
+                    "default": False,
+                    "label": "Auto Whitening"
+                }),
                 "whitening_strength": ("INT", {
                     "default": 50, 
                     "min": 0, 
                     "max": 100, 
-                    "step": 1, 
-                    "display": "slider", 
+                    "step": 1,
                     "lazy": False
                 }),
                 "Translucent_skin": ("INT", {
@@ -28,7 +25,6 @@ class Whitening_Node:
                     "min": 0,
                     "max": 20,
                     "step": 1,
-                    "display": "slider",
                     "lazy": False
                 }),
             },
@@ -38,72 +34,151 @@ class Whitening_Node:
     RETURN_NAMES = ("whitened_image",)
     FUNCTION = "execute"
     CATEGORY = "🍊 Kim-Nodes/👧🏻美颜"
-    DEPRECATED = False
-    EXPERIMENTAL = False
+
+    def __init__(self):
+        pass
 
     def detect_skin(self, img):
         """
         检测图像中的皮肤区域。
-        
-        参数:
-            img (np.array): RGB格式的图像。
-            
-        返回:
-            np.array: 皮肤区域的掩码（二值图像）。
         """
-        # 转换到YCrCb颜色空间
         ycrcb = cv2.cvtColor(img, cv2.COLOR_RGB2YCrCb)
-        
-        # 定义皮肤的颜色范围
         min_YCrCb = np.array([0, 133, 77], np.uint8)
         max_YCrCb = np.array([255, 173, 127], np.uint8)
-        
-        # 创建皮肤掩码
         skin_mask = cv2.inRange(ycrcb, min_YCrCb, max_YCrCb)
-        
-        # 应用形态学操作来改善掩码质量
         kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
         skin_mask = cv2.erode(skin_mask, kernel, iterations=1)
         skin_mask = cv2.dilate(skin_mask, kernel, iterations=1)
-        
-        # 高斯模糊使边缘更自然
         skin_mask = cv2.GaussianBlur(skin_mask, (3, 3), 0)
         return skin_mask
 
-    def execute(self, image, whitening_strength, Translucent_skin):
+    def generate_whitening_lookup(self, value):
         """
-        对图像的皮肤区域应用美白效果和黄色调节。
+        生成美白查找表
+        """
+        midtones_add = 0.667 * (1 - ((np.arange(256) - 127.0) / 127) ** 2)
+        lookup = np.clip(np.arange(256) + (value * midtones_add).astype(np.int16), 0, 255).astype(np.uint8)
+        return lookup
 
-        参数:
-            image (torch.Tensor): 输入图像张量。
-            whitening_strength (int): 美白效果的强度（0-100）。
-            Translucent_skin (int): 黄色调节的强度（-100到100）。
+    def analyze_skin_tone(self, img_np):
+        """
+        智能分析皮肤状况，动态返回建议的美白强度
+        """
+        skin_mask = self.detect_skin(img_np)
+        skin_area = cv2.bitwise_and(img_np, img_np, mask=skin_mask)
+        
+        # 转换到LAB色彩空间进行分析
+        lab_img = cv2.cvtColor(skin_area, cv2.COLOR_RGB2LAB)
+        l_channel = lab_img[:, :, 0]  # 亮度通道
+        a_channel = lab_img[:, :, 1]  # 红绿通道
+        b_channel = lab_img[:, :, 2]  # 黄蓝通道
+        
+        # 获取有效的皮肤像素
+        valid_pixels = (skin_mask > 0)
+        if not np.any(valid_pixels):
+            return 45  # 如果没有检测到皮肤，返回中等默认值
+        
+        # 分析亮度分布
+        l_values = l_channel[valid_pixels]
+        mean_l = np.mean(l_values)
+        std_l = np.std(l_values)
+        
+        # 分析肤色
+        a_values = a_channel[valid_pixels]
+        b_values = b_channel[valid_pixels]
+        mean_a = np.mean(a_values)
+        mean_b = np.mean(b_values)
+        
+        # 重新调整亮度区间的基础强度（降低亮图片的处理强度）
+        if mean_l > 200:      # 过度明亮
+            base_strength = 5
+        elif mean_l > 180:    # 非常亮
+            base_strength = 10
+        elif mean_l > 160:    # 较亮
+            base_strength = 20
+        elif mean_l > 140:    # 稍亮
+            base_strength = 35
+        elif mean_l > 120:    # 中等
+            base_strength = 50
+        elif mean_l > 100:    # 稍暗
+            base_strength = 65
+        elif mean_l > 80:     # 较暗
+            base_strength = 75
+        else:                # 非常暗
+            base_strength = 85
+        
+        # 计算暗区比例（更精确的暗区分析）
+        dark_pixels = l_values < 100
+        dark_ratio = np.mean(dark_pixels)
+        very_dark_pixels = l_values < 80
+        very_dark_ratio = np.mean(very_dark_pixels)
+        
+        # 根据暗区比例调整强度
+        if very_dark_ratio > 0.3:  # 大面积深暗区
+            base_strength += int(very_dark_ratio * 30)
+        elif dark_ratio > 0.4:     # 大面积暗区
+            base_strength += int(dark_ratio * 20)
+        
+        # 光照均匀性分析（更温和的调整）
+        if std_l > 45:  # 严重不均匀
+            base_strength += int(min(std_l - 45, 15))
+        elif std_l > 35:  # 中度不均匀
+            base_strength += int(min(std_l - 35, 8))
+        elif std_l > 25:  # 轻度不均匀
+            base_strength += int(min(std_l - 25, 5))
+        
+        # 肤色调整（更温和）
+        if mean_a > 135:  # 明显偏红
+            base_strength += 2
+        if mean_b > 135:  # 明显偏黄
+            base_strength += 2
+        
+        # 高光保护：如果高光区域（L>200）占比较大，降低美白强度
+        highlight_ratio = np.mean(l_values > 200)
+        if highlight_ratio > 0.1:  # 如果高光区域超过10%
+            base_strength = max(5, base_strength - int(highlight_ratio * 30))
+        
+        # 确保最终强度在合理范围内（降低上限）
+        final_strength = np.clip(base_strength, 5, 85)
+        
+        # 打印详细分析结果
+        print(f"\nSkin Analysis Results:")
+        print(f"Average Brightness: {mean_l:.1f} (L channel)")
+        print(f"Brightness Variation: {std_l:.1f}")
+        print(f"Dark Area Ratio: {dark_ratio:.2f}")
+        print(f"Very Dark Area Ratio: {very_dark_ratio:.2f}")
+        print(f"Highlight Area Ratio: {highlight_ratio:.2f}")
+        print(f"Red Level: {mean_a:.1f} (a channel)")
+        print(f"Yellow Level: {mean_b:.1f} (b channel)")
+        print(f"Base Strength: {base_strength}")
+        print(f"Final Whitening Strength: {final_strength}")
+        
+        return final_strength
 
-        返回:
-            tuple: 包含处理后图像的元组。
+    def execute(self, image, auto_whitening, whitening_strength, Translucent_skin):
+        """
+        执行美白处理
         """
         if image is None:
             return (None,)
 
-        # 将PyTorch张量转换为NumPy数组进行处理
         img_np = (image.cpu().numpy() * 255).astype(np.uint8)
         img_np = img_np[0]
         
+        if auto_whitening:
+            whitening_strength = self.analyze_skin_tone(img_np)
+            print(f"Auto-detected whitening strength: {whitening_strength}")
+        
         # 检测皮肤区域
         skin_mask = self.detect_skin(img_np)
-        skin_mask = skin_mask / 255.0  # 归一化掩码
+        skin_mask = skin_mask / 255.0
         
         # 转换到LAB色彩空间
         lab_img = cv2.cvtColor(img_np, cv2.COLOR_RGB2LAB)
         
-        # 创建调整后的LAB图像
+        # 调整LAB通道
         adjusted_lab = lab_img.copy()
-        # 只在皮肤区域调整b通道（黄蓝通道）
-        adjusted_lab[:, :, 2] = np.clip(
-            lab_img[:, :, 2] - Translucent_skin * 0.5, 
-            0, 
-            255
-        )
+        adjusted_lab[:, :, 2] = np.clip(lab_img[:, :, 2] - Translucent_skin * 0.5, 0, 255)
         
         # 转换回RGB
         adjusted_rgb = cv2.cvtColor(adjusted_lab, cv2.COLOR_LAB2RGB)
@@ -117,25 +192,9 @@ class Whitening_Node:
         result = img_np.copy()
         for c in range(3):
             result[:, :, c] = lookup[img_np[:, :, c].astype(np.uint8)]
-
-        # 将处理后的图像转换回PyTorch张量
-        img_tensor = torch.from_numpy(result.astype(np.float32) / 255.0).unsqueeze(0)
         
-        return (img_tensor,)
-
-    def generate_whitening_lookup(self, value):
-        """
-        根据提供的强度生成美白查找表。
-
-        参数:
-            value (int): 美白强度。
-
-        返回:
-            np.ndarray: 用于像素值映射的查找表。
-        """
-        # 中间调增强曲线
-        midtones_add = 0.667 * (1 - ((np.arange(256) - 127.0) / 127) ** 2)
-        # 创建查找表并将值限制在 0 到 255 之间
-        lookup = np.clip(np.arange(256) + (value * midtones_add).astype(np.int16), 0, 255).astype(np.uint8)
-        return lookup
+        # 转换回PyTorch张量
+        result_tensor = torch.from_numpy(result.astype(np.float32) / 255.0).unsqueeze(0)
+        
+        return (result_tensor,)
 

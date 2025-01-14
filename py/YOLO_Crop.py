@@ -51,7 +51,7 @@ class YOLO_Crop:
                 "confidence": ("FLOAT", {
                     "default": 0.5, "min": 0.1, "max": 1.0, "step": 0.01
                 }),  # 置信度阈值
-                "square_size_percent": ("FLOAT", {
+                "square_size": ("FLOAT", {
                     "default": 100.0, "min": 10.0, "max": 200.0, "step": 1.0
                 }),  # 现在使用图像尺寸的百分比
                 "vertical_offset": ("FLOAT", {
@@ -70,7 +70,7 @@ class YOLO_Crop:
     def __init__(self):
         pass
 
-    def Face_yolo(self, image, confidence, square_size_percent, yolo_model, vertical_offset, horizontal_offset):
+    def Face_yolo(self, image, confidence, square_size, yolo_model, vertical_offset, horizontal_offset):
         # 检查并加载模型
         if yolo_model in self.model_cache:
             model = self.model_cache[yolo_model]  # 使用缓存模型
@@ -132,7 +132,7 @@ class YOLO_Crop:
                     actual_square_size = face_size * face_margin
                     
                     # 应用用户指定的百分比调整
-                    actual_square_size = actual_square_size * (square_size_percent / 100.0)
+                    actual_square_size = actual_square_size * (square_size / 100.0)
                     
                     # 计算边界框的中心
                     center_x = (xmin + xmax) / 2
@@ -164,7 +164,7 @@ class YOLO_Crop:
                     })
 
         if not bboxes:
-            return (self.process_output(image_pil), {"pixels": image_np.tolist(), "bboxes": [], "square_size": square_size_percent})  # 无检测结果
+            return (self.process_output(image_pil), {"pixels": image_np.tolist(), "bboxes": [], "square_size": square_size})  # 无检测结果
 
         # 裁剪并更新边界框
         cropped_faces = [self.crop_face(image_pil, bbox) for bbox in bboxes]  # 裁剪脸部
