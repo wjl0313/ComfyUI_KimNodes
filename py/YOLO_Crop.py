@@ -49,16 +49,16 @@ class YOLO_Crop:
                 "image": ("IMAGE",),  # 输入图像
                 "yolo_model": (FILE_LIST,),  # 可选模型文件
                 "confidence": ("FLOAT", {
-                    "default": 0.5, "min": 0.1, "max": 1.0, "step": 0.01, "display": "slider"
+                    "default": 0.5, "min": 0.1, "max": 1.0, "step": 0.01
                 }),  # 置信度阈值
-                "square_size": ("FLOAT", {
-                    "default": 500.0, "min": 100.0, "max": 1000.0, "step": 1.0, "display": "slider"
-                }),  # 方块大小（以像素为单位）
+                "square_size_percent": ("FLOAT", {
+                    "default": 100.0, "min": 10.0, "max": 200.0, "step": 1.0
+                }),  # 现在使用图像尺寸的百分比
                 "vertical_offset": ("FLOAT", {
-                    "default": 0.0, "min": -512.0, "max": 512.0, "step": 1.0, "display": "slider"
+                    "default": 0.0, "min": -512.0, "max": 512.0, "step": 1.0
                 }),  # 上下偏移百分比
                 "horizontal_offset": ("FLOAT", {
-                    "default": 0.0, "min": -512.0, "max": 512.0, "step": 1.0, "display": "slider"
+                    "default": 0.0, "min": -512.0, "max": 512.0, "step": 1.0
                 })  # 左右偏移百分比
             },
         }
@@ -70,7 +70,7 @@ class YOLO_Crop:
     def __init__(self):
         pass
 
-    def Face_yolo(self, image, confidence, square_size, yolo_model, vertical_offset, horizontal_offset):
+    def Face_yolo(self, image, confidence, square_size_percent, yolo_model, vertical_offset, horizontal_offset):
         # 检查并加载模型
         if yolo_model in self.model_cache:
             model = self.model_cache[yolo_model]  # 使用缓存模型
@@ -117,20 +117,33 @@ class YOLO_Crop:
                 conf = box.conf.cpu().numpy()
                 cls = box.cls.cpu().numpy()
 
-                if cls == 0 and conf >= confidence:  # 仅保存置信度足够的脸部
+                if cls == 0 and conf >= confidence:
+                    # 计算检测到的人脸框的宽度和高度
+                    face_width = xmax - xmin
+                    face_height = ymax - ymin
+                    face_size = max(face_width, face_height)  # 使用较大的边作为基准
+                    
+                    # 计算图像的最小边长
+                    min_side = min(width, height)
+                    
+                    # 根据人脸尺寸计算合适的方块大小
+                    # 添加额外的边距（这里使用1.5作为系数，您可以根据需要调整）
+                    face_margin = 1.5
+                    actual_square_size = face_size * face_margin
+                    
+                    # 应用用户指定的百分比调整
+                    actual_square_size = actual_square_size * (square_size_percent / 100.0)
+                    
                     # 计算边界框的中心
                     center_x = (xmin + xmax) / 2
                     center_y = (ymin + ymax) / 2
 
-                    # 确保宽高相等，取较小的一边为边界框的大小
-                    box_size = min(xmax - xmin, ymax - ymin)
-
-                    # 根据 square_size 设置为方块大小
-                    half_size = square_size / 1.2
+                    # 使用实际的方块大小
+                    half_size = actual_square_size / 2
 
                     # 计算偏移后的坐标
-                    vertical_offset_px = (box_size) * vertical_offset / 100
-                    horizontal_offset_px = (box_size) * horizontal_offset / 100
+                    vertical_offset_px = (actual_square_size) * vertical_offset / 100
+                    horizontal_offset_px = (actual_square_size) * horizontal_offset / 100
 
                     # 计算新的边界框坐标，保持正方形大小
                     xmin_new = max(0, int(center_x - half_size + horizontal_offset_px))
@@ -151,7 +164,7 @@ class YOLO_Crop:
                     })
 
         if not bboxes:
-            return (self.process_output(image_pil), {"pixels": image_np.tolist(), "bboxes": [], "square_size": square_size})  # 无检测结果
+            return (self.process_output(image_pil), {"pixels": image_np.tolist(), "bboxes": [], "square_size": square_size_percent})  # 无检测结果
 
         # 裁剪并更新边界框
         cropped_faces = [self.crop_face(image_pil, bbox) for bbox in bboxes]  # 裁剪脸部
