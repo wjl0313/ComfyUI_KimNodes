@@ -18,7 +18,8 @@ class SeamlessIconGenerator:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "icons": ("IMAGE",),
+                "icons_1": ("IMAGE",),
+                "icons_2": ("IMAGE",),
                 "scene_image": ("IMAGE",),
                 "icon_size": ("INT", {
                     "default": 50,
@@ -34,13 +35,21 @@ class SeamlessIconGenerator:
                     "step": 1,
                     "display": "number"
                 }),
-                "spacing": ("INT", {
-                    "default": 20,
-                    "min": 0,
-                    "max": 100,
+                "max_repeats": ("INT", {
+                    "default": 10,
+                    "min": 1,
+                    "max": 50,
                     "step": 1,
                     "display": "number",
-                    "label": "行间距"
+                    "label": "列重复次数"
+                }),
+                "total_height": ("INT", {
+                    "default": 1536,
+                    "min": 100,
+                    "max": 4096,
+                    "step": 8,
+                    "display": "number",
+                    "label": "总高度"
                 }),
                 "column_spacing": ("INT", {
                     "default": 20,
@@ -102,20 +111,22 @@ class SeamlessIconGenerator:
 
         return icon_list
 
-    def create_grid_layout(self, icons, icon_size, num_rows, spacing, scene_height, scene_width, column_spacing, column_offset, rotation):
-        if not icons:
+    def create_grid_layout(self, icons_1, icons_2, icon_size, num_rows, total_height, scene_height, scene_width, column_spacing, column_offset, rotation, max_repeats):
+        if not icons_1 or not icons_2:
             raise ValueError("没有输入任何图标。")
 
-        # 限制图标数量为num_rows
-        transformed_icons = [icon for icon in icons[:num_rows]]
-        total_icons = len(transformed_icons)
+        # 限制两组图标数量为num_rows
+        transformed_icons_1 = [icon for icon in icons_1[:num_rows]]
+        transformed_icons_2 = [icon for icon in icons_2[:num_rows]]
+        
+        total_icons = len(transformed_icons_1) + len(transformed_icons_2)
         num_columns = 1  # 因为现在只取num_rows个图标，所以只需要一列
 
         # 存储基础列组的图标信息
-        base_columns = [transformed_icons]  # 直接将所有图标放在一列中
+        base_columns = [transformed_icons_1 + transformed_icons_2]  # 直接将所有图标放在一列中
 
         # 计算列的最大宽度（使用原始图标尺寸）
-        col_widths = [max(icon.size[0] for icon in transformed_icons)]
+        col_widths = [max(icon.size[0] for icon in transformed_icons_1 + transformed_icons_2)]
 
         # 计算基础列组的总宽度
         base_group_width = sum(col_widths) + column_spacing * (num_columns - 1) if num_columns > 0 else 0
@@ -134,53 +145,71 @@ class SeamlessIconGenerator:
             x_offset = repeat_x * (base_group_width + column_spacing)
             y_offset = (repeat_x % 2) * column_offset
             
+            # 根据列的奇偶选择使用哪组图标
+            current_icons = transformed_icons_2 if repeat_x % 2 == 1 else transformed_icons_1
+            
             for col_idx, col_icons in enumerate(base_columns):
                 current_x = x_offset + sum(col_widths[:col_idx]) + column_spacing * col_idx
                 col_width = col_widths[col_idx]
                 
-                single_group_height = sum(icon.size[1] for icon in col_icons) + spacing * (len(col_icons) - 1)
-                total_group_height = single_group_height + spacing
+                # 计算每组图标的实际高度（不包含间距）
+                icons_heights = [icon.size[1] for icon in current_icons]
                 
-                effective_height = scene_height - abs(y_offset)
-                repeat_times = (effective_height + total_group_height - 1) // total_group_height
+                # 计算每个重复组的区域高度
+                section_height = total_height / max_repeats
                 
-                for repeat_y in range(repeat_times):
-                    current_y = y_offset + repeat_y * total_group_height
+                for repeat_y in range(max_repeats):
+                    # 计算当前重复组的起始y坐标
+                    section_start = y_offset + repeat_y * section_height
                     
-                    for icon in col_icons:
+                    # 计算当前组内图标的间距
+                    if len(current_icons) > 1:
+                        total_icons_height = sum(icons_heights)
+                        available_space = section_height - total_icons_height
+                        spacing_between = available_space / (len(current_icons) - 1)
+                    else:
+                        spacing_between = 0
+                    
+                    # 在当前区域内均匀分布图标
+                    current_y = section_start
+                    for idx, icon in enumerate(current_icons):
                         w, h = icon.size
                         x_centered = current_x + (col_width - w) // 2
                         
-                        if 0 <= current_y < scene_height and x_centered + w <= scene_width:
-                            # 创建一个新的透明背景，大小足够容纳旋转后的图像
+                        # 将图标垂直居中放置在其分配的空间内
+                        y_centered = current_y + h/2
+                        
+                        if 0 <= y_centered < scene_height and x_centered + w <= scene_width:
+                            # 创建旋转画布
                             diagonal = int(((w ** 2 + h ** 2) ** 0.5))
                             rotated_canvas = Image.new('RGBA', (diagonal, diagonal), (0, 0, 0, 0))
                             rotated_draw = ImageDraw.Draw(rotated_canvas)
                             
-                            # 将图标粘贴到新画布的中心
+                            # 将图标粘贴到画布中心
                             paste_x = (diagonal - w) // 2
                             paste_y = (diagonal - h) // 2
                             rotated_canvas.paste(icon, (paste_x, paste_y), icon)
                             
-                            # 在同一画布上绘制红框
+                            # 绘制红框
                             rotated_draw.rectangle(
                                 [paste_x, paste_y, paste_x + w, paste_y + h],
                                 outline=(255, 0, 0, 255),
-                                width=0
+                                width=2
                             )
                             
-                            # 旋转整个画布（包含图标和红框）
+                            # 旋转画布
                             rotated_image = rotated_canvas.rotate(rotation, expand=True, resample=Image.BICUBIC)
                             
-                            # 计算旋转后图像的新位置，使其中心点保持在原来的位置
+                            # 计算旋转后的位置
                             new_w, new_h = rotated_image.size
                             paste_x = x_centered - (new_w - w) // 2
-                            paste_y = current_y - (new_h - h) // 2
+                            paste_y = int(y_centered - h/2) - (new_h - h) // 2
                             
-                            # 粘贴旋转后的图像（包含图标和红框）
+                            # 粘贴旋转后的图像
                             collage.paste(rotated_image, (paste_x, paste_y), rotated_image)
                         
-                        current_y += h + spacing
+                        # 更新下一个图标的y坐标
+                        current_y += h + spacing_between
 
         return collage
 
@@ -233,26 +262,26 @@ class SeamlessIconGenerator:
         # 根据 positions 将图标贴到对应位置，并绘制红框
         for icon, (x, y, w, h) in zip(transformed_icons, positions):
             collage.paste(icon, (x, y), icon)
-            # 红框仅围住图标
-            draw.rectangle(
-                [x, y, x + w, y + h],
-                outline=(255, 0, 0, 255),
-                width=2
-            )
+            # 删除绘制红框的代码
+            # draw.rectangle(
+            #     [x, y, x + w, y + h],
+            #     outline=(255, 0, 0, 255),
+            #     width=0
+            # )
 
         return collage
 
-    def generate_seamless_icon(self, icons, scene_image, icon_size=50, num_rows=5, spacing=0, column_spacing=0, column_offset=0, rotation=0.0, random_order=False, seed=0):
+    def generate_seamless_icon(self, icons_1, icons_2, scene_image, icon_size=50, num_rows=5, total_height=1536, column_spacing=0, column_offset=0, rotation=0.0, random_order=False, seed=0, max_repeats=10):
         """
         处理输入参数，确保它们是正确的类型
         """
-        # 确保数值参数不是列表
+        # 处理参数
+        if isinstance(total_height, list):
+            total_height = total_height[0]
         if isinstance(icon_size, list):
             icon_size = icon_size[0]
         if isinstance(num_rows, list):
             num_rows = num_rows[0]
-        if isinstance(spacing, list):
-            spacing = spacing[0]
         if isinstance(random_order, list):
             random_order = random_order[0]
         if isinstance(seed, list):
@@ -263,26 +292,24 @@ class SeamlessIconGenerator:
             column_offset = column_offset[0]
         if isinstance(rotation, list):
             rotation = rotation[0]
+        if isinstance(max_repeats, list):
+            max_repeats = max_repeats[0]
 
-        # 预处理图标
-        icon_list = self.preprocess_icons(icons)
-
-        # 随机顺序
+        # 预处理两组图标
+        icon_list_1 = self.preprocess_icons(icons_1)
+        icon_list_2 = self.preprocess_icons(icons_2)
+        
+        # 随机顺序处理（如果启用）
         if random_order:
-            # 如果用户提供了种子，使用用户的种子；否则使用当前时间作为种子
             if seed != 0:
                 random.seed(seed)
             else:
-                random.seed(None)  # 使用系统时间作为随机种子
-
-            # 创建副本并打乱
-            shuffled_icons = list(icon_list)
-            random.shuffle(shuffled_icons)
-
-            # 还原默认种子
+                random.seed(None)
+            
+            random.shuffle(icon_list_1)
+            random.shuffle(icon_list_2)
+            
             random.seed()
-
-            icon_list = shuffled_icons
 
         # 处理背景图 scene_image
         if isinstance(scene_image, list):
@@ -310,7 +337,9 @@ class SeamlessIconGenerator:
         scene_height = scene_pil.size[1]
 
         # 在独立画布上按网格排列图标，并绘制边框，传入场景高度和宽度
-        grid_collage = self.create_grid_layout(icon_list, icon_size, num_rows, spacing, scene_height, scene_width, column_spacing, column_offset, rotation)
+        grid_collage = self.create_grid_layout(icon_list_1, icon_list_2, icon_size, num_rows, 
+                                             total_height, scene_height, scene_width, 
+                                             column_spacing, column_offset, rotation, max_repeats)
 
         # 将网格贴到场景图上 (从左上角开始贴)
         scene_pil.paste(grid_collage, (0, 0), grid_collage)
