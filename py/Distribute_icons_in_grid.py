@@ -23,14 +23,14 @@ class IconDistributeByGrid:
                 "icon_size": ("INT", {
                     "default": 50,
                     "min": 10,  
-                    "max": 512,
+                    "max": 1600,
                     "step": 5,
                     "display": "number"
                 }),
                 "min_distance": ("INT", {
                     "default": 0,
                     "min": 0,
-                    "max": 512, 
+                    "max": 1600, 
                     "step": 5,
                     "display": "number"
                 }),
@@ -63,7 +63,7 @@ class IconDistributeByGrid:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "distribute_icons_in_grid" 
-    CATEGORY = "🍊 Kim-Nodes/🛑Distribute Icons | 分发图标"
+    CATEGORY = "🍊 Kim-Nodes/🛑Icon Processing | 图标处理"
 
     def distribute_icons_in_grid(self, scene_image, mask_image, icons, icon_size,
                     min_distance, num_rows=5, num_cols=10, max_scale=1.0, vertical_offset=0):
@@ -139,7 +139,7 @@ class IconDistributeByGrid:
             icon = icon.resize((target_size, target_size), Image.LANCZOS)
             return icon
 
-        def get_grid_positions(binary_mask, icon_width, icon_height, num_rows, num_cols):
+        def get_grid_positions(binary_mask, icon_width, icon_height, num_rows, num_cols, icons):
             """根据蒙版获取按格子排列的所有可用位置"""
             mask_height, mask_width = binary_mask.shape
             positions = []
@@ -158,8 +158,16 @@ class IconDistributeByGrid:
             grid_width = max(icon_width, valid_width // num_cols)
             grid_height = max(icon_height, valid_height // num_rows)
 
+            count = 0
+            icon_count = len(icons)
+            # 如果行数为7，则第7行列数为8
             for row in range(num_rows):
+                count += 1
+                if count == 7 and num_cols == 7 and icon_count == 50:
+                    num_cols = 8
                 for col in range(num_cols):
+                    if num_cols == 8:
+                        grid_width = valid_width // num_cols
                     x = min_x + col * grid_width
                     y = min_y + row * grid_height
 
@@ -246,7 +254,7 @@ class IconDistributeByGrid:
         mask_np = preprocess_mask_image(mask_image)
         contours, binary_mask = get_white_area(mask_np)
         icons = icons_preprocess(icons)
-        positions = get_grid_positions(binary_mask, icon_size, icon_size, num_rows, num_cols)
+        positions = get_grid_positions(binary_mask, icon_size, icon_size, num_rows, num_cols, icons)
 
         # 对齐网格到蒙版中心并应用垂直偏移
         aligned_positions = align_positions_to_mask_center(positions, scene_image_np.shape[1], scene_image_np.shape[0], binary_mask, icon_size, icon_size, vertical_offset)

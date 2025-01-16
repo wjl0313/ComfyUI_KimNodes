@@ -60,7 +60,7 @@ class Distribute_Icons:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "distribute_icons" 
-    CATEGORY = "🍊 Kim-Nodes/🛑Distribute Icons | 分发图标"
+    CATEGORY = "🍊 Kim-Nodes/🛑Icon Processing | 图标处理"
 
     def distribute_icons(self, scene_image, mask_image, icon_folder, icon_size,
                     min_distance, min_scale, rotation_angle, max_scale=1.0):
