@@ -19,9 +19,9 @@ class SeamlessIconGenerator:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "背景图片": ("IMAGE", ),
                 "图标组1": ("IMAGE", ),
                 "图标组2": ("IMAGE", ),
+                "背景图片": ("IMAGE", ),
                 "随机种子": ("INT", {"forceInput":True}),
                 "图标1尺寸": ("INT", {
                     "default": 128,
@@ -45,35 +45,35 @@ class SeamlessIconGenerator:
                     "display": "number"
                 }),
                 "列向下重复次数": ("INT", {
-                    "default": 10,
+                    "default": 8,
                     "min": 1,
                     "max": 50,
                     "step": 1,
                     "display": "number"
                 }),
                 "列首尾icon中心点总高度": ("INT", {
-                    "default": 2000,
+                    "default": 1800,
                     "min": 100,
                     "max": 4096,
                     "step": 4,
                     "display": "number"
                 }),
                 "列间距": ("INT", {
-                    "default": 25,
+                    "default": 0,
                     "min": 0,
                     "max": 512,
                     "step": 1,
                     "display": "number"
                 }),
                 "列偏移": ("INT", {
-                    "default": 135,
+                    "default": 85,
                     "min": -512,
                     "max": 512,
                     "step": 1,
                     "display": "number"
                 }),
                 "旋转角度": ("FLOAT", {
-                    "default": 40,
+                    "default": 0.0,
                     "min": -180.0,
                     "max": 180.0,
                     "step": 1,
@@ -86,8 +86,7 @@ class SeamlessIconGenerator:
             }
         }
 
-    RETURN_TYPES = ("IMAGE", "DATA")
-    RETURN_NAMES = ("图像", "图标位置数据")
+    RETURN_TYPES = ("IMAGE",)
     INPUT_IS_LIST = True
     FUNCTION = "generate_seamless_icon"
     CATEGORY = "🍊 Kim-Nodes/🛑Icon Processing | 图标处理"
@@ -113,10 +112,7 @@ class SeamlessIconGenerator:
         if not icons_1 or not icons_2:
             raise ValueError("没有输入任何图标。")
 
-        # 添加一个列表来存储所有图标的位置信息
-        icon_positions = []
-        
-        # 调整图标1的大小，但保持原图质量
+        # 调整图标1的大小
         transformed_icons_1 = []
         for icon in icons_1[:num_rows]:
             # 保持宽高比进行缩放
@@ -124,10 +120,9 @@ class SeamlessIconGenerator:
             scale = icon1_size / max(w, h)
             new_w = int(w * scale)
             new_h = int(h * scale)
-            # 使用高质量的缩放方法
-            transformed_icons_1.append(icon.resize((new_w, new_h), Image.Resampling.LANCZOS))
+            transformed_icons_1.append(icon.resize((new_w, new_h), Image.LANCZOS))
 
-        # 调整图标2的大小，但保持原图质量
+        # 调整图标2的大小
         transformed_icons_2 = []
         for icon in icons_2[:num_rows]:
             # 保持宽高比进行缩放
@@ -135,8 +130,7 @@ class SeamlessIconGenerator:
             scale = icon2_size / max(w, h)
             new_w = int(w * scale)
             new_h = int(h * scale)
-            # 使用高质量的缩放方法
-            transformed_icons_2.append(icon.resize((new_w, new_h), Image.Resampling.LANCZOS))
+            transformed_icons_2.append(icon.resize((new_w, new_h), Image.LANCZOS))
 
         total_icons = len(transformed_icons_1) + len(transformed_icons_2)
         num_columns = 1  # 因为现在只取num_rows个图标，所以只需要一列
@@ -166,7 +160,6 @@ class SeamlessIconGenerator:
             
             # 根据列的奇偶选择使用哪组图标
             current_icons = transformed_icons_2 if repeat_x % 2 == 1 else transformed_icons_1
-            icon_group = "图标组2" if repeat_x % 2 == 1 else "图标组1"
             
             for col_idx, col_icons in enumerate(base_columns):
                 current_x = x_offset + sum(col_widths[:col_idx]) + column_spacing * col_idx
@@ -200,20 +193,6 @@ class SeamlessIconGenerator:
                         y_centered = current_y + h/2
                         
                         if 0 <= y_centered < scene_height and x_centered + w <= scene_width:
-                            # 记录图标位置信息
-                            icon_info = {
-                                "组别": icon_group,
-                                "列号": repeat_x,
-                                "行号": idx,
-                                "重复组号": repeat_y,
-                                "x": x_centered,
-                                "y": int(y_centered - h/2),
-                                "宽": w,
-                                "高": h,
-                                "旋转角度": rotation
-                            }
-                            icon_positions.append(icon_info)
-                            
                             # 创建旋转画布
                             diagonal = int(((w ** 2 + h ** 2) ** 0.5))
                             rotated_canvas = Image.new('RGBA', (diagonal, diagonal), (0, 0, 0, 0))
@@ -245,7 +224,7 @@ class SeamlessIconGenerator:
                         # 更新下一个图标的y坐标
                         current_y += h + spacing_between
 
-        return collage, icon_positions
+        return collage
 
     def create_flow_layout(self, icons, spacing=10, max_width=1024):
         """
@@ -376,10 +355,10 @@ class SeamlessIconGenerator:
         scene_width = scene_pil.size[0]
         scene_height = scene_pil.size[1]
 
-        # 创建网格布局，现在返回两个值
-        grid_collage, icon_positions = self.create_grid_layout(icon_list_1, icon_list_2, 图标1尺寸, 图标2尺寸, 每组数量, 
-                                                             列首尾icon中心点总高度, scene_height, scene_width, 
-                                                             列间距, 列偏移, 旋转角度, 列向下重复次数)
+        # 创建网格布局
+        grid_collage = self.create_grid_layout(icon_list_1, icon_list_2, 图标1尺寸, 图标2尺寸, 每组数量, 
+                                             列首尾icon中心点总高度, scene_height, scene_width, 
+                                             列间距, 列偏移, 旋转角度, 列向下重复次数)
 
         # 将网格贴到场景图上
         scene_pil.paste(grid_collage, (0, 0), grid_collage)
@@ -389,5 +368,4 @@ class SeamlessIconGenerator:
         if result.shape[-1] == 4:
             result = result[..., :3]  # 去掉 alpha 通道
         result = np.expand_dims(result, axis=0)
-        
-        return (torch.from_numpy(result), icon_positions)
+        return torch.from_numpy(result), 

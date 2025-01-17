@@ -2,6 +2,7 @@ import logging
 from .py.Distribute_Icons import Distribute_Icons
 from .py.Distribute_icons_in_grid import IconDistributeByGrid
 from .py.Seamless_Icon_Generator import SeamlessIconGenerator
+from .py.Icon_Position_Cropper import IconPositionCropper
 from .py.YOLO_Crop import YOLO_Crop
 from .py.Crop_Paste import Crop_Paste
 from .py.KimFilter import KimFilter
@@ -23,6 +24,7 @@ NODE_CLASS_MAPPINGS = {
     "Distribute_Icons": Distribute_Icons,
     "IconDistributeByGrid": IconDistributeByGrid,
     "Seamless_Icon_Generator": SeamlessIconGenerator,
+    "Icon_Position_Cropper": IconPositionCropper,
     "YOLO_Crop": YOLO_Crop,
     "Crop_Paste": Crop_Paste,
     "KimFilter": KimFilter,
@@ -44,7 +46,8 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Distribute_Icons": "Kim_🍊istribute_Icons🛑",
     "IconDistributeByGrid": "Kim_🍊IconDistributeByGrid🛑",
-    "Seamless_Icon_Generator": "Kim_🍊Seamless_Icon_Generator🛑",
+    "Seamless_Icon_Generator": "Kim_🍊Seamless_Icon_Generator🛑",  
+    "Icon_Position_Cropper": "Kim_🍊Icon_Position_Cropper🛑",
     "YOLO_Crop": "Kim_🍊YOLO_Crop✂YOLO裁切",
     "Crop_Paste": "Kim_🍊Crop_Paste✂裁切粘贴",
     "KimFilter": "Kim_🍊Filter🎨滤镜",
