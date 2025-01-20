@@ -72,6 +72,13 @@ class SeamlessIconGenerator:
                     "step": 1,
                     "display": "number"
                 }),
+                "行偏移": ("INT", {
+                    "default": 50,
+                    "min": -512,
+                    "max": 512,
+                    "step": 1,
+                    "display": "number"
+                }),
                 "旋转角度": ("FLOAT", {
                     "default": 40,
                     "min": -180.0,
@@ -82,7 +89,6 @@ class SeamlessIconGenerator:
                 "随机排序": ("BOOLEAN", {
                     "default": True
                 }),
-
             }
         }
 
@@ -109,7 +115,7 @@ class SeamlessIconGenerator:
 
         return icon_list
 
-    def create_grid_layout(self, icons_1, icons_2, icon1_size, icon2_size, num_rows, total_height, scene_height, scene_width, column_spacing, column_offset, rotation, max_repeats):
+    def create_grid_layout(self, icons_1, icons_2, icon1_size, icon2_size, num_rows, total_height, scene_height, scene_width, column_spacing, column_offset, row_offset, rotation, max_repeats):
         if not icons_1 or not icons_2:
             raise ValueError("没有输入任何图标。")
 
@@ -182,6 +188,10 @@ class SeamlessIconGenerator:
                     # 计算当前重复组的起始y坐标
                     section_start = y_offset + repeat_y * section_height
                     
+                    # 添加行偏移，奇数行向右偏移，偶数行向左偏移
+                    row_x_offset = row_offset if repeat_y % 2 == 1 else -row_offset
+                    current_x_with_offset = current_x + row_x_offset
+                    
                     # 计算当前组内图标的间距
                     if len(current_icons) > 1:
                         total_icons_height = sum(icons_heights)
@@ -194,7 +204,7 @@ class SeamlessIconGenerator:
                     current_y = section_start
                     for idx, icon in enumerate(current_icons):
                         w, h = icon.size
-                        x_centered = current_x + (col_width - w) // 2
+                        x_centered = current_x_with_offset + (col_width - w) // 2
                         
                         # 将图标垂直居中放置在其分配的空间内
                         y_centered = current_y + h/2
@@ -306,7 +316,7 @@ class SeamlessIconGenerator:
         return collage
 
     def generate_seamless_icon(self, 图标组1, 图标组2, 背景图片, 图标1尺寸=50, 图标2尺寸=50, 每组数量=5, 列首尾icon中心点总高度=1800, 
-                             列间距=0, 列偏移=0, 旋转角度=0.0, 随机排序=False, 随机种子=0, 列向下重复次数=10):
+                             列间距=0, 列偏移=0, 行偏移=0, 旋转角度=0.0, 随机排序=False, 随机种子=0, 列向下重复次数=10):
         """
         处理输入参数，确保它们是正确的类型
         """
@@ -323,6 +333,8 @@ class SeamlessIconGenerator:
             列间距 = 列间距[0]
         if isinstance(列偏移, list):
             列偏移 = 列偏移[0]
+        if isinstance(行偏移, list):
+            行偏移 = 行偏移[0]
         if isinstance(旋转角度, list):
             旋转角度 = 旋转角度[0]
         if isinstance(随机排序, list):
@@ -379,7 +391,7 @@ class SeamlessIconGenerator:
         # 创建网格布局，现在返回两个值
         grid_collage, icon_positions = self.create_grid_layout(icon_list_1, icon_list_2, 图标1尺寸, 图标2尺寸, 每组数量, 
                                                              列首尾icon中心点总高度, scene_height, scene_width, 
-                                                             列间距, 列偏移, 旋转角度, 列向下重复次数)
+                                                             列间距, 列偏移, 行偏移, 旋转角度, 列向下重复次数)
 
         # 将网格贴到场景图上
         scene_pil.paste(grid_collage, (0, 0), grid_collage)

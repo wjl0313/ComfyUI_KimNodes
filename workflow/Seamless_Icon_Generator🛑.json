@@ -1,0 +1,1037 @@
+{
+  "last_node_id": 43,
+  "last_link_id": 65,
+  "nodes": [
+    {
+      "id": 27,
+      "type": "MathExpression|pysssss",
+      "pos": [
+        271.9609069824219,
+        -303.134033203125
+      ],
+      "size": [
+        210,
+        116
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "INT,FLOAT,IMAGE,LATENT",
+          "link": 30,
+          "shape": 7,
+          "label": "a"
+        },
+        {
+          "name": "b",
+          "type": "INT,FLOAT,IMAGE,LATENT",
+          "link": null,
+          "shape": 7,
+          "label": "b"
+        },
+        {
+          "name": "c",
+          "type": "INT,FLOAT,IMAGE,LATENT",
+          "link": null,
+          "shape": 7,
+          "label": "c"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            32,
+            33,
+            35
+          ],
+          "slot_index": 0,
+          "label": "整数"
+        },
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null,
+          "label": "浮点"
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "a/2"
+      ]
+    },
+    {
+      "id": 26,
+      "type": "BatchCount+",
+      "pos": [
+        338.8757629394531,
+        -399.3231201171875
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "batch",
+          "type": "*",
+          "link": 61,
+          "label": "批次"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            30
+          ],
+          "slot_index": 0,
+          "label": "整数"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BatchCount+"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 42,
+      "type": "Reroute",
+      "pos": [
+        383.078369140625,
+        -494.64874267578125
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 63
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "IMAGE",
+          "links": [
+            59,
+            60,
+            61
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 37,
+      "type": "ImageListToBatch+",
+      "pos": [
+        291.53564453125,
+        -587.4702758789062
+      ],
+      "size": [
+        184.8000030517578,
+        26
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 65
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            63
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageListToBatch+"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "LayerUtility: GetColorTone",
+      "pos": [
+        189.27330017089844,
+        -720.993896484375
+      ],
+      "size": [
+        294,
+        78
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 9,
+          "label": "图像"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "RGB color in HEX",
+          "type": "STRING",
+          "links": [
+            25
+          ],
+          "slot_index": 0,
+          "label": "HEX字符串"
+        },
+        {
+          "name": "HSV color in list",
+          "type": "LIST",
+          "links": null,
+          "slot_index": 1,
+          "label": "HSV色值列表"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerUtility: GetColorTone"
+      },
+      "widgets_values": [
+        "main_color"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 34,
+      "type": "LayerMask: BiRefNetUltraV2",
+      "pos": [
+        -137.6171875,
+        -717.4777221679688
+      ],
+      "size": [
+        310.79998779296875,
+        246
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 38,
+          "label": "图像"
+        },
+        {
+          "name": "birefnet_model",
+          "type": "BIREFNET_MODEL",
+          "link": 39,
+          "label": "BiRefNet模型"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            64
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null,
+          "label": "遮罩"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerMask: BiRefNetUltraV2"
+      },
+      "widgets_values": [
+        "VITMatte",
+        4,
+        2,
+        0.01,
+        0.99,
+        false,
+        "cuda",
+        2
+      ],
+      "color": "rgba(27, 80, 119, 0.7)"
+    },
+    {
+      "id": 43,
+      "type": "ImageResize",
+      "pos": [
+        118.67268371582031,
+        -495.2461242675781
+      ],
+      "size": [
+        210,
+        106
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 64
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            65
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageResize"
+      },
+      "widgets_values": [
+        "true",
+        "lanczos",
+        512
+      ]
+    },
+    {
+      "id": 28,
+      "type": "ImageFromBatch",
+      "pos": [
+        498.3207702636719,
+        -435.1440734863281
+      ],
+      "size": [
+        210,
+        74
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 60,
+          "label": "图像"
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "link": 32,
+          "widget": {
+            "name": "length"
+          },
+          "label": "长度"
+        },
+        {
+          "name": "batch_index",
+          "type": "INT",
+          "link": 33,
+          "widget": {
+            "name": "batch_index"
+          },
+          "label": "批次索引"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            52,
+            57
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 29,
+      "type": "ImageFromBatch",
+      "pos": [
+        497.29376220703125,
+        -586.3053588867188
+      ],
+      "size": [
+        210,
+        78
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 59,
+          "label": "图像"
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "link": 35,
+          "widget": {
+            "name": "length"
+          },
+          "label": "长度"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            51,
+            56
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": 24,
+      "type": "LayerUtility: ColorImage",
+      "pos": [
+        494.3942565917969,
+        -722.120849609375
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "color",
+          "type": "STRING",
+          "link": 25,
+          "widget": {
+            "name": "color"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            27
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerUtility: ColorImage"
+      },
+      "widgets_values": [
+        2048,
+        2048,
+        "#000000"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 41,
+      "type": "PreviewImage",
+      "pos": [
+        522.523193359375,
+        -157.7598876953125
+      ],
+      "size": [
+        210,
+        246
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 57
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 40,
+      "type": "PreviewImage",
+      "pos": [
+        278.267578125,
+        -150.88018798828125
+      ],
+      "size": [
+        210,
+        246
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 56
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 21,
+      "type": "LayerUtility: Seed",
+      "pos": [
+        555.1849975585938,
+        -308.6015319824219
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": [
+            19
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerUtility: Seed"
+      },
+      "widgets_values": [
+        691888949232538,
+        "randomize"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 19,
+      "type": "Seamless_Icon_Generator",
+      "pos": [
+        743.2154541015625,
+        -584.345947265625
+      ],
+      "size": [
+        390.5999755859375,
+        314
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "背景图片",
+          "type": "IMAGE",
+          "link": 27
+        },
+        {
+          "name": "图标组1",
+          "type": "IMAGE",
+          "link": 51
+        },
+        {
+          "name": "图标组2",
+          "type": "IMAGE",
+          "link": 52
+        },
+        {
+          "name": "随机种子",
+          "type": "INT",
+          "link": 19,
+          "widget": {
+            "name": "随机种子"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "图像",
+          "type": "IMAGE",
+          "links": [
+            20
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "图标位置数据",
+          "type": "DATA",
+          "links": [
+            21
+          ],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Seamless_Icon_Generator"
+      },
+      "widgets_values": [
+        0,
+        201,
+        129,
+        1,
+        10,
+        2000,
+        15,
+        135,
+        33,
+        true
+      ]
+    },
+    {
+      "id": 20,
+      "type": "Icon_Position_Cropper",
+      "pos": [
+        1152.8828125,
+        -584.221435546875
+      ],
+      "size": [
+        243.60000610351562,
+        126
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "图片",
+          "type": "IMAGE",
+          "link": 20
+        },
+        {
+          "name": "位置数据",
+          "type": "DATA",
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "name": "裁切后图像",
+          "type": "IMAGE",
+          "links": [
+            22
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Icon_Position_Cropper"
+      },
+      "widgets_values": [
+        0,
+        8,
+        8
+      ]
+    },
+    {
+      "id": 32,
+      "type": "LayerMask: LoadBiRefNetModelV2",
+      "pos": [
+        -263.2039489746094,
+        -417.200927734375
+      ],
+      "size": [
+        352.79998779296875,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "birefnet_model",
+          "type": "BIREFNET_MODEL",
+          "links": [
+            39
+          ],
+          "label": "birefnet_model"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerMask: LoadBiRefNetModelV2"
+      },
+      "widgets_values": [
+        "RMBG-2.0"
+      ],
+      "color": "rgba(27, 80, 119, 0.7)"
+    },
+    {
+      "id": 33,
+      "type": "SplitStickers",
+      "pos": [
+        -254.35406494140625,
+        -311.2015686035156
+      ],
+      "size": [
+        210,
+        26
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_path",
+          "type": "IMAGE",
+          "link": 41,
+          "label": "image_path"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            38
+          ],
+          "slot_index": 0,
+          "shape": 6,
+          "label": "image"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SplitStickers"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 7,
+      "type": "LoadImage",
+      "pos": [
+        -588.6986083984375,
+        -721.0296020507812
+      ],
+      "size": [
+        300.5302429199219,
+        493.20245361328125
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9,
+            41
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "label": "遮罩"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "55_1.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 22,
+      "type": "PreviewImage",
+      "pos": [
+        750.8724365234375,
+        -218.34808349609375
+      ],
+      "size": [
+        709.2396240234375,
+        688.305419921875
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 22
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      9,
+      7,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      21,
+      0,
+      19,
+      3,
+      "INT"
+    ],
+    [
+      20,
+      19,
+      0,
+      20,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      19,
+      1,
+      20,
+      1,
+      "DATA"
+    ],
+    [
+      22,
+      20,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      25,
+      11,
+      0,
+      24,
+      0,
+      "STRING"
+    ],
+    [
+      27,
+      24,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      30,
+      26,
+      0,
+      27,
+      0,
+      "INT,FLOAT,IMAGE,LATENT"
+    ],
+    [
+      32,
+      27,
+      0,
+      28,
+      1,
+      "INT"
+    ],
+    [
+      33,
+      27,
+      0,
+      28,
+      2,
+      "INT"
+    ],
+    [
+      35,
+      27,
+      0,
+      29,
+      1,
+      "INT"
+    ],
+    [
+      38,
+      33,
+      0,
+      34,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      32,
+      0,
+      34,
+      1,
+      "BIREFNET_MODEL"
+    ],
+    [
+      41,
+      7,
+      0,
+      33,
+      0,
+      "IMAGE"
+    ],
+    [
+      51,
+      29,
+      0,
+      19,
+      1,
+      "IMAGE"
+    ],
+    [
+      52,
+      28,
+      0,
+      19,
+      2,
+      "IMAGE"
+    ],
+    [
+      56,
+      29,
+      0,
+      40,
+      0,
+      "IMAGE"
+    ],
+    [
+      57,
+      28,
+      0,
+      41,
+      0,
+      "IMAGE"
+    ],
+    [
+      59,
+      42,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      60,
+      42,
+      0,
+      28,
+      0,
+      "IMAGE"
+    ],
+    [
+      61,
+      42,
+      0,
+      26,
+      0,
+      "*"
+    ],
+    [
+      63,
+      37,
+      0,
+      42,
+      0,
+      "*"
+    ],
+    [
+      64,
+      34,
+      0,
+      43,
+      0,
+      "IMAGE"
+    ],
+    [
+      65,
+      43,
+      0,
+      37,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5989500000000137,
+      "offset": [
+        782.8758196684093,
+        1223.421114191682
+      ]
+    },
+    "ue_links": []
+  },
+  "version": 0.4
+}
