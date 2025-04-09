@@ -11,11 +11,11 @@ class Text_Match:
             },
         }
 
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("文本",)
+    RETURN_TYPES = ("STRING", "BOOLEAN",)
+    RETURN_NAMES = ("文本", "布尔值",)
     FUNCTION = "execute"
     CATEGORY = "🍊 Kim-Nodes/🔍Text_Match | 文本匹配"
 
     def execute(self, text_match, text_tag):
         matched = text_match in text_tag
-        return (str(matched),)
+        return (str(matched), matched,)

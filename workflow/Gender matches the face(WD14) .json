@@ -1,0 +1,720 @@
+{
+  "id": "a4fb4b3f-9325-41ee-a23d-0eebdc4316e2",
+  "revision": 0,
+  "last_node_id": 375,
+  "last_link_id": 757,
+  "nodes": [
+    {
+      "id": 352,
+      "type": "Prompt_Text",
+      "pos": [
+        -1412.145751953125,
+        -1105.065185546875
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            708
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "7734e51cdef8d245fbc41ba2138d0b9102812b20",
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "girl"
+      ]
+    },
+    {
+      "id": 369,
+      "type": "Prompt_Text",
+      "pos": [
+        -1408.407470703125,
+        -944.438232421875
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "文本",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            748
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "7734e51cdef8d245fbc41ba2138d0b9102812b20",
+        "Node name for S&R": "Prompt_Text"
+      },
+      "widgets_values": [
+        "boy"
+      ]
+    },
+    {
+      "id": 370,
+      "type": "Text_Match",
+      "pos": [
+        -1164.8931884765625,
+        -940.2288818359375
+      ],
+      "size": [
+        210,
+        102
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_match",
+          "type": "STRING",
+          "widget": {
+            "name": "text_match"
+          },
+          "link": 748
+        },
+        {
+          "name": "text_tag",
+          "type": "STRING",
+          "widget": {
+            "name": "text_tag"
+          },
+          "link": 753
+        }
+      ],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "布尔值",
+          "type": "BOOLEAN",
+          "links": [
+            749
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "7734e51cdef8d245fbc41ba2138d0b9102812b20",
+        "Node name for S&R": "Text_Match"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 349,
+      "type": "Text_Match",
+      "pos": [
+        -1170.3868408203125,
+        -1111.9742431640625
+      ],
+      "size": [
+        210,
+        102
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_match",
+          "type": "STRING",
+          "widget": {
+            "name": "text_match"
+          },
+          "link": 708
+        },
+        {
+          "name": "text_tag",
+          "type": "STRING",
+          "widget": {
+            "name": "text_tag"
+          },
+          "link": 705
+        }
+      ],
+      "outputs": [
+        {
+          "name": "文本",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "布尔值",
+          "type": "BOOLEAN",
+          "links": [
+            751
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "7734e51cdef8d245fbc41ba2138d0b9102812b20",
+        "Node name for S&R": "Text_Match"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 371,
+      "type": "easy showAnything",
+      "pos": [
+        -901.9808349609375,
+        -967.158935546875
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 752
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "389387308538e2790b89457ccb555f8329c97e86",
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "false"
+      ]
+    },
+    {
+      "id": 350,
+      "type": "WD14Tagger|pysssss",
+      "pos": [
+        -1407.4239501953125,
+        -797.1802368164062
+      ],
+      "size": [
+        210.95164489746094,
+        261.34893798828125
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 730
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            705,
+            718,
+            753
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-wd14-tagger",
+        "ver": "d33501765c5bf3dca6e90e0ebaa962890999fbc5",
+        "Node name for S&R": "WD14Tagger|pysssss"
+      },
+      "widgets_values": [
+        "wd-swinv2-tagger-v3",
+        0.35,
+        0.85,
+        false,
+        false,
+        "",
+        "looking_at_viewer, smile, open_mouth, short_hair, blonde_hair, long_sleeves, 1boy, holding, jacket, upper_body, grey_hair, male_focus, outdoors, teeth, day, bag, blurry, multiple_views, blurry_background, facial_hair, ring, blue_jacket, backpack, zipper, pocket, hand_in_pocket, realistic"
+      ]
+    },
+    {
+      "id": 358,
+      "type": "easy showAnything",
+      "pos": [
+        -1158.023681640625,
+        -772.0274658203125
+      ],
+      "size": [
+        210,
+        150.76763916015625
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 718
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "389387308538e2790b89457ccb555f8329c97e86",
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "looking_at_viewer, smile, open_mouth, short_hair, blonde_hair, long_sleeves, 1boy, holding, jacket, upper_body, grey_hair, male_focus, outdoors, teeth, day, bag, blurry, multiple_views, blurry_background, facial_hair, ring, blue_jacket, backpack, zipper, pocket, hand_in_pocket, realistic"
+      ]
+    },
+    {
+      "id": 368,
+      "type": "easy ifElse",
+      "pos": [
+        -905.7371215820312,
+        -1106.4210205078125
+      ],
+      "size": [
+        210,
+        78
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_true",
+          "type": "*",
+          "link": 751
+        },
+        {
+          "name": "on_false",
+          "type": "*",
+          "link": 749
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            752,
+            754
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "389387308538e2790b89457ccb555f8329c97e86",
+        "Node name for S&R": "easy ifElse"
+      },
+      "widgets_values": [
+        true
+      ]
+    },
+    {
+      "id": 373,
+      "type": "LoadImage",
+      "pos": [
+        -1652.0391845703125,
+        -472.2652587890625
+      ],
+      "size": [
+        210,
+        317.7682189941406
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            755
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "女脸",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "ComfyUI_temp_idkic_00005_.png",
+        "image",
+        ""
+      ]
+    },
+    {
+      "id": 374,
+      "type": "LoadImage",
+      "pos": [
+        -1407.7001953125,
+        -477.2131652832031
+      ],
+      "size": [
+        210,
+        317.7682189941406
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            756
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "男脸",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "ComfyUI_temp_idkic_00003_.png",
+        "image",
+        ""
+      ]
+    },
+    {
+      "id": 375,
+      "type": "PreviewImage",
+      "pos": [
+        -906.322265625,
+        -417.0776672363281
+      ],
+      "size": [
+        210,
+        246
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 757
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 372,
+      "type": "easy ifElse",
+      "pos": [
+        -920.6333618164062,
+        -572.4179077148438
+      ],
+      "size": [
+        210,
+        78
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_true",
+          "type": "*",
+          "link": 755
+        },
+        {
+          "name": "on_false",
+          "type": "*",
+          "link": 756
+        },
+        {
+          "name": "boolean",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "boolean"
+          },
+          "link": 754
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            757
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "389387308538e2790b89457ccb555f8329c97e86",
+        "Node name for S&R": "easy ifElse"
+      },
+      "widgets_values": [
+        true
+      ]
+    },
+    {
+      "id": 360,
+      "type": "LoadImage",
+      "pos": [
+        -1641.824462890625,
+        -1109.26025390625
+      ],
+      "size": [
+        210,
+        317.7682189941406
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            724,
+            728,
+            730
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "22.png",
+        "image",
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      628,
+      291,
+      2,
+      292,
+      0,
+      "IMAGE"
+    ],
+    [
+      629,
+      291,
+      2,
+      279,
+      0,
+      "IMAGE"
+    ],
+    [
+      705,
+      350,
+      0,
+      349,
+      1,
+      "STRING"
+    ],
+    [
+      708,
+      352,
+      0,
+      349,
+      0,
+      "STRING"
+    ],
+    [
+      718,
+      350,
+      0,
+      358,
+      0,
+      "*"
+    ],
+    [
+      730,
+      360,
+      0,
+      350,
+      0,
+      "IMAGE"
+    ],
+    [
+      748,
+      369,
+      0,
+      370,
+      0,
+      "STRING"
+    ],
+    [
+      749,
+      370,
+      1,
+      368,
+      1,
+      "*"
+    ],
+    [
+      751,
+      349,
+      1,
+      368,
+      0,
+      "*"
+    ],
+    [
+      752,
+      368,
+      0,
+      371,
+      0,
+      "*"
+    ],
+    [
+      753,
+      350,
+      0,
+      370,
+      1,
+      "STRING"
+    ],
+    [
+      754,
+      368,
+      0,
+      372,
+      2,
+      "BOOLEAN"
+    ],
+    [
+      755,
+      373,
+      0,
+      372,
+      0,
+      "*"
+    ],
+    [
+      756,
+      374,
+      0,
+      372,
+      1,
+      "*"
+    ],
+    [
+      757,
+      372,
+      0,
+      375,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "性别分类(WD14)",
+      "bounding": [
+        -1671.79248046875,
+        -1189.22412109375,
+        1007.1004028320312,
+        1039.298583984375
+      ],
+      "color": "#a1309b",
+      "font_size": 22,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.4122927695244514,
+      "offset": [
+        2327.9249444003844,
+        1327.080033622459
+      ]
+    }
+  },
+  "version": 0.4
+}
