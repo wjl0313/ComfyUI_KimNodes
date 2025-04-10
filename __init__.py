@@ -4,6 +4,7 @@ from .py.Distribute_icons_in_grid import IconDistributeByGrid
 from .py.Seamless_Icon_Generator import SeamlessIconGenerator
 from .py.Icon_Position_Cropper import IconPositionCropper
 from .py.YOLO_Crop import YOLO_Crop
+from .py.YOLO_Multi_Crop import YOLO_Multi_Crop
 from .py.Crop_Paste import Crop_Paste
 from .py.KimFilter import KimFilter
 from .py.Prompt_Text import Prompt_Text
@@ -26,6 +27,7 @@ NODE_CLASS_MAPPINGS = {
     "Seamless_Icon_Generator": SeamlessIconGenerator,
     "Icon_Position_Cropper": IconPositionCropper,
     "YOLO_Crop": YOLO_Crop,
+    "YOLO_Multi_Crop": YOLO_Multi_Crop,
     "Crop_Paste": Crop_Paste,
     "KimFilter": KimFilter,
     "Text_Match": Text_Match,
@@ -49,6 +51,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Seamless_Icon_Generator": "Kim_🍊Seamless_Icon_Generator🛑",  
     "Icon_Position_Cropper": "Kim_🍊Icon_Position_Cropper🛑",
     "YOLO_Crop": "Kim_🍊YOLO_Crop✂YOLO裁切",
+    "YOLO_Multi_Crop": "Kim_🍊YOLO_Multi_Crop✂多人物裁切",
     "Crop_Paste": "Kim_🍊Crop_Paste✂裁切粘贴",
     "KimFilter": "Kim_🍊Filter🎨滤镜",
     "Prompt_Text": "Kim_🍊Prompt_Text",

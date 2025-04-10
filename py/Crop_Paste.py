@@ -24,7 +24,7 @@ class Crop_Paste:
         return {
             "required": {
                 "image": ("IMAGE",),  # 输入的原始图片
-                "crop_image": ("IMAGE",),    # 置信度最高的裁剪图像
+                "crop_images": ("IMAGE",),    # 裁剪的图像列表
                 "data": ("DATA",),              # 包含边界框信息的字典
                 "feather_amount": ("FLOAT", {
                     "default": 0.2,
@@ -42,99 +42,107 @@ class Crop_Paste:
     def __init__(self):
         pass
 
-    def crop_paste(self, data, image, crop_image, feather_amount):
+    def crop_paste(self, data, image, crop_images, feather_amount):
         """
-        Merge the single cropped image back into the original image with feathered edges.
+        将多个裁剪的图像粘贴回原始图像的对应位置
         """
-        # 打印输入图像的类型和维度信息
-        logger.info(f"Original input type: {type(image)}")
-        if isinstance(image, torch.Tensor):
-            logger.info(f"Original input shape (torch.Tensor): {image.shape}")
-        elif isinstance(image, np.ndarray):
-            logger.info(f"Original input shape (NumPy array): {image.shape}")
-        elif isinstance(image, Image.Image):
-            logger.info(f"Original input size (PIL.Image): {image.size}")
-        else:
-            logger.warning(f"Unknown image type: {type(image)}")
-
-        # 确保输入图像是 PIL.Image
-        image = self._ensure_pil_image(image)
-        crop_image = self._ensure_pil_image(crop_image)
-
-        # 再次打印转换后的 PIL.Image 的尺寸
-        logger.info(f"Converted input image size (PIL.Image): {image.size}")
-
-        # 确保原始图像和裁剪图像都是 'RGB' 模式
-        if image.mode != 'RGB':
-            logger.info(f"Converting original image from {image.mode} to RGB")
-            image = image.convert('RGB')
-
-        if crop_image.mode != 'RGB':
-            logger.info(f"Converting cropped image from {crop_image.mode} to RGB")
-            crop_image = crop_image.convert('RGB')
-
-        # 提取图像尺寸和边界框
-        width, height = image.size  # width 和 height 对应于 W 和 H
-        bboxes = data.get("bboxes", [])
-        logger.info(f"Original image dimensions: {width}x{height}")
-        logger.info(f"Number of bounding boxes: {len(bboxes)}")
-
-        if not bboxes:
-            logger.warning("No bounding boxes detected. Returning the original image.")
-            return self.process_output(image)  # 返回原始图片
-
-        # 假设置信度最高的边界框是第一个
-        bbox = bboxes[0]
-        logger.info(f"Selected bounding box: {bbox}")
-
-        # 计算实际裁切的像素坐标
-        left = max(0, int(bbox["xmin"] * width))
-        top = max(0, int(bbox["ymin"] * height))
-        right = min(width, int(bbox["xmax"] * width))
-        bottom = min(height, int(bbox["ymax"] * height))
-
-        logger.info(f"Bounding box coordinates: left={left}, top={top}, right={right}, bottom={bottom}")
-
-        if left >= right or top >= bottom:
-            logger.warning(f"Invalid bounding box: {left}, {top}, {right}, {bottom}")
-            return self.process_output(image)
-
-        # 调整裁剪图像的尺寸以匹配边界框的尺寸
-        bbox_width = right - left
-        bbox_height = bottom - top
-        logger.info(f"BBox width: {bbox_width}, BBox height: {bbox_height}")
-        crop_image_resized = crop_image.resize((bbox_width, bbox_height))
-
-        # 修改遮罩创建部分
-        mask = Image.new('L', (bbox_width, bbox_height), 255)
-        feather_pixels = int(min(bbox_width, bbox_height) * feather_amount)
+        print("\n===== Crop_Paste 节点输入信息 =====")
+        print(f"输入图像类型: {type(image)}")
         
-        if feather_pixels > 0:
-            # 创建渐变遮罩
-            gradient = np.ones((bbox_height, bbox_width), dtype=np.float32)
+        # 打印裁剪图像信息
+        print(f"裁剪图像类型: {type(crop_images)}")
+        if isinstance(crop_images, torch.Tensor):
+            print(f"裁剪图像形状: {crop_images.shape}")
+            if len(crop_images.shape) == 4:
+                print(f"裁剪图像批次数量: {crop_images.shape[0]}")
+        
+        # 处理原始图像
+        if isinstance(image, torch.Tensor):
+            if len(image.shape) == 4:
+                image = image[0]
+            image_np = image.cpu().numpy()
+            if image_np.max() <= 1.0:
+                image_np = (image_np * 255).astype(np.uint8)
+            image_pil = Image.fromarray(image_np)
+            print(f"原始图像尺寸: {image_pil.size}")
+        
+        # 获取边界框
+        bboxes = data.get("bboxes", [])
+        print(f"边界框数量: {len(bboxes)}")
+        
+        # 创建一个新的图像用于粘贴
+        image_paste = image_pil.copy()
+        width, height = image_pil.size
+        
+        if image_paste.mode != 'RGB':
+            image_paste = image_paste.convert('RGB')
+        
+        # 处理裁剪图像
+        print("\n处理裁剪图像...")
+        if isinstance(crop_images, torch.Tensor) and len(crop_images.shape) == 4:
+            batch_size = crop_images.shape[0]
+            print(f"检测到批次张量，包含 {batch_size} 个图像")
             
-            # 创建四边的渐变
-            for i in range(feather_pixels):
-                weight = (i / feather_pixels) ** 2
-                # 左边
-                gradient[:, i] *= weight
-                # 右边
-                gradient[:, -(i+1)] *= weight
-                # 上边
-                gradient[i, :] *= weight
-                # 下边
-                gradient[-(i+1), :] *= weight
-            
-            # 转换为 uint8 类型并创建遮罩
-            gradient = (gradient * 255).astype(np.uint8)
-            mask = Image.fromarray(gradient)
-
-        # 将裁剪图像粘贴回原始图像，使用透明度遮罩
-        image_paste = image.copy()
-        image_paste.paste(crop_image_resized, (left, top), mask)
-
-        logger.info(f"Result image size: {image_paste.size}")
-        return self.process_output(image_paste)
+            # 遍历所有裁剪图像和对应的边界框
+            for i in range(min(batch_size, len(bboxes))):
+                print(f"\n处理第 {i+1}/{batch_size} 个裁剪图像")
+                
+                try:
+                    # 安全获取图像
+                    crop_img = crop_images[i]
+                    if crop_img.shape[0] == 1 and crop_img.shape[1] == 1:
+                        print(f"警告: 图像 {i} 尺寸过小 ({crop_img.shape})，跳过")
+                        continue
+                    
+                    # 打印形状和数值范围
+                    print(f"裁剪图像形状: {crop_img.shape}")
+                    
+                    # 裁剪图像预处理
+                    crop_np = crop_img.cpu().numpy()
+                    
+                    # 规范化数值范围
+                    if crop_np.max() > 1.0 or crop_np.min() < 0:
+                        print(f"警告: 图像 {i} 数值范围异常 ({crop_np.min()} 到 {crop_np.max()})，进行规范化")
+                        crop_np = np.clip(crop_np, 0, 1)
+                    
+                    # 转换为8位格式
+                    crop_np = (crop_np * 255).astype(np.uint8)
+                    
+                    # 计算边界框坐标
+                    bbox = bboxes[i]
+                    left = max(0, int(bbox["xmin"] * width))
+                    top = max(0, int(bbox["ymin"] * height))
+                    right = min(width, int(bbox["xmax"] * width))
+                    bottom = min(height, int(bbox["ymax"] * height))
+                    
+                    print(f"边界框坐标: ({left}, {top}) -> ({right}, {bottom})")
+                    
+                    if left >= right or top >= bottom:
+                        print(f"警告: 无效的边界框坐标，跳过")
+                        continue
+                    
+                    # 创建PIL图像并调整尺寸
+                    crop_pil = Image.fromarray(crop_np)
+                    bbox_width = right - left
+                    bbox_height = bottom - top
+                    crop_resized = crop_pil.resize((bbox_width, bbox_height))
+                    
+                    # 粘贴图像
+                    image_paste.paste(crop_resized, (left, top))
+                    print(f"图像 {i} 粘贴成功")
+                    
+                except Exception as e:
+                    print(f"处理图像 {i} 时出错: {e}")
+                    import traceback
+                    traceback.print_exc()
+        
+        print("\n所有裁剪图像处理完成")
+        
+        # 转换为张量并返回
+        result_np = np.array(image_paste).astype(np.float32) / 255.0
+        result_tensor = torch.from_numpy(result_np).unsqueeze(0)
+        
+        return (result_tensor,)
 
     def _ensure_pil_image(self, image):
         """

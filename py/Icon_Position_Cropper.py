@@ -48,16 +48,31 @@ class IconPositionCropper:
         print(f"起始列号: {起始列号}")
         print(f"终止列号: {终止列号}")
         print(f"结束行号: {行号}")
+        print(f"输入图片批次大小: {图片.shape[0]}")
+        
+        # 调试输出位置数据格式
+        if 位置数据 and len(位置数据) > 0:
+            print("\n=== 位置数据结构 ===")
+            print(f"位置数据类型: {type(位置数据)}")
+            print(f"位置数据长度: {len(位置数据)}")
+            print(f"第一个元素键: {list(位置数据[0].keys()) if isinstance(位置数据[0], dict) else '不是字典'}")
+            
+            # 检查是否有嵌套结构
+            if '图标位置' in 位置数据[0]:
+                print(f"找到图标位置字段，包含 {len(位置数据[0]['图标位置'])} 个位置项")
+                if len(位置数据[0]['图标位置']) > 0:
+                    实际位置数据 = 位置数据[0]['图标位置']
+                    print(f"图标位置项示例: {实际位置数据[0]}")
+                    print(f"图标位置项键: {list(实际位置数据[0].keys()) if isinstance(实际位置数据[0], dict) else '不是字典'}")
+            else:
+                print("未找到图标位置字段")
+                实际位置数据 = 位置数据
+        else:
+            print("警告: 位置数据为空")
+            raise ValueError("位置数据为空，无法进行裁切")
         
         # 处理输入图片
-        if isinstance(图片, torch.Tensor):
-            if 图片.shape[0] != 1:
-                raise ValueError("图片只支持 batch_size=1")
-            if 图片.shape[1] in (3, 4):
-                图片 = 图片.permute(0, 2, 3, 1)
-            image_np = (图片[0].cpu().numpy() * 255).astype(np.uint8)
-            image_pil = Image.fromarray(image_np)
-        else:
+        if not isinstance(图片, torch.Tensor):
             raise ValueError("图片必须是 torch.Tensor 类型")
 
         # 找到四个角落的中心点
@@ -66,27 +81,45 @@ class IconPositionCropper:
         左下中心点 = None
         右下中心点 = None
         
-        # 遍历所有位置找到四个角落
-        for pos in 位置数据:
-            if pos["列号"] == 起始列号 and pos["重复组号"] == 0:
-                center_x = pos["x"] + pos["宽"]/2
-                center_y = pos["y"] + pos["高"]/2
-                左上中心点 = (center_x, center_y)
+        # 如果数据是嵌套的，使用图标位置数据
+        if '图标位置' in 位置数据[0]:
+            实际位置数据 = 位置数据[0]['图标位置']
+        else:
+            实际位置数据 = 位置数据
             
-            if pos["列号"] == 终止列号 and pos["重复组号"] == 0:
-                center_x = pos["x"] + pos["宽"]/2
-                center_y = pos["y"] + pos["高"]/2
-                右上中心点 = (center_x, center_y)
+        print("\n=== 查找四个角落点 ===")
+        print(f"使用数据长度: {len(实际位置数据)}")
+        print(f"查找范围: 第{起始列号}列到第{终止列号}列，第0行到第{行号}行")
+        
+        # 遍历所有位置找到四个角落
+        for pos in 实际位置数据:
+            try:
+                if pos["列号"] == 起始列号 and pos["重复组号"] == 0:
+                    center_x = pos["x"] + pos["宽"]/2
+                    center_y = pos["y"] + pos["高"]/2
+                    左上中心点 = (center_x, center_y)
+                    print(f"找到左上中心点: {左上中心点}")
                 
-            if pos["列号"] == 起始列号 and pos["重复组号"] == 行号:
-                center_x = pos["x"] + pos["宽"]/2
-                center_y = pos["y"] + pos["高"]/2
-                左下中心点 = (center_x, center_y)
-                
-            if pos["列号"] == 终止列号 and pos["重复组号"] == 行号:
-                center_x = pos["x"] + pos["宽"]/2
-                center_y = pos["y"] + pos["高"]/2
-                右下中心点 = (center_x, center_y)
+                if pos["列号"] == 终止列号 and pos["重复组号"] == 0:
+                    center_x = pos["x"] + pos["宽"]/2
+                    center_y = pos["y"] + pos["高"]/2
+                    右上中心点 = (center_x, center_y)
+                    print(f"找到右上中心点: {右上中心点}")
+                    
+                if pos["列号"] == 起始列号 and pos["重复组号"] == 行号:
+                    center_x = pos["x"] + pos["宽"]/2
+                    center_y = pos["y"] + pos["高"]/2
+                    左下中心点 = (center_x, center_y)
+                    print(f"找到左下中心点: {左下中心点}")
+                    
+                if pos["列号"] == 终止列号 and pos["重复组号"] == 行号:
+                    center_x = pos["x"] + pos["宽"]/2
+                    center_y = pos["y"] + pos["高"]/2
+                    右下中心点 = (center_x, center_y)
+                    print(f"找到右下中心点: {右下中心点}")
+            except KeyError as e:
+                print(f"警告：处理位置时出错 - 键{e}不存在")
+                continue
         
         if not all([左上中心点, 右上中心点, 左下中心点, 右下中心点]):
             raise ValueError(f"未找到所需的四个角落点，请检查参数是否正确。\n"
@@ -109,13 +142,31 @@ class IconPositionCropper:
         print(f"右下角: ({right}, {bottom})")
         print(f"宽度: {right - left}, 高度: {bottom - top}")
 
-        # 裁切图片
-        cropped_image = image_pil.crop((left, top, right, bottom))
-
-        # 转换回 tensor
-        result = np.array(cropped_image, dtype=np.float32) / 255.0
-        if result.shape[-1] == 4:
-            result = result[..., :3]  # 去掉 alpha 通道
-        result = np.expand_dims(result, axis=0)
+        # 批量处理所有图片
+        结果列表 = []
+        批次大小 = 图片.shape[0]
+        print(f"开始批量处理 {批次大小} 张图片")
         
-        return (torch.from_numpy(result),) 
+        for i in range(批次大小):
+            处理图片 = 图片[i:i+1]  # 获取当前图片
+            
+            if 处理图片.shape[1] in (3, 4):
+                处理图片 = 处理图片.permute(0, 2, 3, 1)
+            
+            image_np = (处理图片[0].cpu().numpy() * 255).astype(np.uint8)
+            image_pil = Image.fromarray(image_np)
+            
+            # 裁切图片
+            cropped_image = image_pil.crop((left, top, right, bottom))
+            
+            # 转换回 tensor
+            result = np.array(cropped_image, dtype=np.float32) / 255.0
+            if result.shape[-1] == 4:
+                result = result[..., :3]  # 去掉 alpha 通道
+            
+            # 调整维度顺序以符合 IMAGE 格式 [H, W, C]
+            结果列表.append(torch.from_numpy(result))
+        
+        print(f"已完成 {len(结果列表)} 张图片的裁切处理")
+        # 将列表转换成批次张量 [B, H, W, C]
+        return (torch.stack(结果列表),) 
