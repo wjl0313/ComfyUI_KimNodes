@@ -61,10 +61,10 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Crop_Paste": "Kim_🍊Crop_Paste✂裁切粘贴",
 ####滤镜
     "KimFilter": "Kim_🍊Filter🎨滤镜",
-    "KimHDR": "Kim_🍊KimHDR",
+    "KimHDR": "Kim_🍊KimHDR🌈HDR",
     "Whitening_Node": "Kim_🍊Whitening_👧🏻牛奶肌",
 ####文本工具
-    "Prompt_Text": "Kim_🍊Prompt_Text",
+    "Prompt_Text": "Kim_🍊Prompt_Text📒文本输出",
     "Text_Match": "Kim_🍊Text_Match🔍文本匹配",
     "Text_Processor": "Kim_🍊Text_Processor🔍文本数字提取",
     "Image_Classification": "Kim_🍊Image_Classification🔍图像分类",
@@ -76,7 +76,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
 ####数据匹配
     "YOLOWorld_Match": "Kim_🍊YOLOWorld_Match🔍特征匹配",
 ####图像处理
-    "Image_Resize": "Kim_🍊Image_Resize",
+    "Image_Resize": "Kim_🍊Image_Resize📐图像尺寸缩放",
 ####蒙板处理
     "Split_Mask": "Kim_🍊Split_Mask🔍蒙版元素分割器",
 }
