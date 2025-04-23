@@ -9,7 +9,7 @@ def tensor2pil(image):
 def pil2tensor(image):
     return torch.from_numpy(np.array(image).astype(np.float32) / 255.0).unsqueeze(0)
 
-class ImageResize:
+class Image_Resize:
     def __init__(self):
         pass
 

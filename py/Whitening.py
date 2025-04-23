@@ -33,7 +33,7 @@ class Whitening_Node:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("whitened_image",)
     FUNCTION = "execute"
-    CATEGORY = "🍊 Kim-Nodes/👧🏻美颜"
+    CATEGORY = "🍊 Kim-Nodes/🎨Filter | 滤镜"
 
     def __init__(self):
         pass

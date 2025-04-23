@@ -15,7 +15,7 @@ class Image_Classification:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("output_path",)
     FUNCTION = "execute"
-    CATEGORY = "🍊 Kim-Nodes/🔍Text_Match | 文本匹配"
+    CATEGORY = "🍊 Kim-Nodes/🔍Text_Tools | 文本工具"
 
     def execute(self, text_tag, true_path, false_path):
         """

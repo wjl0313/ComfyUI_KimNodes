@@ -22,7 +22,7 @@ class Prompt_Text:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("文本",)
     FUNCTION = "execute"
-    CATEGORY = "🍊 Kim-Nodes/🔍Text_Match | 文本匹配"
+    CATEGORY = "🍊 Kim-Nodes/🔍Text_Tools | 文本工具"
     OUTPUT_NODE = True
     INPUT_IS_LIST = True
     OUTPUT_IS_LIST = (True,)
