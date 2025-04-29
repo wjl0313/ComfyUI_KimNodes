@@ -155,7 +155,7 @@ class Split_Mask:
     RETURN_NAMES = ("images",)
     OUTPUT_IS_LIST = (True,)
     FUNCTION = "split_mask"
-    CATEGORY = "🍊 Kim-Nodes/🔲Mask_Tools | 蒙板工具"
+    CATEGORY = "🍒 Kim-Nodes/🔲Mask_Tools | 蒙板工具"
 
     def split_mask(self, image, mask, padding=10, filtration_area=0.0025):
         # 处理输入图像

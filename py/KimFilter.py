@@ -65,7 +65,7 @@ class KimFilter:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    CATEGORY = "🍊 Kim-Nodes/🎨Filter | 滤镜"
+    CATEGORY = "🍒 Kim-Nodes/🎨Filter | 滤镜"
 
     def execute(self, image, UM非锐化掩蔽, DCP暗通道先验, CLAHE对比度增强限制, 自然饱和度, 伽马值, clahe_tile_grid_size=1):
         # 确保图像格式正确

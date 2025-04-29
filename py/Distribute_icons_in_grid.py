@@ -63,7 +63,7 @@ class IconDistributeByGrid:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "distribute_icons_in_grid" 
-    CATEGORY = "🍊 Kim-Nodes/🛑Icon Processing | 图标处理"
+    CATEGORY = "🍒 Kim-Nodes/🧩Icon Processing | 图标处理"
 
     def distribute_icons_in_grid(self, scene_image, mask_image, icons, icon_size,
                     min_distance, num_rows=5, num_cols=10, max_scale=1.0, vertical_offset=0):

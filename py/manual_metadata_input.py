@@ -152,7 +152,7 @@ class Manual_MetadataInput:
     RETURN_TYPES = ("DICT",)
     RETURN_NAMES = ("输出元数据",)
     FUNCTION = "generate_metadata"
-    CATEGORY = "🍊 Kim-Nodes/🔢Metadata | 元数据处理"
+    CATEGORY = "🍒 Kim-Nodes/🔢Metadata | 元数据处理"
 
     def __init__(self):
         pass

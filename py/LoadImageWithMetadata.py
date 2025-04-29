@@ -25,7 +25,7 @@ class LoadImage_Metadata:
     RETURN_TYPES = ("DICT",)
     RETURN_NAMES = ("输出元数据",)
     FUNCTION = "load_image"
-    CATEGORY = "🍊 Kim-Nodes/🔢Metadata | 元数据处理"
+    CATEGORY = "🍒 Kim-Nodes/🔢Metadata | 元数据处理"
 
     def __init__(self):
         pass

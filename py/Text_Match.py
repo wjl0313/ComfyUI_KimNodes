@@ -14,7 +14,7 @@ class Text_Match:
     RETURN_TYPES = ("STRING", "BOOLEAN",)
     RETURN_NAMES = ("文本", "布尔值",)
     FUNCTION = "execute"
-    CATEGORY = "🍊 Kim-Nodes/🔍Text_Tools | 文本工具"
+    CATEGORY = "🍒 Kim-Nodes/🔍Text_Tools | 文本工具"
 
     def execute(self, text_match, text_tag):
         matched = text_match in text_tag

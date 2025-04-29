@@ -42,7 +42,7 @@ class Save_Image:
     FUNCTION = "save_images"
 
     OUTPUT_NODE = True
-    CATEGORY = "🍊 Kim-Nodes/🔍Text_Tools | 文本工具"
+    CATEGORY = "🍒 Kim-Nodes/🔍Text_Tools | 文本工具"
 
     def save_images(self, images, file_path, prompt=None, extra_pnginfo=None):
         filename_prefix = os.path.basename(file_path)

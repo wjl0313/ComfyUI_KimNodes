@@ -94,7 +94,7 @@ class Add_ImageMetadata:
 
     RETURN_TYPES = ()
     FUNCTION = "add_metadata"
-    CATEGORY = "🍊 Kim-Nodes/🔢Metadata | 元数据处理"
+    CATEGORY = "🍒 Kim-Nodes/🔢Metadata | 元数据处理"
     OUTPUT_NODE = True  # 标记为输出节点
 
     def __init__(self):

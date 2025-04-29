@@ -63,7 +63,7 @@ class YOLO_Multi_Crop:
     RETURN_TYPES = ("IMAGE", "DATA")
     FUNCTION = "multi_crop"
     OUTPUT_IS_LIST = (True, False)  # 图像输出为列表，DATA输出不是列表
-    CATEGORY = "🍊 Kim-Nodes/✂ Crop | 裁剪处理"
+    CATEGORY = "🍒 Kim-Nodes/✂ Crop | 裁剪回贴"
 
     def __init__(self):
         pass

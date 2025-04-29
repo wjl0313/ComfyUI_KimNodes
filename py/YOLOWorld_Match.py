@@ -66,7 +66,7 @@ class YOLOWorld_Match:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("result",)
     FUNCTION = 'object_matcher'
-    CATEGORY = "\U0001F34A Kim-Nodes/\U0001F50DYOLOWorld_Match | 特征匹配"
+    CATEGORY = "🍒 Kim-Nodes/🔍YOLOWorld_Match | 特征匹配"
 
     def object_matcher(self, image, yolo_world_model, confidence_threshold, category):
         """

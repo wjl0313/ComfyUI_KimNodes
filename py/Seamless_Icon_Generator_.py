@@ -89,7 +89,7 @@ class SeamlessIconGenerator:
     RETURN_TYPES = ("IMAGE",)
     INPUT_IS_LIST = True
     FUNCTION = "generate_seamless_icon"
-    CATEGORY = "🍊 Kim-Nodes/🛑Icon Processing | 图标处理"
+    CATEGORY = "🍒 Kim-Nodes/🧩Icon Processing | 图标处理"
 
     def preprocess_icons(self, icons):
         """将批次或列表张量类型图片转换为PIL Image 对象列表"""

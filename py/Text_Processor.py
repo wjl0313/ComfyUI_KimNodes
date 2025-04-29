@@ -18,7 +18,7 @@ class Text_Processor:
     RETURN_TYPES = ("STRING", "INT",)
     RETURN_NAMES = ("文本", "数字提取",)
     FUNCTION = "process_text"
-    CATEGORY = "🍊 Kim-Nodes/🔍Text_Tools | 文本工具"
+    CATEGORY = "🍒 Kim-Nodes/🔍Text_Tools | 文本工具"
 
     def process_text(self, 输入文本, 提取数字=True):
         # 处理文本内容，可以根据需要修改处理逻辑

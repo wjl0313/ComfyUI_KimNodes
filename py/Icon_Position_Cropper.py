@@ -40,7 +40,7 @@ class IconPositionCropper:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("裁切后图像",)
     FUNCTION = "crop_by_positions"
-    CATEGORY = "🍊 Kim-Nodes/🛑Icon Processing | 图标处理"
+    CATEGORY = "🍒 Kim-Nodes/🧩Icon Processing | 图标处理"
 
     def crop_by_positions(self, 图片, 位置数据, 起始列号, 终止列号, 行号):
         # 添加详细的调试信息

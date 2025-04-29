@@ -78,7 +78,7 @@ class KimHDR:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "execute"
-    CATEGORY = "🍊 Kim-Nodes/🎨Filter | 滤镜"
+    CATEGORY = "🍒 Kim-Nodes/🎨Filter | 滤镜"
 
     def execute(self, image, HDR强度, 欠曝光因子, 过曝光因子, gamma, 高光细节, 中间调细节, 阴影细节, 整体强度):
         try:

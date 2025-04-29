@@ -41,7 +41,7 @@ class ExtractDifferenceLora:
 
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "extract_difference"
-    CATEGORY = "🍊 Kim-Nodes/LoRA_DifferenceExtraction"
+    CATEGORY = "🍒 Kim-Nodes/LoRA_DifferenceExtraction"
 
     def str_to_dtype(self, p):
         if p == "float":
