@@ -33,6 +33,7 @@ from .py.YOLOWorld_Match import YOLOWorld_Match
 from .py.Image_Resize import Image_Resize
 # 蒙板处理
 from .py.Split_Mask import Split_Mask
+from .py.MaskWhiteAreaRatio import Mask_White_Area_Ratio
 # from .py.Lora_Difference_extraction import ExtractDifferenceLora
 
 # 插件的节点类映射
@@ -71,13 +72,14 @@ NODE_CLASS_MAPPINGS = {
     "Image_Resize": Image_Resize,
     # 蒙板处理
     "Split_Mask": Split_Mask,
+    "Mask_White_Area_Ratio": Mask_White_Area_Ratio,
     # "ExtractDifferenceLora": ExtractDifferenceLora
 }
 
 # 节点的显示名称映射
 NODE_DISPLAY_NAME_MAPPINGS = {
 #图标类
-    "Distribute_Icons": "🍒istribute_Icons",
+    "Distribute_Icons": "🍒distribute_Icons",
     "IconDistributeByGrid": "🍒IconDistributeByGrid",
     "Seamless_Icon_Generator": "🍒Seamless_Icon_Generator",  
     "Icon_Position_Cropper": "🍒Icon_Position_Cropper",
@@ -110,6 +112,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Image_Resize": "🍒Image_Resize📐图像尺寸缩放",
 #蒙板处理
     "Split_Mask": "🍒Split_Mask🔍蒙版元素分割器",
+    "Mask_White_Area_Ratio": "🍒Mask_White_Area_Ratio📊蒙版白色区域占比",
 }
 
 # 插件初始化
