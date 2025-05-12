@@ -1,7 +1,7 @@
 [project]
 name = "comfyui_kimnodes"
 description = "ComfyUI node collection: icon layout & processing, YOLO intelligent cropping, image filters & enhancement, text processing tools, metadata management, mask handling and image classification in one comprehensive toolbox."
-version = "1.0.2"
+version = "1.0.3"
 license = {file = "LICENSE"}
 
 [project.urls]
@@ -11,4 +11,4 @@ Repository = "https://github.com/wjl0313/ComfyUI_KimNodes"
 [tool.comfy]
 PublisherId = "kim"
 DisplayName = "ComfyUI_KimNodes"
-Icon = "🍊"
+Icon = "🍒"
