@@ -37,7 +37,7 @@ class Crop_Paste:
 
     RETURN_TYPES = ("IMAGE",)  # 返回修改后的图片
     FUNCTION = "crop_paste"
-    CATEGORY = "🍒 Kim-Nodes/✂ Crop | 裁剪回贴"
+    CATEGORY = "🍒 Kim-Nodes/✂ Crop | 裁剪工具"
 
     def __init__(self):
         pass

@@ -38,7 +38,7 @@ from .py.Mask_Noise_Cleaner import Mask_Noise_Cleaner
 # from .py.Lora_Difference_extraction import ExtractDifferenceLora
 from .py.Max_Length_Image_List_Selector import MaxLength_ImageListSelector
 from .py.Transparent_Image_Filter import Transparent_Image_Filter
-
+from .py.Image_Pixel_Filter import Image_PixelFilter
 
 # 插件的节点类映射
 NODE_CLASS_MAPPINGS = {
@@ -81,6 +81,7 @@ NODE_CLASS_MAPPINGS = {
     # "ExtractDifferenceLora": ExtractDifferenceLora,
     "MaxLength_ImageListSelector": MaxLength_ImageListSelector,
     "Transparent_Image_Filter": Transparent_Image_Filter,
+    "Image_PixelFilter": Image_PixelFilter,
 }
 
 # 节点的显示名称映射
@@ -90,11 +91,10 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "IconDistributeByGrid": "🍒IconDistributeByGrid / 区域分发图标",
     "Seamless_Icon_Generator": "🍒Seamless_Icon_Generator / 无缝图标生成",  
     "Icon_Position_Cropper": "🍒Icon_Position_Cropper / 图标位置裁剪",
-#裁切贴回
+#裁剪工具
     "YOLO_Crop": "🍒YOLO_Crop / YOLO裁切",
     "YOLO_Multi_Crop": "🍒YOLO_Multi_Crop / 多人物裁切",
     "Crop_Paste": "🍒Crop_Paste / 裁切粘贴",
-#裁剪工具
     "Edge_Element_Cropper": "🍒Edge_Element_Cropper✀边缘元素裁剪",
     "Transparent_Area_Cropper": "🍒Transparent_Area_Cropper✀透明区域裁剪",
     "Percentage_Cropper": "🍒Percentage_Cropper✀百分比裁剪",
@@ -124,6 +124,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
 #选择器
     "MaxLength_ImageListSelector": "🍒MaxLength_ImageListSelector✔️最长图片列表选择",
     "Transparent_Image_Filter": "🍒Transparent_ImageFilter✔️无色图像过滤",
+    "Image_PixelFilter": "🍒Image_PixelFilter✔️图像像素过滤",
 }
 
 # 插件初始化

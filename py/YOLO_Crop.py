@@ -65,7 +65,7 @@ class YOLO_Crop:
 
     RETURN_TYPES = ("IMAGE", "DATA")  # 增加输出项 DATA
     FUNCTION = "Face_yolo"
-    CATEGORY = "🍒 Kim-Nodes/✂ Crop | 裁剪回贴"
+    CATEGORY = "🍒 Kim-Nodes/✂ Crop | 裁剪工具"
 
     def __init__(self):
         pass
