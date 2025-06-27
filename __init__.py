@@ -27,6 +27,7 @@ from .py.Save_Image import Save_Image
 from .py.Kim_image_metadata import Add_ImageMetadata
 from .py.LoadImageWithMetadata import LoadImage_Metadata
 from .py.manual_metadata_input import Manual_MetadataInput
+from .py.LoRA_Metadata_Reader import LoRA_Metadata_Reader
 # 数据匹配
 from .py.YOLOWorld_Match import YOLOWorld_Match
 # 图像处理
@@ -70,6 +71,7 @@ NODE_CLASS_MAPPINGS = {
     "Add_ImageMetadata": Add_ImageMetadata,
     "LoadImage_Metadata": LoadImage_Metadata,
     "Manual_MetadataInput": Manual_MetadataInput,
+    "LoRA_Metadata_Reader": LoRA_Metadata_Reader,
     # 数据匹配
     "YOLOWorld_Match": YOLOWorld_Match,
     # 图像处理
@@ -92,9 +94,9 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Seamless_Icon_Generator": "🍒Seamless_Icon_Generator / 无缝图标生成",  
     "Icon_Position_Cropper": "🍒Icon_Position_Cropper / 图标位置裁剪",
 #裁剪工具
-    "YOLO_Crop": "🍒YOLO_Crop / YOLO裁切",
-    "YOLO_Multi_Crop": "🍒YOLO_Multi_Crop / 多人物裁切",
-    "Crop_Paste": "🍒Crop_Paste / 裁切粘贴",
+    "YOLO_Crop": "🍒YOLO_Crop✀YOLO裁切",
+    "YOLO_Multi_Crop": "🍒YOLO_Multi_Crop✀多人物裁切",
+    "Crop_Paste": "🍒Crop_Paste✀裁切粘贴",
     "Edge_Element_Cropper": "🍒Edge_Element_Cropper✀边缘元素裁剪",
     "Transparent_Area_Cropper": "🍒Transparent_Area_Cropper✀透明区域裁剪",
     "Percentage_Cropper": "🍒Percentage_Cropper✀百分比裁剪",
@@ -113,6 +115,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Add_ImageMetadata": "🍒Add_ImageMetadata / 合并保存图像元数据",
     "LoadImage_Metadata": "🍒LoadImage_Metadata / 加载workflow图片",
     "Manual_MetadataInput": "🍒Manual_MetadataInput / 填写元数据",
+    "LoRA_Metadata_Reader": "🍒LoRA_Metadata_Reader📋LoRA元数据读取器",
 #特征匹配
     "YOLOWorld_Match": "🍒YOLOWorld_Match🔍特征匹配",
 #图像处理
