@@ -17,6 +17,7 @@ from .py.BoundingBox_Cropper import BoundingBox_Cropper
 from .py.KimFilter import KimFilter
 from .py.KimHDR import KimHDR
 from .py.Whitening import Whitening_Node
+from .py.Pixelate_Filter import Pixelate_Filter
 # 文本工具
 from .py.Prompt_Text import Prompt_Text
 from .py.Text_Match import Text_Match
@@ -61,6 +62,7 @@ NODE_CLASS_MAPPINGS = {
     "KimFilter": KimFilter,
     "KimHDR": KimHDR,
     "Whitening_Node": Whitening_Node,
+    "Pixelate_Filter": Pixelate_Filter,
     # 文本工具
     "Prompt_Text": Prompt_Text,
     "Text_Match": Text_Match,
@@ -105,6 +107,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "KimFilter": "🍒Filter🎨滤镜",
     "KimHDR": "🍒HDR🌈",
     "Whitening_Node": "🍒Whitening_👧🏻牛奶肌",
+    "Pixelate_Filter": "🍒Pixelate_Filter🎮像素化滤镜",
 #文本工具
     "Prompt_Text": "🍒Prompt_Text / 文本输出",
     "Text_Match": "🍒Text_Match / 文本匹配",
