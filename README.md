@@ -15,16 +15,16 @@ Cut out the parts detected by YOLO and paste them back onto the original picture
 
 ---
 
-### Kim_🍊IconDistributeByGrid 🛑
+### 🍒IconDistributeByGrid
 
 Distribute icons in a grid layout, following a structured sequence.
 
 #### Example:
-![IconDistributeByGrid](https://github.com/user-attachments/assets/eb2b3507-ab93-4a5d-b51f-16d4ca07c485)
+<img width="3000" height="1878" alt="Seamless_Template" src="https://github.com/user-attachments/assets/d6e59c2b-044f-4886-ac2d-4447eeb110fd" />
 
 ---
 
-### Kim_🍊Distribute_Icons 🛑
+### 🍒Distribute_Icons
 
 Randomly distribute icons within a specified area.
 
@@ -33,7 +33,7 @@ Randomly distribute icons within a specified area.
 
 ---
 
-### Kim_🍊Text_Match 🔍
+### 🍒Text_Match
 
 Evaluate whether the content of an image matches a given set of keywords and return a Boolean result.
 
@@ -42,7 +42,7 @@ Evaluate whether the content of an image matches a given set of keywords and ret
 
 ---
 
-### Kim_🍊YOLOWorld_Match🔍
+### 🍒YOLOWorld_Match
 
 yolo-world calculates whether the contents of the image match the specified type and returns a Boolean result. And move to the specified folder by image classification.
 
@@ -51,7 +51,7 @@ yolo-world calculates whether the contents of the image match the specified type
 
 ---
 
-### Kim_🍊Filter 🎨
+### 🍒Filter
 
 Adjust images with tools like sharpening, defogging, contrast enhancement, natural saturation adjustment, and gamma correction.
 
@@ -60,14 +60,14 @@ Adjust images with tools like sharpening, defogging, contrast enhancement, natur
 
 ---
 
-### Kim_🍊HDR 🎨
+### 🍒HDR
 
 #### Example:
 ![image](https://github.com/user-attachments/assets/591afb41-a2f6-4bab-bf8f-3436b0a431f5)
 
 ---
 
-### Kim_Metadata
+### 🍒Metadata
 
 Image metadata compilation
 1.It can be used to write workflow and image generation information into any image.
@@ -80,7 +80,7 @@ Image metadata compilation
 
 ---
 
-### Kim_Whitening
+### 🍒Whitening_👧🏻
 
 Beauty Function - Milk skin
 Get rid of the oily AI texture and make your skin crystal clear and radiant.
@@ -90,7 +90,14 @@ Get rid of the oily AI texture and make your skin crystal clear and radiant.
 
 ---
 
+### 🍒Pixelate_Filter🎮
 
+Pixel art image filter.
+
+#### Example:
+![Milk skin]([https://github.com/user-attachments/assets/e4bbc544-36a6-4d86-a709-c3880c4a0037](https://github.com/user-attachments/assets/f0eee713-6e9f-42b8-bba8-12c9d73f785d))
+
+---
 
 
 ## Installation
