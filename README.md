@@ -6,7 +6,7 @@ A versatile toolbox offering image effects, icon layout processing, YOLO-based c
 
 ## Features
 
-### Kim_🍊YOLO_Crop ✂ / Kim_🍊Crop_Paste ✂
+### 🍒YOLO_Crop✀/ 🍒Crop_Paste✀
 
 Cut out the parts detected by YOLO and paste them back onto the original picture.
 
@@ -95,10 +95,36 @@ Get rid of the oily AI texture and make your skin crystal clear and radiant.
 Pixel art image filter.
 
 #### Example:
-![Milk skin]([https://github.com/user-attachments/assets/e4bbc544-36a6-4d86-a709-c3880c4a0037](https://github.com/user-attachments/assets/f0eee713-6e9f-42b8-bba8-12c9d73f785d))
+<img width="2025" height="835" alt="Pixelate_Filter" src="https://github.com/user-attachments/assets/c59e266d-8a80-48bc-9c91-91eb764f2a63" />
 
 ---
 
+### 🍒Image_Square_Pad
+
+Extend the long side to form a square.
+
+#### Example:
+<img width="3583" height="1290" alt="Image_Square_Pad" src="https://github.com/user-attachments/assets/5fc02d0a-f6fc-407d-abba-13bf05d6c233" />
+
+---
+
+### 🍒Mask_Noise_Cleaner🧹
+
+Repair the middle area of the mask.
+
+#### Example:
+<img width="2649" height="932" alt="Mask_Noise_Cleaner" src="https://github.com/user-attachments/assets/68cf652d-14ec-4873-ac23-000a722c8402" />
+
+---
+
+### 🍒Transparent_Area_Cropper✀
+
+Trim the transparent area and maintain the square output.
+
+#### Example:
+<img width="2147" height="775" alt="Transparent_Area_Cropper" src="https://github.com/user-attachments/assets/fb1f7694-24a1-44f8-ae5b-8ab435626390" />
+
+---
 
 ## Installation
 
