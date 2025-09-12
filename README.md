@@ -98,6 +98,26 @@ Get rid of the oily AI texture and make your skin crystal clear and radiant.
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/ComfyUI_KimNodes.git
+   ```
+
+2. Install dependencies:
+   
+   **自动安装（推荐）**：
+   - 重启 ComfyUI，依赖将自动安装
+   
+   **手动安装**：
+   ```bash
+   # 进入插件目录
+   cd ComfyUI/custom_nodes/ComfyUI_KimNodes
+   
+   # 运行安装脚本
+   python install_dependencies.py
+   
+   # 或者直接使用 pip
+   pip install -r requirements.txt
+   ```
+
+3. Restart ComfyUI to load the nodes.
 
 ---
 

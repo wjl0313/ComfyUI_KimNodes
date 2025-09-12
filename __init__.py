@@ -3,6 +3,8 @@ import logging
 from .py.Distribute_Icons import Distribute_Icons
 from .py.Distribute_icons_in_grid import IconDistributeByGrid
 from .py.Seamless_Icon_Generator import SeamlessIconGenerator
+from .py.Seamless_Tiling_Generator import SeamlessTilingGenerator
+from .py.JSON_Image_Compositor import JSONImageCompositor
 from .py.Icon_Position_Cropper import IconPositionCropper
 # 裁切贴回
 from .py.YOLO_Crop import YOLO_Crop
@@ -24,6 +26,7 @@ from .py.Text_Match import Text_Match
 from .py.Text_Processor import Text_Processor
 from .py.Image_Classification import Image_Classification
 from .py.Save_Image import Save_Image
+from .py.Prompt_Loader import Prompt_Loader
 # 元数据相关
 from .py.Kim_image_metadata import Add_ImageMetadata
 from .py.LoadImageWithMetadata import LoadImage_Metadata
@@ -33,10 +36,13 @@ from .py.LoRA_Metadata_Reader import LoRA_Metadata_Reader
 from .py.YOLOWorld_Match import YOLOWorld_Match
 # 图像处理
 from .py.Image_Resize import Image_Resize
+from .py.Image_List_Splitter import Image_List_Splitter
+from .py.Image_Square_Pad import Image_Square_Pad
 # 蒙板处理
 from .py.Split_Mask import Split_Mask
 from .py.MaskWhiteAreaRatio import Mask_White_Area_Ratio
 from .py.Mask_Noise_Cleaner import Mask_Noise_Cleaner
+from .py.Mask_Add_Switch import Mask_Add_Switch
 # from .py.Lora_Difference_extraction import ExtractDifferenceLora
 from .py.Max_Length_Image_List_Selector import MaxLength_ImageListSelector
 from .py.Transparent_Image_Filter import Transparent_Image_Filter
@@ -48,6 +54,8 @@ NODE_CLASS_MAPPINGS = {
     "Distribute_Icons": Distribute_Icons,
     "IconDistributeByGrid": IconDistributeByGrid,
     "Seamless_Icon_Generator": SeamlessIconGenerator,
+    "Seamless_Tiling_Generator": SeamlessTilingGenerator,
+    "JSON_Image_Compositor": JSONImageCompositor,
     "Icon_Position_Cropper": IconPositionCropper,
     # 裁切贴回
     "YOLO_Crop": YOLO_Crop,
@@ -69,6 +77,7 @@ NODE_CLASS_MAPPINGS = {
     "Text_Processor": Text_Processor,
     "Image_Classification": Image_Classification,
     "Save_Image": Save_Image,
+    "Prompt_Loader": Prompt_Loader,
     # 元数据相关
     "Add_ImageMetadata": Add_ImageMetadata,
     "LoadImage_Metadata": LoadImage_Metadata,
@@ -78,14 +87,18 @@ NODE_CLASS_MAPPINGS = {
     "YOLOWorld_Match": YOLOWorld_Match,
     # 图像处理
     "Image_Resize": Image_Resize,
+    "Image_List_Splitter": Image_List_Splitter,
+    "Image_Square_Pad": Image_Square_Pad,
     # 蒙板处理
     "Split_Mask": Split_Mask,
     "Mask_White_Area_Ratio": Mask_White_Area_Ratio,
     "Mask_Noise_Cleaner": Mask_Noise_Cleaner,
+    "Mask_Add_Switch": Mask_Add_Switch,
     # "ExtractDifferenceLora": ExtractDifferenceLora,
     "MaxLength_ImageListSelector": MaxLength_ImageListSelector,
     "Transparent_Image_Filter": Transparent_Image_Filter,
     "Image_PixelFilter": Image_PixelFilter,
+
 }
 
 # 节点的显示名称映射
@@ -94,6 +107,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Distribute_Icons": "🍒Distribute_Icons / 分发图标",
     "IconDistributeByGrid": "🍒IconDistributeByGrid / 区域分发图标",
     "Seamless_Icon_Generator": "🍒Seamless_Icon_Generator / 无缝图标生成",  
+    "Seamless_Tiling_Generator": "🍒Seamless_Tiling_Generator / 无缝四方连续拼图",
+    "JSON_Image_Compositor": "🍒JSON_Image_Compositor / JSON图像合成器",
     "Icon_Position_Cropper": "🍒Icon_Position_Cropper / 图标位置裁剪",
 #裁剪工具
     "YOLO_Crop": "🍒YOLO_Crop✀YOLO裁切",
@@ -114,6 +129,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "Text_Processor": "🍒Text_Processor / 文本数字提取",
     "Image_Classification": "🍒Image_Classification / 图像分类",
     "Save_Image": "🍒Save_Image / 判断路径保存",
+    "Prompt_Loader": "🍒Prompt_Loader📝提示词加载器",
 #数据处理
     "Add_ImageMetadata": "🍒Add_ImageMetadata / 合并保存图像元数据",
     "LoadImage_Metadata": "🍒LoadImage_Metadata / 加载workflow图片",
@@ -123,10 +139,13 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "YOLOWorld_Match": "🍒YOLOWorld_Match🔍特征匹配",
 #图像处理
     "Image_Resize": "🍒Image_Resize📐图像尺寸缩放",
+    "Image_List_Splitter": "🍒Image_List_Splitter📂图片列表分割器",
+    "Image_Square_Pad": "🍒Image_Square_Pad⬜图片正方形填充",
 #蒙板处理
     "Split_Mask": "🍒Split_Mask🔪蒙版元素分割",
     "Mask_White_Area_Ratio": "🍒Mask_White_Area_Ratio📊蒙版白色区域占比",
     "Mask_Noise_Cleaner": "🍒Mask_Noise_Cleaner🧹蒙版噪点清理器",
+    "Mask_Add_Switch": "🍒Mask_Add_Switch🔄蒙版合并开关",
 #选择器
     "MaxLength_ImageListSelector": "🍒MaxLength_ImageListSelector✔️最长图片列表选择",
     "Transparent_Image_Filter": "🍒Transparent_ImageFilter✔️无色图像过滤",

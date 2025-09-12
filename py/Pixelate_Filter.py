@@ -85,22 +85,57 @@ class Pixelate_Filter:
 
     def process_contrast(self, image, size, block_size, edge_thickness, colors):
         """使用 pixeloe 的 contrast 模式处理图像"""
-        from pixeloe.pixelize import pixelize
         
-        # 使用 pixeloe 进行像素化
-        img = pixelize(image,
-                    mode="contrast",
-                    target_size=size,
-                    patch_size=block_size,
-                    thickness=edge_thickness,
+        try:
+            # 尝试 torch 版本
+            from pixeloe.torch.pixelize import pixelize
+            
+            # 将图像转换为正确的格式 [B,C,H,W] range [0..1]
+            if len(image.shape) == 3:  # HWC -> CHW
+                img_tensor = torch.from_numpy(image.transpose(2, 0, 1)).float() / 255.0
+                img_tensor = img_tensor.unsqueeze(0)  # 添加批次维度
+            else:
+                img_tensor = torch.from_numpy(image).float() / 255.0
+            
+            # 使用 torch 版本的参数
+            result = pixelize(
+                img_tensor,
+                pixel_size=block_size,
+                thickness=edge_thickness,
+                mode="contrast",
+                do_color_match=True,
+                do_quant=(colors < 256),
+                num_colors=colors if colors < 256 else 32,
+                no_post_upscale=False
+            )
+            # 转换回 numpy 格式
+            img = (result.squeeze(0).permute(1, 2, 0).cpu().numpy() * 255).astype(np.uint8)
+            
+        except (ImportError, TypeError):
+            try:
+                # 如果 torch 版本失败，尝试 legacy 版本
+                from pixeloe.legacy.pixelize import pixelize
+                img = pixelize(
+                    image,
+                    mode="contrast", 
                     contrast=1.0,
                     saturation=1.0,
-                    color_matching=True,  # 默认启用颜色匹配
-                    no_upscale=False)  # 默认启用放大
-        
-        # 应用颜色量化（如果需要）
-        if colors < 256:
-            img = self.quantize_colors(np.array(img), colors)
+                    colors=colors if colors < 256 else None,
+                    color_quant_method='kmeans',
+                    no_upscale=False
+                )
+                
+                # legacy 版本可能需要额外的颜色量化
+                if colors < 256 and isinstance(img, np.ndarray):
+                    img = self.quantize_colors(img, colors)
+                    
+            except ImportError as e:
+                raise ImportError(
+                    "无法导入 pixeloe 模块。请确保已安装 pixeloe 包。\n"
+                    "您可以通过以下命令安装：\n"
+                    "pip install pixeloe\n"
+                    f"错误详情: {str(e)}"
+                )
         
         # 转换为 tensor
         return T.ToTensor()(img)

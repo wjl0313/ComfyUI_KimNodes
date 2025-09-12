@@ -30,7 +30,7 @@ class Save_Image:
         return {
             "required": {
                 "images": ("IMAGE", ),
-                "file_path": ("STRING", {"forceInput": True}),
+                "file_path": ("STRING", {"multiline": False, "placeholder": "输入图片文件所在的目录路径"}),
             },
             "hidden": {
                 "prompt": "PROMPT",
