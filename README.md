@@ -11,7 +11,7 @@ A versatile toolbox offering image effects, icon layout processing, YOLO-based c
 Cut out the parts detected by YOLO and paste them back onto the original picture.
 
 #### Example:
-![YOLO_Crop/Crop_Paste](https://github.com/user-attachments/assets/20b62bcb-1c42-4a68-b04a-4844b137c2ef)
+<img width="1479" height="704" alt="QQ20250922-142055" src="https://github.com/user-attachments/assets/f660191c-74d3-4a02-a030-a55cc0313817" />
 
 ---
 
@@ -87,6 +87,15 @@ Get rid of the oily AI texture and make your skin crystal clear and radiant.
 
 #### Example:
 ![Milk skin](https://github.com/user-attachments/assets/e4bbc544-36a6-4d86-a709-c3880c4a0037)
+
+---
+
+### 🍒Bitch_Filter👧🏻
+
+"Internet celebrity filter" Similar to Kodak Gold 200.
+
+#### Example:
+<img width="1413" height="718" alt="QQ20250922-142410" src="https://github.com/user-attachments/assets/a3e76d79-42cc-4cea-8db3-69acea34571a" />
 
 ---
 
