@@ -1,0 +1,259 @@
+{
+  "id": "a79aace3-a771-40ea-bcb4-e9dff96154b0",
+  "revision": 0,
+  "last_node_id": 49,
+  "last_link_id": 154,
+  "nodes": [
+    {
+      "id": 47,
+      "type": "LoadImage",
+      "pos": [
+        1025.7568359375,
+        721.5315551757812
+      ],
+      "size": [
+        265.2795715332031,
+        474.4954833984375
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            151,
+            154
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "._2024-10-28_11-09-10.png",
+        "image"
+      ]
+    },
+    {
+      "id": 48,
+      "type": "Note",
+      "pos": [
+        1328.0155029296875,
+        869.1072387695312
+      ],
+      "size": [
+        307.6581726074219,
+        88
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "基于LongerSide扩展成方形\n1.如果不填写HEX16色值,扩展为透明底正方形。\n2.如果填写HEX16色值如“#000000”，则扩展为黑底正方形。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 46,
+      "type": "Image_Square_Pad",
+      "pos": [
+        1329.543212890625,
+        1005.9970092773438
+      ],
+      "size": [
+        304.3935241699219,
+        102
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 151
+        },
+        {
+          "name": "alpha",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            152
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image_Square_Pad"
+      },
+      "widgets_values": [
+        true,
+        "#000000"
+      ]
+    },
+    {
+      "id": 40,
+      "type": "PreviewImage",
+      "pos": [
+        1648.3983154296875,
+        718.1779174804688
+      ],
+      "size": [
+        406.1524963378906,
+        469.6331481933594
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 143
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 45,
+      "type": "PreviewImage",
+      "pos": [
+        2064.858154296875,
+        717.637451171875
+      ],
+      "size": [
+        395.8533630371094,
+        467.0584411621094
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 152
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 42,
+      "type": "Image_Square_Pad",
+      "pos": [
+        1326.9619140625,
+        721.4761352539062
+      ],
+      "size": [
+        306.3441162109375,
+        102
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 154
+        },
+        {
+          "name": "alpha",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            143
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image_Square_Pad"
+      },
+      "widgets_values": [
+        true,
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      143,
+      42,
+      0,
+      40,
+      0,
+      "IMAGE"
+    ],
+    [
+      151,
+      47,
+      0,
+      46,
+      0,
+      "IMAGE"
+    ],
+    [
+      152,
+      46,
+      0,
+      45,
+      0,
+      "IMAGE"
+    ],
+    [
+      154,
+      47,
+      0,
+      42,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.4122927695244514,
+      "offset": [
+        -940.6341570687011,
+        -614.3959933617286
+      ]
+    },
+    "frontendVersion": "1.23.4",
+    "ue_links": []
+  },
+  "version": 0.4
+}

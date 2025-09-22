@@ -30,24 +30,24 @@ class SeamlessTilingGenerator:
         return {
             "required": {
                 "image_list": ("IMAGE", ),
-                "拼图模板": (template_choices, {
+                "tiling_template": (template_choices, {
                     "default": "经典四方连续" if "经典四方连续" in template_choices else template_choices[0]
                 }),
-                "输出宽度": ("INT", {
+                "output_width": ("INT", {
                     "default": 1024,
                     "min": 256,
                     "max": 4096,
                     "step": 32,
                     "display": "number"
                 }),
-                "输出高度": ("INT", {
+                "output_height": ("INT", {
                     "default": 1024,
                     "min": 256,
                     "max": 4096,
                     "step": 32,
                     "display": "number"
                 }),
-                "基础图片尺寸": ("INT", {
+                "base_image_size": ("INT", {
                     "default": 84,
                     "min": 32,
                     "max": 512,
@@ -55,7 +55,7 @@ class SeamlessTilingGenerator:
                     "display": "number",
                     "description": "控制四个角的尺寸（中心图片会是其4倍大小）"
                 }),
-                "四边图片尺寸": ("INT", {
+                "edge_image_size": ("INT", {
                     "default": 168,
                     "min": 32,
                     "max": 512,
@@ -63,21 +63,21 @@ class SeamlessTilingGenerator:
                     "display": "number",
                     "description": "单独控制四条边的图片尺寸"
                 }),
-                "填充中间区域": ("BOOLEAN", {
+                "fill_center_area": ("BOOLEAN", {
                     "default": True,
                     "description": "是否在中间区域放置图片"
                 }),
-                "随机种子": ("INT", {
+                "random_seed": ("INT", {
                     "default": 0,
                      "min": 0,
                     "max": 4294967295,
                     "step": 1,
                     "display": "number"
                 }),
-                "启用随机": ("BOOLEAN", {
+                "enable_random": ("BOOLEAN", {
                     "default": True
                 }),
-                "背景颜色": ("STRING", {
+                "background_color": ("STRING", {
                     "default": "#FFFFFF",
                     "description": "十六进制背景颜色值，例如：#FFFFFF"
                 }),
@@ -122,25 +122,25 @@ class SeamlessTilingGenerator:
         img_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
         return f"data:image/{format.lower()};base64,{img_str}"
 
-    def generate_seamless_tiling(self, image_list, 拼图模板="经典四方连续", 输出宽度=1024, 输出高度=1024, 基础图片尺寸=128, 
-                               四边图片尺寸=128, 填充中间区域=True, 随机种子=0, 启用随机=True, 背景颜色="#FFFFFF"):
+    def generate_seamless_tiling(self, image_list, tiling_template="经典四方连续", output_width=1024, output_height=1024, base_image_size=128, 
+                               edge_image_size=128, fill_center_area=True, random_seed=0, enable_random=True, background_color="#FFFFFF"):
         """使用模板系统生成无缝拼图"""
         
         # 由于INPUT_IS_LIST=True，所有参数都是列表，需要取第一个元素
-        拼图模板 = 拼图模板[0] if isinstance(拼图模板, list) else 拼图模板
-        输出宽度 = 输出宽度[0] if isinstance(输出宽度, list) else 输出宽度
-        输出高度 = 输出高度[0] if isinstance(输出高度, list) else 输出高度
-        基础图片尺寸 = 基础图片尺寸[0] if isinstance(基础图片尺寸, list) else 基础图片尺寸
-        四边图片尺寸 = 四边图片尺寸[0] if isinstance(四边图片尺寸, list) else 四边图片尺寸
-        填充中间区域 = 填充中间区域[0] if isinstance(填充中间区域, list) else 填充中间区域
-        随机种子 = 随机种子[0] if isinstance(随机种子, list) else 随机种子
-        启用随机 = 启用随机[0] if isinstance(启用随机, list) else 启用随机
-        背景颜色 = 背景颜色[0] if isinstance(背景颜色, list) else 背景颜色
+        tiling_template = tiling_template[0] if isinstance(tiling_template, list) else tiling_template
+        output_width = output_width[0] if isinstance(output_width, list) else output_width
+        output_height = output_height[0] if isinstance(output_height, list) else output_height
+        base_image_size = base_image_size[0] if isinstance(base_image_size, list) else base_image_size
+        edge_image_size = edge_image_size[0] if isinstance(edge_image_size, list) else edge_image_size
+        fill_center_area = fill_center_area[0] if isinstance(fill_center_area, list) else fill_center_area
+        random_seed = random_seed[0] if isinstance(random_seed, list) else random_seed
+        enable_random = enable_random[0] if isinstance(enable_random, list) else enable_random
+        background_color = background_color[0] if isinstance(background_color, list) else background_color
 
-        print(f"🎨 使用模板: {拼图模板}")
-        print(f"📏 基础图片尺寸: {基础图片尺寸} (控制四个角)")
-        print(f"📐 四边图片尺寸: {四边图片尺寸} (控制四条边的图片)")
-        print(f"🎯 中间图片尺寸: 将被模板设置为 {基础图片尺寸 * 4} (4倍基础尺寸)")
+        print(f"🎨 使用模板: {tiling_template}")
+        print(f"📏 基础图片尺寸: {base_image_size} (控制四个角)")
+        print(f"📐 四边图片尺寸: {edge_image_size} (控制四条边的图片)")
+        print(f"🎯 中间图片尺寸: 将被模板设置为 {base_image_size * 4} (4倍基础尺寸)")
 
         # 预处理图片
         images = self.preprocess_images(image_list)
@@ -151,7 +151,7 @@ class SeamlessTilingGenerator:
         
         # 获取模板实例
         try:
-            template = template_manager.get_template(拼图模板)
+            template = template_manager.get_template(tiling_template)
             template_info = template.get_template_info()
             print(f"📋 模板信息: {template_info['name']} - {template_info['description']}")
         except ValueError as e:
@@ -162,19 +162,21 @@ class SeamlessTilingGenerator:
         
         # 准备模板参数 - 分别控制不同区域的尺寸
         params = {
-            "边界宽度": 四边图片尺寸,      # 四条边的图片尺寸
-            "角落大小": 基础图片尺寸,      # 四个角的尺寸
-            "中间图片大小": 基础图片尺寸,    # 中心图片的尺寸（注：大部分模板会内部乘以2）
-            "基础图片尺寸": 基础图片尺寸,    # 提供基础尺寸给模板参考
-            "四边图片尺寸": 四边图片尺寸,    # 提供四边尺寸给模板参考
-            "填充中间区域": 填充中间区域,
-            "随机种子": 随机种子,
-            "启用随机": 启用随机,
-            "背景颜色": 背景颜色
+            "输出宽度": output_width,
+            "输出高度": output_height,
+            "边界宽度": edge_image_size,      # 四条边的图片尺寸
+            "角落大小": base_image_size,      # 四个角的尺寸
+            "中间图片大小": base_image_size,    # 中心图片的尺寸（注：大部分模板会内部乘以2）
+            "基础图片尺寸": base_image_size,    # 提供基础尺寸给模板参考
+            "四边图片尺寸": edge_image_size,    # 提供四边尺寸给模板参考
+            "填充中间区域": fill_center_area,
+            "随机种子": random_seed,
+            "启用随机": enable_random,
+            "背景颜色": background_color
         }
         
         # 使用模板生成拼图
-        canvas_size = (输出宽度, 输出高度)
+        canvas_size = (output_width, output_height)
         result_tuple = template.generate_tiling(images, canvas_size, params)
         
         # 兼容旧版模板（只返回canvas和mask_canvas）和新版模板（返回positions）
@@ -234,6 +236,6 @@ class SeamlessTilingGenerator:
         print(f"✅ 拼图生成完成！")
         print(f"图像张量形状: {result_tensor.shape}")
         print(f"遮罩张量形状: {mask_tensor.shape}")
-        print(f"🎯 最终输出: 1张 {输出宽度}x{输出高度} 的无缝拼图、遮罩及 {len(positions)} 个图像区域的JSON信息")
+        print(f"🎯 最终输出: 1张 {output_width}x{output_height} 的无缝拼图、遮罩及 {len(positions)} 个图像区域的JSON信息")
         
         return (result_tensor, mask_tensor, json_string) 

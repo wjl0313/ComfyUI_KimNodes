@@ -146,14 +146,13 @@ class MultiEdgeTemplate(TilingTemplateBase):
         return center_positions
     
     def fill_multiple_horizontal_edges(self, canvas, mask_canvas, h_edge_images, start_x, end_x, 
-                                     top_y, bottom_y, edge_width, global_y_offset, global_x_offset):
+                                     top_y, bottom_y, edge_width):
         """填充多个水平边界（上下三对，直接在主画布上粘贴）"""
         h_edge_length = end_x - start_x
         if h_edge_length <= 0:
             return
             
         print(f"📏 创建多个水平边界（上下三对，完整图片，统一偏移）...")
-        print(f"📏 全局偏移：Y轴+{global_y_offset}px，X轴+{global_x_offset}px")
         
         # 计算三对边界的位置
         segment_width = h_edge_length // 3
@@ -176,15 +175,30 @@ class MultiEdgeTemplate(TilingTemplateBase):
             new_height = int(edge_image.size[1] * scale)
             resized_img = edge_image.resize((new_width, new_height), Image.Resampling.LANCZOS)
             
-            # 计算新的中心点位置（偏移后的边界线）
-            # 上边界：新中心点在 y = 0 + global_y_offset
-            top_center_y = top_y + global_y_offset
-            # 下边界：新中心点在 y = canvas高度 + global_y_offset
-            bottom_center_y = bottom_y + edge_width + global_y_offset
+            fh = int((canvas.size[1])/8)
+            fw = int((canvas.size[1])/10)
+
+
+            # 为每个图片生成独立的上下偏移（范围缩小避免重叠）
+            individual_y_offset_1 = random.randint(-fh, fw)  # 减小偏移范围
+            individual_y_offset_2 = -individual_y_offset_1
+
+            print(f"📏 individual_y_offset_1:{individual_y_offset_1}")
+            print(f"📏 individual_y_offset_2:{individual_y_offset_2}")
+
+
+            # 水平中心位置（不偏移，保持在段内居中）
+            center_x = (segment_start_x + segment_end_x) // 2
             
-            # 水平中心位置
-            center_x = (segment_start_x + segment_end_x) // 2 + global_x_offset
-            
+            # 计算基础位置（避免与角落重叠）
+            # 上边界：基础位置在边界区域内
+            top_base_y = top_y + edge_width // 2
+            # 下边界：基础位置在边界区域内  
+            bottom_base_y = bottom_y + edge_width // 2
+            # 应用独立偏移
+            top_center_y = top_base_y + individual_y_offset_1
+            bottom_center_y = top_center_y + canvas.size[1]  # 下边界反向偏移保持对称
+
             # 基于新中心点计算图片放置位置
             paste_x = center_x - (new_width // 2)
             top_paste_y = top_center_y - (new_height // 2)
@@ -202,14 +216,13 @@ class MultiEdgeTemplate(TilingTemplateBase):
             print(f"  完成第{i+1}对水平边界: 上边中心({center_x}, {top_center_y}) 下边中心({center_x}, {bottom_center_y})")
     
     def fill_multiple_vertical_edges(self, canvas, mask_canvas, v_edge_images, start_y, end_y,
-                                   left_x, right_x, edge_width, global_y_offset, global_x_offset):
+                                   left_x, right_x, edge_width):
         """填充多个垂直边界（左右两对，直接在主画布上粘贴）"""
         v_edge_length = end_y - start_y
         if v_edge_length <= 0:
             return
             
         print(f"📏 创建多个垂直边界（左右两对，完整图片，统一偏移）...")
-        print(f"📏 全局偏移：Y轴+{global_y_offset}px，X轴+{global_x_offset}px")
         
         # 计算两对边界的位置
         segment_height = v_edge_length // 2
@@ -232,15 +245,27 @@ class MultiEdgeTemplate(TilingTemplateBase):
             new_height = int(edge_image.size[1] * scale)
             resized_img = edge_image.resize((new_width, new_height), Image.Resampling.LANCZOS)
             
-            # 计算新的中心点位置（偏移后的边界线）
-            # 左边界：新中心点在 x = 0 + global_x_offset
-            left_center_x = left_x + global_x_offset
-            # 右边界：新中心点在 x = canvas宽度 + global_x_offset
-            right_center_x = right_x + edge_width + global_x_offset
+            fh = int((canvas.size[0])/8)
+            fw = int((canvas.size[0])/10)
+            print(f"📏 -fh:{-fh}")
+            print(f"📏 -fw:{-fw}")
+            # 为每个图片生成独立的左右偏移（范围缩小避免重叠）
+            individual_x_offset_1 = random.randint(-fh, fw)  # 减小偏移范围
+            individual_x_offset_2 = -individual_x_offset_1
+
+            # 垂直中心位置（不偏移，保持在段内居中）
+            center_y = (segment_start_y + segment_end_y) // 2
             
-            # 垂直中心位置
-            center_y = (segment_start_y + segment_end_y) // 2 + global_y_offset
+            # 计算基础位置（避免与角落重叠）
+            # 左边界：基础位置在边界区域内
+            left_base_x = left_x + edge_width // 2
+            # 右边界：基础位置在边界区域内
+            right_base_x = right_x + edge_width // 2
             
+            # 应用独立偏移
+            left_center_x = left_base_x + individual_x_offset_1
+            right_center_x = left_center_x + canvas.size[0]  # 右边界反向偏移保持对称
+
             # 基于新中心点计算图片放置位置
             left_paste_x = left_center_x - (new_width // 2)
             right_paste_x = right_center_x - (new_width // 2)
@@ -289,12 +314,7 @@ class MultiEdgeTemplate(TilingTemplateBase):
         # 设置随机种子
         if 启用随机:
             random.seed(随机种子)
-        
-        # 生成全局统一偏移值
-        global_y_offset = random.randint(0, 128)  # Y轴向下偏移
-        global_x_offset = random.randint(0, 128)  # X轴向右偏移
-        print(f"🎯 生成全局统一偏移：Y轴+{global_y_offset}px（向下），X轴+{global_x_offset}px（向右）")
-        print(f"📏 偏移范围：0-128px（基于新中心点放置，无裁切问题）")
+
         
         total_images = len(images)
         print(f"🎯 多边界模板图片分配：输入图片数量 = {total_images}")
@@ -379,16 +399,14 @@ class MultiEdgeTemplate(TilingTemplateBase):
             self.fill_multiple_horizontal_edges(
                 canvas, mask_canvas, h_edge_images,
                 角落大小, 输出宽度 - 角落大小,
-                0, 输出高度 - 边界宽度, 边界宽度,
-                global_y_offset, global_x_offset
+                0, 输出高度 - 边界宽度, 边界宽度
             )
             
             # 创建多个垂直边界（左右两对）
             self.fill_multiple_vertical_edges(
                 canvas, mask_canvas, v_edge_images,
                 角落大小, 输出高度 - 角落大小,
-                0, 输出宽度 - 边界宽度, 边界宽度,
-                global_y_offset, global_x_offset
+                0, 输出宽度 - 边界宽度, 边界宽度
             )
             
             # 填充中心区域
@@ -413,7 +431,6 @@ class MultiEdgeTemplate(TilingTemplateBase):
         print(f"   • 中心位置: 固定使用图1（居中无偏移）")
         print(f"   • 上下边界: 3对边界（完整图片2倍放大，以边缘线为中心）")
         print(f"   • 左右边界: 2对边界（完整图片2倍放大，以边缘线为中心）")
-        print(f"   • 全局偏移: Y轴+{global_y_offset}px（向下），X轴+{global_x_offset}px（向右）")
         print(f"   • 偏移方式: 以偏移后的边界线为新中心点直接放置")
         print(f"   • 图片放置: 完整图片2倍放大，直接在主画布粘贴，允许超出边界")
         print(f"   • 无缝特性: 全局统一偏移确保四方连续无缝拼接")

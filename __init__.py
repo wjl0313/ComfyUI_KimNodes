@@ -1,7 +1,7 @@
 import logging
 # 图标类
 from .py.Distribute_Icons import Distribute_Icons
-from .py.Distribute_icons_in_grid import IconDistributeByGrid
+from .py.IconDistributeByGrid import IconDistributeByGrid
 from .py.Seamless_Icon_Generator import SeamlessIconGenerator
 from .py.Seamless_Tiling_Generator import SeamlessTilingGenerator
 from .py.JSON_Image_Compositor import JSONImageCompositor
@@ -20,6 +20,7 @@ from .py.KimFilter import KimFilter
 from .py.KimHDR import KimHDR
 from .py.Whitening import Whitening_Node
 from .py.Pixelate_Filter import Pixelate_Filter
+from .py.Bitch_Filter import Bitch_Filter as Bitch_Filter
 # 文本工具
 from .py.Prompt_Text import Prompt_Text
 from .py.Text_Match import Text_Match
@@ -71,6 +72,7 @@ NODE_CLASS_MAPPINGS = {
     "KimHDR": KimHDR,
     "Whitening_Node": Whitening_Node,
     "Pixelate_Filter": Pixelate_Filter,
+    "Bitch_Filter": Bitch_Filter,
     # 文本工具
     "Prompt_Text": Prompt_Text,
     "Text_Match": Text_Match,
@@ -123,6 +125,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "KimHDR": "🍒HDR🌈",
     "Whitening_Node": "🍒Whitening_👧🏻牛奶肌",
     "Pixelate_Filter": "🍒Pixelate_Filter🎮像素化滤镜",
+    "Bitch_Filter": "🍒Bitch_Filter🎨母狗滤镜",
 #文本工具
     "Prompt_Text": "🍒Prompt_Text / 文本输出",
     "Text_Match": "🍒Text_Match / 文本匹配",

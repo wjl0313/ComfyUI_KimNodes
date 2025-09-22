@@ -1,14 +1,13 @@
 """
 四边界拼图模板
 
-改进的边界布局策略：
+基于多边界模板，将边界分布逻辑扩展为：
 - 四个角固定使用图1（四等分）
-- 中心点固定使用图1（2倍尺寸，居中无偏移）
-- 上下边界：4对图片，每个图片独立上下偏移±30px
-- 左右边界：4对图片，每个图片独立左右偏移±30px
-- 防重叠设计：偏移范围控制，确保不与角落图片重叠
-- 对称美学：对边图片反向偏移，保持视觉平衡
-- 视觉丰富：每个边界图片位置随机化，避免单调排列
+- 中心点固定使用图1（不再偏移）
+- 上下边界增加为四对（完整图片2倍放大，以边缘线为中心点）
+- 左右边界增加为四对（完整图片2倍放大，以边缘线为中心点）
+- 全局统一偏移：以偏移后的边界线为新中心点放置图片（0-128px）
+- 无缝拼接：通过统一偏移确保四方连续拼接的图片内容连续性
 """
 
 import random
@@ -23,7 +22,7 @@ class QuadEdgeTemplate(TilingTemplateBase):
     def __init__(self):
         super().__init__()
         self.template_name = "四边界拼图"
-        self.template_description = "角落固定图1，每边4对边界图片独立随机偏移，上下边界上下偏移，左右边界左右偏移，避免重叠确保视觉丰富性"
+        self.template_description = "角落固定图1，边界2倍放大以偏移后边缘线为新中心，每边4对边界，全局统一偏移，保证无缝拼接"
     
     def get_template_info(self):
         """返回模板信息"""
@@ -58,7 +57,7 @@ class QuadEdgeTemplate(TilingTemplateBase):
         scale = min(corner_size * 2 / w, corner_size * 2 / h)
         new_w = int(w * scale)
         new_h = int(h * scale)
-        
+
         # 缩放图片，保持原始比例
         corner_img = corner_image.resize((new_w, new_h), Image.Resampling.LANCZOS)
         
@@ -100,9 +99,7 @@ class QuadEdgeTemplate(TilingTemplateBase):
     def fill_center_area(self, canvas, mask_canvas, center_image, start_x, start_y, end_x, end_y, tile_size):
         """填充中心区域，使用固定图片居中放置（不添加随机偏移）"""
         if not center_image:
-            return []
-        
-        center_positions = []
+            return
             
         print(f"🎯 四边界模板中心填充：固定图1（2倍尺寸）+居中放置")
         print(f"📐 填充区域: ({start_x}, {start_y}) 到 ({end_x}, {end_y})")
@@ -132,32 +129,19 @@ class QuadEdgeTemplate(TilingTemplateBase):
         if tile_img.mode == 'RGBA':
             mask_canvas.paste(0, (x, y), tile_img)
         
-        # 记录中心位置信息
-        center_positions.append({
-            "type": "center",
-            "position": "center",
-            "bbox": [x, y, x + tile_size, y + tile_size],
-            "image_index": 0  # 固定使用第一张图片
-        })
-        
         print(f"✅ 中心区域填充完成，使用图1（2倍尺寸，居中无偏移）")
-        
-        return center_positions
     
     def fill_multiple_horizontal_edges(self, canvas, mask_canvas, h_edge_images, start_x, end_x, 
-                                     top_y, bottom_y, edge_width, random_seed):
-        """填充多个水平边界（上下四对，每个图片独立随机上下偏移）"""
+                                     top_y, bottom_y, edge_width):
+        """填充多个水平边界（上下四对，直接在主画布上粘贴）"""
         h_edge_length = end_x - start_x
         if h_edge_length <= 0:
             return
             
-        print(f"📏 创建多个水平边界（上下四对，每个图片独立上下偏移）...")
-        
+        print(f"📏 创建多个水平边界（上下四对，完整图片，统一偏移）...")
+
         # 计算四对边界的位置
         segment_width = h_edge_length // 4
-        
-        # 设置随机种子确保可重现
-        random.seed(random_seed)
         
         for i in range(4):
             # 计算当前段的位置
@@ -170,16 +154,24 @@ class QuadEdgeTemplate(TilingTemplateBase):
             
             # 获取对应的图片（每对使用同一张图）
             edge_image = h_edge_images[i] if i < len(h_edge_images) else h_edge_images[0]
-            
-            # 缩放图片（适当放大）
+            # 缩放图片（2倍放大）
             scale = min(current_width / edge_image.size[0], edge_width / edge_image.size[1]) * 1.5
             new_width = int(edge_image.size[0] * scale)
             new_height = int(edge_image.size[1] * scale)
             resized_img = edge_image.resize((new_width, new_height), Image.Resampling.LANCZOS)
-            
+
+            fh = int((canvas.size[1])/8)
+            fw = int((canvas.size[1])/10)
+
+
             # 为每个图片生成独立的上下偏移（范围缩小避免重叠）
-            individual_y_offset = random.randint(-30, 30)  # 减小偏移范围
-            
+            individual_y_offset_1 = random.randint(-fh, fw)  # 减小偏移范围
+            individual_y_offset_2 = -individual_y_offset_1
+
+            print(f"📏 individual_y_offset_1:{individual_y_offset_1}")
+            print(f"📏 individual_y_offset_2:{individual_y_offset_2}")
+
+
             # 水平中心位置（不偏移，保持在段内居中）
             center_x = (segment_start_x + segment_end_x) // 2
             
@@ -188,17 +180,16 @@ class QuadEdgeTemplate(TilingTemplateBase):
             top_base_y = top_y + edge_width // 2
             # 下边界：基础位置在边界区域内  
             bottom_base_y = bottom_y + edge_width // 2
-            
             # 应用独立偏移
-            top_center_y = top_base_y + individual_y_offset
-            bottom_center_y = bottom_base_y - individual_y_offset  # 下边界反向偏移保持对称
-            
-            # 基于中心点计算图片放置位置
+            top_center_y = top_base_y + individual_y_offset_1
+            bottom_center_y = top_center_y + canvas.size[1]  # 下边界反向偏移保持对称
+
+            # 基于新中心点计算图片放置位置
             paste_x = center_x - (new_width // 2)
             top_paste_y = top_center_y - (new_height // 2)
             bottom_paste_y = bottom_center_y - (new_height // 2)
             
-            # 直接在主画布上粘贴
+            # 直接在主画布上粘贴（允许超出边界）
             canvas.paste(resized_img, (paste_x, top_paste_y), resized_img)
             canvas.paste(resized_img, (paste_x, bottom_paste_y), resized_img)
             
@@ -207,22 +198,20 @@ class QuadEdgeTemplate(TilingTemplateBase):
                 mask_canvas.paste(0, (paste_x, top_paste_y), resized_img)
                 mask_canvas.paste(0, (paste_x, bottom_paste_y), resized_img)
             
-            print(f"  完成第{i+1}对水平边界: 上边中心({center_x}, {top_center_y}) 下边中心({center_x}, {bottom_center_y}) 偏移:{individual_y_offset}px")
+            print(f"  完成第{i+1}对水平边界: 上边中心({center_x}, {top_center_y}) 下边中心({center_x}, {bottom_center_y})")
     
     def fill_multiple_vertical_edges(self, canvas, mask_canvas, v_edge_images, start_y, end_y,
-                                   left_x, right_x, edge_width, random_seed):
-        """填充多个垂直边界（左右四对，每个图片独立随机左右偏移）"""
+                                   left_x, right_x, edge_width):
+        """填充多个垂直边界（左右四对，直接在主画布上粘贴）"""
         v_edge_length = end_y - start_y
         if v_edge_length <= 0:
             return
-            
-        print(f"📏 创建多个垂直边界（左右四对，每个图片独立左右偏移）...")
+
+ 
+        print(f"📏 创建多个垂直边界（左右四对，完整图片，统一偏移）...")
         
         # 计算四对边界的位置
         segment_height = v_edge_length // 4
-        
-        # 使用不同的随机种子避免与水平边界偏移相同
-        random.seed(random_seed + 1000)
         
         for i in range(4):
             # 计算当前段的位置
@@ -236,15 +225,20 @@ class QuadEdgeTemplate(TilingTemplateBase):
             # 获取对应的图片（每对使用同一张图）
             edge_image = v_edge_images[i] if i < len(v_edge_images) else v_edge_images[0]
             
-            # 缩放图片（适当放大）
+            # 缩放图片（2倍放大）
             scale = min(edge_width / edge_image.size[0], current_height / edge_image.size[1]) * 1.5
             new_width = int(edge_image.size[0] * scale)
             new_height = int(edge_image.size[1] * scale)
             resized_img = edge_image.resize((new_width, new_height), Image.Resampling.LANCZOS)
             
+            fh = int((canvas.size[0])/8)
+            fw = int((canvas.size[0])/10)
+            print(f"📏 -fh:{-fh}")
+            print(f"📏 -fw:{-fw}")
             # 为每个图片生成独立的左右偏移（范围缩小避免重叠）
-            individual_x_offset = random.randint(-30, 30)  # 减小偏移范围
-            
+            individual_x_offset_1 = random.randint(-fh, fw)  # 减小偏移范围
+            individual_x_offset_2 = -individual_x_offset_1
+
             # 垂直中心位置（不偏移，保持在段内居中）
             center_y = (segment_start_y + segment_end_y) // 2
             
@@ -255,15 +249,15 @@ class QuadEdgeTemplate(TilingTemplateBase):
             right_base_x = right_x + edge_width // 2
             
             # 应用独立偏移
-            left_center_x = left_base_x + individual_x_offset
-            right_center_x = right_base_x - individual_x_offset  # 右边界反向偏移保持对称
-            
-            # 基于中心点计算图片放置位置
+            left_center_x = left_base_x + individual_x_offset_1
+            right_center_x = left_center_x + canvas.size[0]  # 右边界反向偏移保持对称
+
+            # 基于新中心点计算图片放置位置
             left_paste_x = left_center_x - (new_width // 2)
             right_paste_x = right_center_x - (new_width // 2)
             paste_y = center_y - (new_height // 2)
             
-            # 直接在主画布上粘贴
+            # 直接在主画布上粘贴（允许超出边界）
             canvas.paste(resized_img, (left_paste_x, paste_y), resized_img)
             canvas.paste(resized_img, (right_paste_x, paste_y), resized_img)
             
@@ -272,16 +266,12 @@ class QuadEdgeTemplate(TilingTemplateBase):
                 mask_canvas.paste(0, (left_paste_x, paste_y), resized_img)
                 mask_canvas.paste(0, (right_paste_x, paste_y), resized_img)
             
-            print(f"  完成第{i+1}对垂直边界: 左边中心({left_center_x}, {center_y}) 右边中心({right_center_x}, {center_y}) 偏移:{individual_x_offset}px")
+            print(f"  完成第{i+1}对垂直边界: 左边中心({left_center_x}, {center_y}) 右边中心({right_center_x}, {center_y})")
     
     def generate_tiling(self, images, canvas_size, params):
         """生成四边界无缝拼图"""
-        
         if not self.validate_params(params):
             raise ValueError("参数验证失败")
-        
-        # 初始化位置信息列表
-        positions = []
         
         if len(images) < 1:
             raise ValueError("至少需要1张图片")
@@ -307,9 +297,8 @@ class QuadEdgeTemplate(TilingTemplateBase):
         if 启用随机:
             random.seed(随机种子)
         
-        # 移除全局偏移，改为每个图片独立偏移
-        print(f"🎯 使用独立随机偏移策略：每个边界图片独立偏移，避免与角落重叠")
-        print(f"📏 偏移范围：±30px（减小范围确保不重叠）")
+
+        print(f"📏 偏移范围：0-128px（基于新中心点放置，无裁切问题）")
         
         total_images = len(images)
         print(f"🎯 四边界模板图片分配：输入图片数量 = {total_images}")
@@ -351,34 +340,6 @@ class QuadEdgeTemplate(TilingTemplateBase):
         canvas.paste(bl_corner, (0, 输出高度 - 角落大小), bl_corner)
         canvas.paste(br_corner, (输出宽度 - 角落大小, 输出高度 - 角落大小), br_corner)
         
-        # 记录四个角的位置信息
-        positions.extend([
-            {
-                "type": "corner",
-                "position": "top_left",
-                "bbox": [0, 0, 角落大小, 角落大小],
-                "image_index": images.index(corner_image)
-            },
-            {
-                "type": "corner", 
-                "position": "top_right",
-                "bbox": [输出宽度 - 角落大小, 0, 输出宽度, 角落大小],
-                "image_index": images.index(corner_image)
-            },
-            {
-                "type": "corner",
-                "position": "bottom_left", 
-                "bbox": [0, 输出高度 - 角落大小, 角落大小, 输出高度],
-                "image_index": images.index(corner_image)
-            },
-            {
-                "type": "corner",
-                "position": "bottom_right",
-                "bbox": [输出宽度 - 角落大小, 输出高度 - 角落大小, 输出宽度, 输出高度],
-                "image_index": images.index(corner_image)
-            }
-        ])
-        
         # 遮罩
         if tl_corner.mode == 'RGBA':
             mask_canvas.paste(0, (0, 0), tl_corner)
@@ -394,16 +355,14 @@ class QuadEdgeTemplate(TilingTemplateBase):
             self.fill_multiple_horizontal_edges(
                 canvas, mask_canvas, h_edge_images,
                 角落大小, 输出宽度 - 角落大小,
-                0, 输出高度 - 边界宽度, 边界宽度,
-                随机种子
+                0, 输出高度 - 边界宽度, 边界宽度
             )
             
             # 创建多个垂直边界（左右四对）
             self.fill_multiple_vertical_edges(
                 canvas, mask_canvas, v_edge_images,
                 角落大小, 输出高度 - 角落大小,
-                0, 输出宽度 - 边界宽度, 边界宽度,
-                随机种子
+                0, 输出宽度 - 边界宽度, 边界宽度
             )
             
             # 填充中心区域
@@ -415,9 +374,8 @@ class QuadEdgeTemplate(TilingTemplateBase):
             if center_end_x > center_start_x and center_end_y > center_start_y:
                 中间图片实际尺寸 = 基础图片尺寸 * 2  # 固定为2倍尺寸
                 print(f"🎯 填充中心位置（图1，2倍尺寸，居中无偏移）...")
-                center_positions = self.fill_center_area(canvas, mask_canvas, center_image, center_start_x, center_start_y, 
+                self.fill_center_area(canvas, mask_canvas, center_image, center_start_x, center_start_y, 
                                     center_end_x, center_end_y, 中间图片实际尺寸)
-                positions.extend(center_positions)
             
         else:
             print("🚫 已禁用中间区域填充（不显示边界和中心）")
@@ -426,14 +384,13 @@ class QuadEdgeTemplate(TilingTemplateBase):
         print(f"📊 模板特征:")
         print(f"   • 角落位置: 固定使用图1（四等分）")
         print(f"   • 中心位置: 固定使用图1（2倍尺寸，居中无偏移）")
-        print(f"   • 上下边界: 4对边界（每个图片独立上下偏移±30px）")
-        print(f"   • 左右边界: 4对边界（每个图片独立左右偏移±30px）")
-        print(f"   • 偏移策略: 每个边界图片独立随机偏移，避免与角落重叠")
-        print(f"   • 对称特性: 对边图片反向偏移，保持视觉平衡")
-        print(f"   • 图片放置: 适度放大(1.5倍)，基于边界区域中心定位")
-        print(f"   • 防重叠: 偏移范围控制在±30px，确保不与角落冲突")
+        print(f"   • 上下边界: 4对边界（完整图片2倍放大，以边缘线为中心）")
+        print(f"   • 左右边界: 4对边界（完整图片2倍放大，以边缘线为中心）")
+        print(f"   • 偏移方式: 以偏移后的边界线为新中心点直接放置")
+        print(f"   • 图片放置: 完整图片2倍放大，直接在主画布粘贴，允许超出边界")
+        print(f"   • 无缝特性: 全局统一偏移确保四方连续无缝拼接")
         print(f"   • 图片分配: 自动循环分配，确保对间不重复")
         print(f"   • 图片需求: 最少1张，推荐9张（实现完全无重复）")
         print(f"   • 填充控制: {'✅ 启用边界+中心' if 填充中间区域 else '❌ 只显示角落'}")
         
-        return canvas, mask_canvas, positions
+        return canvas, mask_canvas

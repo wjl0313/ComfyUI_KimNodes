@@ -202,7 +202,6 @@ class LoRA_Metadata_Reader:
                 # 额外的内部参数
                 "ss_steps",  # 如果和max_train_steps相同就排除
                 "ss_num_epochs",  # 如果和epoch相同就排除
-                "ss_epoch",  # 保留num_epochs
                 "ss_v_parameterization",  # V参数化
                 "ss_v_prediction",  # V预测
                 "ss_dataset_split",  # 数据集分割
@@ -310,12 +309,14 @@ class LoRA_Metadata_Reader:
                 training_params["Network Structure"] = network_params
             if training_params_basic:
                 # 合并重复的参数
+                # 保留epoch参数，因为它通常表示当前训练的epoch数，与num_epochs（总epoch数）不同
+                # 只有当epoch和num_epochs完全相同时才删除epoch
                 if "epoch" in training_params_basic and "num_epochs" in training_params_basic:
-                    if training_params_basic["epoch"] == training_params_basic["num_epochs"]:
+                    if str(training_params_basic["epoch"]) == str(training_params_basic["num_epochs"]):
                         del training_params_basic["epoch"]
                     
                 if "max_train_steps" in training_params_basic and "steps" in training_params_basic:
-                    if training_params_basic["max_train_steps"] == training_params_basic["steps"]:
+                    if str(training_params_basic["max_train_steps"]) == str(training_params_basic["steps"]):
                         del training_params_basic["steps"]
                         
                 training_params["Basic Parameters"] = training_params_basic
@@ -401,8 +402,8 @@ class LoRA_Metadata_Reader:
                     dataset_dirs_data = dataset_dirs_raw
                 
                 dataset_info = {
-                    "数据集概览": {},
-                    "详细信息": []
+                    "overview": {},
+                    "details": []
                 }
                 
                 total_imgs = 0
@@ -424,29 +425,29 @@ class LoRA_Metadata_Reader:
                     dir_display = dir_name.split('\\')[-1].split('/')[-1]
                     
                     detail_item = {
-                        "名称": dir_display,
-                        "图片数": img_count,
-                        "重复": f"×{n_repeats}",
-                        "加权总数": weighted_total
+                        "name": dir_display,
+                        "image_count": img_count,
+                        "repeats": f"×{n_repeats}",
+                        "weighted_total": weighted_total
                     }
                     
                     # 只有当路径和显示名不同时才添加原始路径
                     if dir_name != dir_display and '\\' in dir_name or '/' in dir_name:
-                        detail_item["原始路径"] = dir_name
+                        detail_item["original_path"] = dir_name
                         
-                    dataset_info["详细信息"].append(detail_item)
+                    dataset_info["details"].append(detail_item)
                 
                 # 计算数据集概览
-                dataset_info["数据集概览"] = {
-                    "数据集数量": len(dataset_dirs_data),
-                    "总图片数": total_imgs,
-                    "加权总图片数": total_weighted,
-                    "平均重复次数": f"{total_weighted / total_imgs:.1f}" if total_imgs > 0 else "0",
-                    "重复范围": f"{min_repeats} - {max_repeats}" if min_repeats != float('inf') else "无"
+                dataset_info["overview"] = {
+                    "dataset_count": len(dataset_dirs_data),
+                    "total_images": total_imgs,
+                    "weighted_total_images": total_weighted,
+                    "average_repeats": f"{total_weighted / total_imgs:.1f}" if total_imgs > 0 else "0",
+                    "repeat_range": f"{min_repeats} - {max_repeats}" if min_repeats != float('inf') else "无"
                 }
                 
                 # 按加权总数排序
-                dataset_info["详细信息"].sort(key=lambda x: x["加权总数"], reverse=True)
+                dataset_info["details"].sort(key=lambda x: x["weighted_total"], reverse=True)
                 
                 full_metadata["数据集信息"] = dataset_info
                     
@@ -594,18 +595,18 @@ class LoRA_Metadata_Reader:
             dataset = full_metadata["数据集信息"]
             output_lines.append("\n【Dataset Info / 数据集信息】")
             
-            if "数据集概览" in dataset:
-                overview = dataset["数据集概览"]
+            if "overview" in dataset:
+                overview = dataset["overview"]
                 output_lines.append("◆ Overview / 概览")
                 for k, v in overview.items():
                     output_lines.append(f"  - {k}: {v}")
             
-            if "详细信息" in dataset and len(dataset["详细信息"]) > 0:
+            if "details" in dataset and len(dataset["details"]) > 0:
                 output_lines.append("◆ Dataset Details / 数据集详情")
-                for ds in dataset["详细信息"]:  # 显示所有数据集
-                    ds_line = f"  - {ds['名称']}: {ds['图片数']} images {ds['重复']} (weighted: {ds['加权总数']})"
-                    if "原始路径" in ds:
-                        ds_line += f"\n    path: {ds['原始路径']}"
+                for ds in dataset["details"]:  # 显示所有数据集
+                    ds_line = f"  - {ds['name']}: {ds['image_count']} images {ds['repeats']} (weighted: {ds['weighted_total']})"
+                    if "original_path" in ds:
+                        ds_line += f"\n    path: {ds['original_path']}"
                     output_lines.append(ds_line)
         
         # 标签频率（显示前50个）

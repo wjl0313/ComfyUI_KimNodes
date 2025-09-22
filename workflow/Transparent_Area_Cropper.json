@@ -1,0 +1,263 @@
+{
+  "id": "2c97f51a-bbac-44e1-b1ac-4c71b2578868",
+  "revision": 0,
+  "last_node_id": 29,
+  "last_link_id": 71,
+  "nodes": [
+    {
+      "id": 27,
+      "type": "RMBG",
+      "pos": [
+        769.65966796875,
+        1658.541015625
+      ],
+      "size": [
+        216.59512329101562,
+        126
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 64
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            67
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            65
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RMBG"
+      },
+      "widgets_values": [
+        "RMBG-2.0",
+        false,
+        "none"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoadImage",
+      "pos": [
+        485.4457702636719,
+        1658.04296875
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            64
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "b_f901fab009ae1feb61bbe6c448145506.png",
+        "image"
+      ]
+    },
+    {
+      "id": 29,
+      "type": "InvertMask",
+      "pos": [
+        1006.692138671875,
+        1726.74560546875
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 65
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            66
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InvertMask"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "PreviewImage",
+      "pos": [
+        1570.406005859375,
+        1660.4840087890625
+      ],
+      "size": [
+        237.44821166992188,
+        259.2536926269531
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 69
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 28,
+      "type": "Transparent_Area_Cropper",
+      "pos": [
+        1162.4481201171875,
+        1658.996826171875
+      ],
+      "size": [
+        387.8091735839844,
+        146
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "图片",
+          "type": "IMAGE",
+          "link": 67
+        },
+        {
+          "name": "蒙版",
+          "type": "MASK",
+          "link": 66
+        }
+      ],
+      "outputs": [
+        {
+          "name": "合并Alpha图片",
+          "type": "IMAGE",
+          "links": [
+            69
+          ]
+        },
+        {
+          "name": "裁剪后图片",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "透明蒙版",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Transparent_Area_Cropper"
+      },
+      "widgets_values": [
+        true,
+        0,
+        0
+      ]
+    }
+  ],
+  "links": [
+    [
+      64,
+      10,
+      0,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      65,
+      27,
+      1,
+      29,
+      0,
+      "MASK"
+    ],
+    [
+      66,
+      29,
+      0,
+      28,
+      1,
+      "MASK"
+    ],
+    [
+      67,
+      27,
+      0,
+      28,
+      0,
+      "IMAGE"
+    ],
+    [
+      69,
+      28,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.9646149645000006,
+      "offset": [
+        -348.83919976551874,
+        -1149.5846316305583
+      ]
+    },
+    "frontendVersion": "1.23.4",
+    "ue_links": []
+  },
+  "version": 0.4
+}

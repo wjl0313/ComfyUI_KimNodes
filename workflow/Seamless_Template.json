@@ -1,0 +1,1879 @@
+{
+  "id": "291e8820-7676-46ee-ad8e-972bc982e821",
+  "revision": 0,
+  "last_node_id": 97,
+  "last_link_id": 244,
+  "nodes": [
+    {
+      "id": 41,
+      "type": "JoinImageWithAlpha",
+      "pos": [
+        -305.5546569824219,
+        -843.4498901367188
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 83
+        },
+        {
+          "label": "alpha",
+          "name": "alpha",
+          "type": "MASK",
+          "link": 82
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            84
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JoinImageWithAlpha",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 30,
+      "type": "Seed_",
+      "pos": [
+        -298.1274108886719,
+        -702.4923095703125
+      ],
+      "size": [
+        211.65292358398438,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "seed",
+          "name": "seed",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            64
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Seed_",
+        "cnr_id": "comfyui-mixlab-nodes",
+        "ver": "67c974c96e6472316cb4bf4326281d9f86a25ae6"
+      },
+      "widgets_values": [
+        204554197880630,
+        "randomize"
+      ]
+    },
+    {
+      "id": 29,
+      "type": "Image_List_Splitter",
+      "pos": [
+        -34.01683044433594,
+        -846.2880249023438
+      ],
+      "size": [
+        299.1685485839844,
+        126
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 84
+        },
+        {
+          "label": "random_seed",
+          "name": "random_seed",
+          "type": "INT",
+          "widget": {
+            "name": "random_seed"
+          },
+          "link": 64
+        }
+      ],
+      "outputs": [
+        {
+          "label": "selected_images",
+          "name": "selected_images",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": [
+            66,
+            231
+          ]
+        },
+        {
+          "label": "remaining_images",
+          "name": "remaining_images",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image_List_Splitter",
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "9bdcf4b6c4a2760bfa12c3cef1751718030e6a31"
+      },
+      "widgets_values": [
+        6,
+        true,
+        0
+      ]
+    },
+    {
+      "id": 70,
+      "type": "ImageListToBatch+",
+      "pos": [
+        -332.31134033203125,
+        -347.309814453125
+      ],
+      "size": [
+        185.96347045898438,
+        26
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 176
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            177,
+            178
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageListToBatch+",
+        "cnr_id": "comfyui_essentials",
+        "ver": "64e38fd0f3b2e925573684f4a43727be80dc7d5b"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 12,
+      "type": "MaskPreview+",
+      "pos": [
+        422.8428039550781,
+        -966.1539306640625
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 228
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MaskPreview+",
+        "cnr_id": "comfyui_essentials",
+        "ver": "64e38fd0f3b2e925573684f4a43727be80dc7d5b"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 32,
+      "type": "PreviewImage",
+      "pos": [
+        665.3617553710938,
+        -976.2989501953125
+      ],
+      "size": [
+        239.51470947265625,
+        264.891845703125
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 66
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 53,
+      "type": "IconDistributeByGrid",
+      "pos": [
+        -21.866416931152344,
+        -312.6968078613281
+      ],
+      "size": [
+        285.4512634277344,
+        349
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "scene_image",
+          "name": "scene_image",
+          "type": "IMAGE",
+          "link": 226
+        },
+        {
+          "label": "mask_image",
+          "name": "mask_image",
+          "type": "MASK",
+          "link": 119
+        },
+        {
+          "label": "icons",
+          "name": "icons",
+          "type": "IMAGE",
+          "link": 178
+        },
+        {
+          "label": "input_json",
+          "name": "input_json",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "input_json"
+          },
+          "link": 237
+        }
+      ],
+      "outputs": [
+        {
+          "label": "processed_image",
+          "name": "processed_image",
+          "type": "IMAGE",
+          "links": [
+            112,
+            186
+          ]
+        },
+        {
+          "label": "updated_mask",
+          "name": "updated_mask",
+          "type": "MASK",
+          "links": [
+            141
+          ]
+        },
+        {
+          "label": "output_json",
+          "name": "output_json",
+          "type": "STRING",
+          "links": [
+            238
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IconDistributeByGrid",
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "9bdcf4b6c4a2760bfa12c3cef1751718030e6a31"
+      },
+      "widgets_values": [
+        236,
+        236,
+        36,
+        0,
+        0,
+        0.5,
+        -1,
+        false,
+        "",
+        360
+      ]
+    },
+    {
+      "id": 37,
+      "type": "PreviewImage",
+      "pos": [
+        -323.3145751953125,
+        -266.110107421875
+      ],
+      "size": [
+        276.4999694824219,
+        249.8012237548828
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 177
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.47"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 69,
+      "type": "JoinImageWithAlpha",
+      "pos": [
+        -338.6669006347656,
+        -460.6878356933594
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 167
+        },
+        {
+          "label": "alpha",
+          "name": "alpha",
+          "type": "MASK",
+          "link": 168
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            176
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JoinImageWithAlpha",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 73,
+      "type": "JoinImageWithAlpha",
+      "pos": [
+        -312.2278137207031,
+        35.92036819458008
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 187
+        },
+        {
+          "label": "alpha",
+          "name": "alpha",
+          "type": "MASK",
+          "link": 188
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            199
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JoinImageWithAlpha",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 79,
+      "type": "Image_List_Splitter",
+      "pos": [
+        -14.951577186584473,
+        97.08733367919922
+      ],
+      "size": [
+        296.1861267089844,
+        126
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 199
+        }
+      ],
+      "outputs": [
+        {
+          "label": "selected_images",
+          "name": "selected_images",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": [
+            207
+          ]
+        },
+        {
+          "label": "remaining_images",
+          "name": "remaining_images",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image_List_Splitter",
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "9bdcf4b6c4a2760bfa12c3cef1751718030e6a31"
+      },
+      "widgets_values": [
+        17,
+        false,
+        0
+      ]
+    },
+    {
+      "id": 74,
+      "type": "ImageListToBatch+",
+      "pos": [
+        -0.3279080092906952,
+        281.0383605957031
+      ],
+      "size": [
+        185.96347045898438,
+        26
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 207
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            208
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageListToBatch+",
+        "cnr_id": "comfyui_essentials",
+        "ver": "64e38fd0f3b2e925573684f4a43727be80dc7d5b"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 68,
+      "type": "LoadImageListFromDir //Inspire",
+      "pos": [
+        -692.2769165039062,
+        -461.7040710449219
+      ],
+      "size": [
+        296.43109130859375,
+        170
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": [
+            167
+          ]
+        },
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "shape": 6,
+          "type": "MASK",
+          "links": [
+            168
+          ]
+        },
+        {
+          "label": "FILE PATH",
+          "name": "FILE PATH",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImageListFromDir //Inspire",
+        "cnr_id": "comfyui-inspire-pack",
+        "ver": "c6d53ecd4d3a1233ba57795605247bfea927c1f2"
+      },
+      "widgets_values": [
+        "C:\\Users\\kim\\Downloads\\test\\方案6\\2",
+        0,
+        0,
+        true
+      ]
+    },
+    {
+      "id": 87,
+      "type": "Seamless_Tiling_Generator",
+      "pos": [
+        -26.455209732055664,
+        -659.9832763671875
+      ],
+      "size": [
+        355.8023376464844,
+        290
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image_list",
+          "name": "image_list",
+          "type": "IMAGE",
+          "link": 231
+        }
+      ],
+      "outputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            226,
+            227
+          ]
+        },
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            228,
+            229,
+            230
+          ]
+        },
+        {
+          "label": "output_json",
+          "name": "output_json",
+          "type": "STRING",
+          "links": [
+            237
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Seamless_Tiling_Generator",
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "9bdcf4b6c4a2760bfa12c3cef1751718030e6a31"
+      },
+      "widgets_values": [
+        "随机偏移拼图",
+        1024,
+        1024,
+        200,
+        120,
+        true,
+        false,
+        true,
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": 72,
+      "type": "LoadImageListFromDir //Inspire",
+      "pos": [
+        -695.31787109375,
+        33.828372955322266
+      ],
+      "size": [
+        297.9515686035156,
+        170
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": [
+            187
+          ]
+        },
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "shape": 6,
+          "type": "MASK",
+          "links": [
+            188
+          ]
+        },
+        {
+          "label": "FILE PATH",
+          "name": "FILE PATH",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImageListFromDir //Inspire",
+        "cnr_id": "comfyui-inspire-pack",
+        "ver": "c6d53ecd4d3a1233ba57795605247bfea927c1f2"
+      },
+      "widgets_values": [
+        "C:\\Users\\kim\\Downloads\\test\\方案6\\3",
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LoadImageListFromDir //Inspire",
+      "pos": [
+        -689.5091552734375,
+        -854.428955078125
+      ],
+      "size": [
+        276.6650390625,
+        170
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": [
+            83
+          ]
+        },
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "shape": 6,
+          "type": "MASK",
+          "links": [
+            82
+          ]
+        },
+        {
+          "label": "FILE PATH",
+          "name": "FILE PATH",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImageListFromDir //Inspire",
+        "cnr_id": "comfyui-inspire-pack",
+        "ver": "c6d53ecd4d3a1233ba57795605247bfea927c1f2"
+      },
+      "widgets_values": [
+        "C:\\Users\\kim\\Downloads\\test\\方案6\\1",
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 3,
+      "type": "PreviewImage",
+      "pos": [
+        423.8299255371094,
+        -666.2123413085938
+      ],
+      "size": [
+        357.09613037109375,
+        398.28680419921875
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 227
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.41"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 13,
+      "type": "PreviewImage",
+      "pos": [
+        791.7413330078125,
+        -667.4484252929688
+      ],
+      "size": [
+        363.0736083984375,
+        399.23883056640625
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 112
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.41"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 93,
+      "type": "JSON_Image_Compositor",
+      "pos": [
+        812.2340087890625,
+        796.6720581054688
+      ],
+      "size": [
+        380.499267578125,
+        204
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "json_data",
+          "name": "json_data",
+          "type": "STRING",
+          "widget": {
+            "name": "json_data"
+          },
+          "link": 239
+        }
+      ],
+      "outputs": [
+        {
+          "label": "合成预览图",
+          "name": "合成预览图",
+          "type": "IMAGE",
+          "links": [
+            240
+          ]
+        },
+        {
+          "label": "统计信息",
+          "name": "统计信息",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JSON_Image_Compositor",
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "9bdcf4b6c4a2760bfa12c3cef1751718030e6a31"
+      },
+      "widgets_values": [
+        "",
+        "#FFFFFF",
+        256,
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": 94,
+      "type": "PreviewImage",
+      "pos": [
+        1216.338134765625,
+        798.3585815429688
+      ],
+      "size": [
+        417.4945983886719,
+        445.9507141113281
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 240
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 35,
+      "type": "GrowMask",
+      "pos": [
+        422.4677734375,
+        -226.9021453857422
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 229
+        }
+      ],
+      "outputs": [
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            75,
+            119
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GrowMask",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14"
+      },
+      "widgets_values": [
+        -30,
+        true
+      ]
+    },
+    {
+      "id": 60,
+      "type": "Mask_Add_Switch",
+      "pos": [
+        423.8719787597656,
+        -106.54039764404297
+      ],
+      "size": [
+        277.5103454589844,
+        78
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "masks_a",
+          "name": "masks_a",
+          "type": "MASK",
+          "link": 230
+        },
+        {
+          "label": "masks_b",
+          "name": "masks_b",
+          "type": "MASK",
+          "link": 141
+        }
+      ],
+      "outputs": [
+        {
+          "label": "MASKS",
+          "name": "MASKS",
+          "type": "MASK",
+          "links": [
+            184,
+            185
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Mask_Add_Switch",
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "9bdcf4b6c4a2760bfa12c3cef1751718030e6a31"
+      },
+      "widgets_values": [
+        true
+      ]
+    },
+    {
+      "id": 61,
+      "type": "GrowMask",
+      "pos": [
+        424.51898193359375,
+        13.531806945800781
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 185
+        }
+      ],
+      "outputs": [
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            191
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GrowMask",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14"
+      },
+      "widgets_values": [
+        -10,
+        true
+      ]
+    },
+    {
+      "id": 36,
+      "type": "MaskPreview+",
+      "pos": [
+        795.9175415039062,
+        -225.01953125
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 75
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MaskPreview+",
+        "cnr_id": "comfyui_essentials",
+        "ver": "64e38fd0f3b2e925573684f4a43727be80dc7d5b"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 62,
+      "type": "MaskPreview+",
+      "pos": [
+        1019.162109375,
+        -225.41656494140625
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "mask",
+          "name": "mask",
+          "type": "MASK",
+          "link": 184
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "MaskPreview+",
+        "cnr_id": "comfyui_essentials",
+        "ver": "64e38fd0f3b2e925573684f4a43727be80dc7d5b"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 75,
+      "type": "PreviewImage",
+      "pos": [
+        796.8347778320312,
+        75.75749206542969
+      ],
+      "size": [
+        375.0320739746094,
+        413.9569396972656
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 192
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.41"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 76,
+      "type": "Reroute",
+      "pos": [
+        802.886962890625,
+        513.0241088867188
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "",
+          "name": "",
+          "type": "*",
+          "link": 198
+        }
+      ],
+      "outputs": [
+        {
+          "label": "",
+          "name": "",
+          "type": "IMAGE",
+          "links": [
+            209,
+            210,
+            211,
+            212,
+            213,
+            214,
+            215,
+            216,
+            217
+          ]
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 86,
+      "type": "ImageGridComposite3x3",
+      "pos": [
+        962.5894165039062,
+        532.1732177734375
+      ],
+      "size": [
+        206.41659545898438,
+        186
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image1",
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 209
+        },
+        {
+          "label": "image2",
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 210
+        },
+        {
+          "label": "image3",
+          "name": "image3",
+          "type": "IMAGE",
+          "link": 211
+        },
+        {
+          "label": "image4",
+          "name": "image4",
+          "type": "IMAGE",
+          "link": 213
+        },
+        {
+          "label": "image5",
+          "name": "image5",
+          "type": "IMAGE",
+          "link": 212
+        },
+        {
+          "label": "image6",
+          "name": "image6",
+          "type": "IMAGE",
+          "link": 214
+        },
+        {
+          "label": "image7",
+          "name": "image7",
+          "type": "IMAGE",
+          "link": 215
+        },
+        {
+          "label": "image8",
+          "name": "image8",
+          "type": "IMAGE",
+          "link": 216
+        },
+        {
+          "label": "image9",
+          "name": "image9",
+          "type": "IMAGE",
+          "link": 217
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            219
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageGridComposite3x3",
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.0.5"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 78,
+      "type": "PreviewImage",
+      "pos": [
+        1456.6861572265625,
+        -230.82044982910156
+      ],
+      "size": [
+        575.54443359375,
+        833.912109375
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 220
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.41"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 85,
+      "type": "ImageCrop",
+      "pos": [
+        1205.776123046875,
+        76.31906127929688
+      ],
+      "size": [
+        210,
+        130
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 219
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            220
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageCrop",
+        "cnr_id": "comfy-core",
+        "ver": "0.3.14"
+      },
+      "widgets_values": [
+        2194,
+        3072,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 71,
+      "type": "IconDistributeByGrid",
+      "pos": [
+        425.8122253417969,
+        142.1634521484375
+      ],
+      "size": [
+        283.1705017089844,
+        344
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "scene_image",
+          "name": "scene_image",
+          "type": "IMAGE",
+          "link": 186
+        },
+        {
+          "label": "mask_image",
+          "name": "mask_image",
+          "type": "MASK",
+          "link": 191
+        },
+        {
+          "label": "icons",
+          "name": "icons",
+          "type": "IMAGE",
+          "link": 208
+        },
+        {
+          "label": "input_json",
+          "name": "input_json",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "input_json"
+          },
+          "link": 238
+        }
+      ],
+      "outputs": [
+        {
+          "label": "processed_image",
+          "name": "processed_image",
+          "type": "IMAGE",
+          "links": [
+            192,
+            198
+          ]
+        },
+        {
+          "label": "updated_mask",
+          "name": "updated_mask",
+          "type": "MASK",
+          "links": []
+        },
+        {
+          "label": "output_json",
+          "name": "output_json",
+          "type": "STRING",
+          "links": [
+            239,
+            244
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IconDistributeByGrid",
+        "cnr_id": "comfyui_kimnodes",
+        "ver": "9bdcf4b6c4a2760bfa12c3cef1751718030e6a31"
+      },
+      "widgets_values": [
+        96,
+        96,
+        60,
+        0,
+        0,
+        0.5,
+        -1,
+        false,
+        "",
+        360
+      ]
+    },
+    {
+      "id": 97,
+      "type": "easy showAnything",
+      "pos": [
+        1710.321533203125,
+        697.60986328125
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 244
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      }
+    }
+  ],
+  "links": [
+    [
+      64,
+      30,
+      0,
+      29,
+      1,
+      "INT"
+    ],
+    [
+      66,
+      29,
+      0,
+      32,
+      0,
+      "IMAGE"
+    ],
+    [
+      75,
+      35,
+      0,
+      36,
+      0,
+      "MASK"
+    ],
+    [
+      82,
+      2,
+      1,
+      41,
+      1,
+      "MASK"
+    ],
+    [
+      83,
+      2,
+      0,
+      41,
+      0,
+      "IMAGE"
+    ],
+    [
+      84,
+      41,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      112,
+      53,
+      0,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      119,
+      35,
+      0,
+      53,
+      1,
+      "MASK"
+    ],
+    [
+      141,
+      53,
+      1,
+      60,
+      1,
+      "MASK"
+    ],
+    [
+      167,
+      68,
+      0,
+      69,
+      0,
+      "IMAGE"
+    ],
+    [
+      168,
+      68,
+      1,
+      69,
+      1,
+      "MASK"
+    ],
+    [
+      176,
+      69,
+      0,
+      70,
+      0,
+      "IMAGE"
+    ],
+    [
+      177,
+      70,
+      0,
+      37,
+      0,
+      "IMAGE"
+    ],
+    [
+      178,
+      70,
+      0,
+      53,
+      2,
+      "IMAGE"
+    ],
+    [
+      184,
+      60,
+      0,
+      62,
+      0,
+      "MASK"
+    ],
+    [
+      185,
+      60,
+      0,
+      61,
+      0,
+      "MASK"
+    ],
+    [
+      186,
+      53,
+      0,
+      71,
+      0,
+      "IMAGE"
+    ],
+    [
+      187,
+      72,
+      0,
+      73,
+      0,
+      "IMAGE"
+    ],
+    [
+      188,
+      72,
+      1,
+      73,
+      1,
+      "MASK"
+    ],
+    [
+      191,
+      61,
+      0,
+      71,
+      1,
+      "MASK"
+    ],
+    [
+      192,
+      71,
+      0,
+      75,
+      0,
+      "IMAGE"
+    ],
+    [
+      198,
+      71,
+      0,
+      76,
+      0,
+      "*"
+    ],
+    [
+      199,
+      73,
+      0,
+      79,
+      0,
+      "IMAGE"
+    ],
+    [
+      207,
+      79,
+      0,
+      74,
+      0,
+      "IMAGE"
+    ],
+    [
+      208,
+      74,
+      0,
+      71,
+      2,
+      "IMAGE"
+    ],
+    [
+      209,
+      76,
+      0,
+      86,
+      0,
+      "IMAGE"
+    ],
+    [
+      210,
+      76,
+      0,
+      86,
+      1,
+      "IMAGE"
+    ],
+    [
+      211,
+      76,
+      0,
+      86,
+      2,
+      "IMAGE"
+    ],
+    [
+      212,
+      76,
+      0,
+      86,
+      4,
+      "IMAGE"
+    ],
+    [
+      213,
+      76,
+      0,
+      86,
+      3,
+      "IMAGE"
+    ],
+    [
+      214,
+      76,
+      0,
+      86,
+      5,
+      "IMAGE"
+    ],
+    [
+      215,
+      76,
+      0,
+      86,
+      6,
+      "IMAGE"
+    ],
+    [
+      216,
+      76,
+      0,
+      86,
+      7,
+      "IMAGE"
+    ],
+    [
+      217,
+      76,
+      0,
+      86,
+      8,
+      "IMAGE"
+    ],
+    [
+      219,
+      86,
+      0,
+      85,
+      0,
+      "IMAGE"
+    ],
+    [
+      220,
+      85,
+      0,
+      78,
+      0,
+      "IMAGE"
+    ],
+    [
+      226,
+      87,
+      0,
+      53,
+      0,
+      "IMAGE"
+    ],
+    [
+      227,
+      87,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      228,
+      87,
+      1,
+      12,
+      0,
+      "MASK"
+    ],
+    [
+      229,
+      87,
+      1,
+      35,
+      0,
+      "MASK"
+    ],
+    [
+      230,
+      87,
+      1,
+      60,
+      0,
+      "MASK"
+    ],
+    [
+      231,
+      29,
+      0,
+      87,
+      0,
+      "IMAGE"
+    ],
+    [
+      237,
+      87,
+      2,
+      53,
+      3,
+      "STRING"
+    ],
+    [
+      238,
+      53,
+      2,
+      71,
+      3,
+      "STRING"
+    ],
+    [
+      239,
+      71,
+      2,
+      93,
+      0,
+      "STRING"
+    ],
+    [
+      240,
+      93,
+      0,
+      94,
+      0,
+      "IMAGE"
+    ],
+    [
+      244,
+      71,
+      2,
+      97,
+      0,
+      "*"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "directory/文件目录",
+      "bounding": [
+        -700.1741333007812,
+        -928.4618530273438,
+        314.093505859375,
+        1145.8485107421875
+      ],
+      "color": "#b58b2a",
+      "font_size": 22,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.45000000000000023,
+      "offset": [
+        1218.4687682401493,
+        709.2587917817402
+      ]
+    },
+    "frontendVersion": "1.23.4",
+    "ue_links": []
+  },
+  "version": 0.4
+}

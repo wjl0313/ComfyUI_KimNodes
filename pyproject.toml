@@ -1,7 +1,7 @@
 [project]
 name = "comfyui_kimnodes"
 description = "ComfyUI node collection: icon layout & processing, YOLO intelligent cropping, image filters & enhancement, text processing tools, metadata management, mask handling and image classification in one comprehensive toolbox."
-version = "1.0.4"
+version = "1.0.5"
 license = {file = "LICENSE"}
 
 [project.urls]

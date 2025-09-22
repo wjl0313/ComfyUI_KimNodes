@@ -1,0 +1,39 @@
+ComfyUI_KimNodes 工作流说明
+
+1) Crop_Paste✂-.json
+   - 对图像按指定区域进行裁剪，并将裁剪结果粘贴到目标位置，适合图层合成/元素搬移。
+
+2) Gender matches the face(WD14) .json
+   - 使用 WD14 分类器判断图像中人脸与性别标签是否匹配，用于简单一致性检查。
+
+3) IconDistributeByGrid🛑.json
+   - 将多枚图标按网格均匀排布，适合生成整齐的图标阵列或贴图表。
+
+4) Image_Classification🔍图像分类(WD14).json
+   - 基于 WD14 对输入图像进行标签分类，输出预测标签，便于检索与筛选。
+
+5) Image_Square_Pad.json
+   - 将任意长宽比的图像通过边缘留白/填充方式变为正方形，避免拉伸变形。
+
+6) Distribute_Icons🛑.json
+   - 图标分布布局工作流。与网格分布类似，用于多图标排布。
+
+7) Mask_Noise_Cleaner.json
+   - 清理掩码中的噪点、小碎片或毛刺，提升后续抠图/合成的质量。
+
+8) Pixelate_Filter.json
+   - 对图像应用像素化（马赛克）效果，可用于风格化或隐私处理。
+
+9) Seamless_Icon_Generator🛑.json
+   - 生成无缝平铺特性的图标/贴图，适合纹理素材制作与平铺展示。
+
+10) Seamless_Template.json
+    - 无缝平铺的模板工作流示例，可作为自定义无缝流程的起点。
+
+11) Transparent_Area_Cropper.json
+    - 根据透明区域自动裁剪图像边界，去除多余留白，得到紧致画布。
+
+12) YOLOWorld_Match🔍图像分类(YOLOWorld).json
+    - 使用 YOLOWorld 进行类别匹配/分类，适合目标类别筛选与数据清理。
+
+备注：以上说明基于文件命名进行概述，实际参数与流程请在 ComfyUI 内打开相应工作流查看结点与连线配置。
