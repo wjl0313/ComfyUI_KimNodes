@@ -6,7 +6,7 @@ A versatile toolbox offering image effects, icon layout processing, YOLO-based c
 
 ## Features
 
-### 🍒YOLO_Crop✀/ 🍒Crop_Paste✀
+### Kim_🍊YOLO_Crop ✂ / Kim_🍊Crop_Paste ✂
 
 Cut out the parts detected by YOLO and paste them back onto the original picture.
 
@@ -15,16 +15,16 @@ Cut out the parts detected by YOLO and paste them back onto the original picture
 
 ---
 
-### 🍒IconDistributeByGrid
+### Kim_🍊IconDistributeByGrid 🛑
 
 Distribute icons in a grid layout, following a structured sequence.
 
 #### Example:
-<img width="3000" height="1878" alt="Seamless_Template" src="https://github.com/user-attachments/assets/d6e59c2b-044f-4886-ac2d-4447eeb110fd" />
+![IconDistributeByGrid](https://github.com/user-attachments/assets/eb2b3507-ab93-4a5d-b51f-16d4ca07c485)
 
 ---
 
-### 🍒Distribute_Icons
+### Kim_🍊Distribute_Icons 🛑
 
 Randomly distribute icons within a specified area.
 
@@ -33,7 +33,7 @@ Randomly distribute icons within a specified area.
 
 ---
 
-### 🍒Text_Match
+### Kim_🍊Text_Match 🔍
 
 Evaluate whether the content of an image matches a given set of keywords and return a Boolean result.
 
@@ -42,7 +42,7 @@ Evaluate whether the content of an image matches a given set of keywords and ret
 
 ---
 
-### 🍒YOLOWorld_Match
+### Kim_🍊YOLOWorld_Match🔍
 
 yolo-world calculates whether the contents of the image match the specified type and returns a Boolean result. And move to the specified folder by image classification.
 
@@ -51,7 +51,7 @@ yolo-world calculates whether the contents of the image match the specified type
 
 ---
 
-### 🍒Filter
+### Kim_🍊Filter 🎨
 
 Adjust images with tools like sharpening, defogging, contrast enhancement, natural saturation adjustment, and gamma correction.
 
@@ -60,14 +60,14 @@ Adjust images with tools like sharpening, defogging, contrast enhancement, natur
 
 ---
 
-### 🍒HDR
+### Kim_🍊HDR 🎨
 
 #### Example:
 ![image](https://github.com/user-attachments/assets/591afb41-a2f6-4bab-bf8f-3436b0a431f5)
 
 ---
 
-### 🍒Metadata
+### Kim_Metadata
 
 Image metadata compilation
 1.It can be used to write workflow and image generation information into any image.
@@ -80,7 +80,7 @@ Image metadata compilation
 
 ---
 
-### 🍒Whitening_👧🏻
+### Kim_Whitening
 
 Beauty Function - Milk skin
 Get rid of the oily AI texture and make your skin crystal clear and radiant.
@@ -90,41 +90,8 @@ Get rid of the oily AI texture and make your skin crystal clear and radiant.
 
 ---
 
-### 🍒Pixelate_Filter🎮
 
-Pixel art image filter.
 
-#### Example:
-<img width="2025" height="835" alt="Pixelate_Filter" src="https://github.com/user-attachments/assets/c59e266d-8a80-48bc-9c91-91eb764f2a63" />
-
----
-
-### 🍒Image_Square_Pad
-
-Extend the long side to form a square.
-
-#### Example:
-<img width="3583" height="1290" alt="Image_Square_Pad" src="https://github.com/user-attachments/assets/5fc02d0a-f6fc-407d-abba-13bf05d6c233" />
-
----
-
-### 🍒Mask_Noise_Cleaner🧹
-
-Repair the middle area of the mask.
-
-#### Example:
-<img width="2649" height="932" alt="Mask_Noise_Cleaner" src="https://github.com/user-attachments/assets/68cf652d-14ec-4873-ac23-000a722c8402" />
-
----
-
-### 🍒Transparent_Area_Cropper✀
-
-Trim the transparent area and maintain the square output.
-
-#### Example:
-<img width="2147" height="775" alt="Transparent_Area_Cropper" src="https://github.com/user-attachments/assets/fb1f7694-24a1-44f8-ae5b-8ab435626390" />
-
----
 
 ## Installation
 
